@@ -224,7 +224,7 @@ public class LogIn extends javax.swing.JFrame {
 
         jPanel2.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 720, 470));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 910, 560));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 0, 910, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

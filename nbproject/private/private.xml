@@ -5,8 +5,7 @@
         <group>
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/FormMain.java</file>
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/LogIn.java</file>
-            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/JFHoaDon.java</file>
-            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/TaiKhoanDao.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/qlchSysDao.java</file>
         </group>
     </open-files>
 </project-private>
