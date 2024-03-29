@@ -4,6 +4,9 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.TaiKhoanDao;
+import com.qlchtl.entity.taikhoan;
+import com.qlchtl.utils.MsgBox;
 import java.awt.Color;
 
 /**
@@ -184,6 +187,9 @@ public class LogIn extends javax.swing.JFrame {
         btnLoggin.setFont(new java.awt.Font("Montserrat ExtraBold", 1, 14)); // NOI18N
         btnLoggin.setRadius(50);
         btnLoggin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLogginMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnLogginAncestorMoved(evt);
             }
@@ -235,6 +241,13 @@ public class LogIn extends javax.swing.JFrame {
         lblForgetPass.setForeground(new Color(47,41,91));
     }//GEN-LAST:event_lblForgetPassMouseExited
 
+    private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
+        // TODO add your handling code here:
+         dangNhap();
+        
+        
+    }//GEN-LAST:event_btnLogginMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -269,6 +282,30 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
     }
+     TaiKhoanDao dao = new TaiKhoanDao();
+
+    void dangNhap() {
+        String taikhoan = txtAccount.getText();
+        String matKhau = txtPassword.getText();
+        taikhoan acc = dao.selectById(taikhoan);
+        if(acc == null){
+            MsgBox.alert(this, "Sai tên đăng nhập!");
+        }
+        else if(!matKhau.equals(acc.getMatKhau())){
+            MsgBox.alert(this, "Sai mật khẩu!");
+        }
+        else if(acc.getTaiKhoan().equals("admin")){
+            this.dispose();
+            FormMain formMenuAdmin = new FormMain();
+            formMenuAdmin.setVisible(true);
+        }
+        else{
+            JFHoaDon formNhanVien = new JFHoaDon();
+            formNhanVien.setVisible(true);
+            this.dispose();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnLoggin;

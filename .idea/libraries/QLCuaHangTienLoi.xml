@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="QLCuaHangTienLoi">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/QLCuaHangTienLoi.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

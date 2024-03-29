@@ -80,6 +80,7 @@ public class FormMain extends javax.swing.JFrame {
                 new FormMain().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
