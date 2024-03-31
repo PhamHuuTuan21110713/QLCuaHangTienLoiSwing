@@ -8,7 +8,6 @@ import com.qlchtl.dao.TaiKhoanDao;
 import com.qlchtl.entity.taikhoan;
 import com.qlchtl.utils.MsgBox;
 import java.awt.Color;
-
 /**
  *
  * @author Dell
