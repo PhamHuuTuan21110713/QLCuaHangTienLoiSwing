@@ -4,20 +4,23 @@
  */
 package com.qlchtl.views;
 
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyButton;
+import com.qlchtl.views.MyControls.MyScrollBar;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -25,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jdk.jfr.Frequency;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
+import org.w3c.dom.css.RGBColor;
 /**
  *
  * @author Dell
@@ -34,11 +38,11 @@ public class FormMain extends javax.swing.JFrame {
     /**
      * Creates new form FormMain
      */
-    
+    private String idProductSelected;
     public FormMain() {
         initComponents();
-
         setLocationRelativeTo(null);
+        settingScrollPane();
         renderItemWithThread();
        
     }
@@ -99,10 +103,19 @@ public class FormMain extends javax.swing.JFrame {
         lblCodeProductFound = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        lblPriceProdFound = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         lblQuantityProductFound = new javax.swing.JLabel();
+        btnDeleteProdFound = new com.qlchtl.views.MyControls.MyButton();
         scpProduct = new javax.swing.JScrollPane();
+        myPanel2 = new com.qlchtl.views.MyControls.MyPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        myPanel3 = new com.qlchtl.views.MyControls.MyPanel();
+        jLabel18 = new javax.swing.JLabel();
+        pnlAddNewPrd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
+        lblAddNewProd = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         ucStaff = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         ucClient = new javax.swing.JPanel();
@@ -764,9 +777,10 @@ public class FormMain extends javax.swing.JFrame {
 
         jPanel2.add(myPanelBoxShadow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 5, 35, 40));
 
-        lblTabName.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
+        lblTabName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTabName.setForeground(new java.awt.Color(21, 123, 142));
         lblTabName.setText("Product");
-        jPanel2.add(lblTabName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 180, 40));
+        jPanel2.add(lblTabName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 40));
 
         pnlMain.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 910, 50));
 
@@ -776,15 +790,12 @@ public class FormMain extends javax.swing.JFrame {
         myPanelBoxShadow4.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow4.setShadowOpacity(0.2F);
         myPanelBoxShadow4.setShadowSize(10);
-        myPanelBoxShadow4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         imgProductFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/headphone.png"))); // NOI18N
         imgProductFound.setText("jLabel4");
-        myPanelBoxShadow4.add(imgProductFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 192, 180));
 
         lblProductNameFound.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
         lblProductNameFound.setText("Head Phone VGR Version 12");
-        myPanelBoxShadow4.add(lblProductNameFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 250, -1));
 
         btnViewProductFound.setForeground(new java.awt.Color(255, 255, 255));
         btnViewProductFound.setText("View Detail");
@@ -794,47 +805,225 @@ public class FormMain extends javax.swing.JFrame {
         btnViewProductFound.setColorOver(new java.awt.Color(47, 173, 171));
         btnViewProductFound.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         btnViewProductFound.setRadius(15);
-        myPanelBoxShadow4.add(btnViewProductFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 110, 40));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 102, 102));
         jLabel12.setText("Code Product:");
-        myPanelBoxShadow4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
 
         lblCodeProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCodeProductFound.setForeground(new java.awt.Color(102, 102, 102));
         lblCodeProductFound.setText("103122431");
-        myPanelBoxShadow4.add(lblCodeProductFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 140, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(10, 200, 186));
         jLabel13.setText("Price:");
-        myPanelBoxShadow4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(10, 200, 186));
         jLabel14.setText("$");
-        myPanelBoxShadow4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, -1, -1));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(10, 200, 186));
-        jLabel15.setText("12.000");
-        myPanelBoxShadow4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 120, -1));
+        lblPriceProdFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPriceProdFound.setForeground(new java.awt.Color(10, 200, 186));
+        lblPriceProdFound.setText("12.000");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(102, 102, 102));
         jLabel16.setText("Quantity:");
-        myPanelBoxShadow4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
 
         lblQuantityProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblQuantityProductFound.setForeground(new java.awt.Color(102, 102, 102));
         lblQuantityProductFound.setText("10");
-        myPanelBoxShadow4.add(lblQuantityProductFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 140, -1));
 
-        ucProduct.add(myPanelBoxShadow4, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 18, 481, 231));
+        btnDeleteProdFound.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteProdFound.setText("Delete");
+        btnDeleteProdFound.setBorderColor(new java.awt.Color(232, 113, 122));
+        btnDeleteProdFound.setColor(new java.awt.Color(235, 40, 54));
+        btnDeleteProdFound.setColorClick(new java.awt.Color(235, 40, 54));
+        btnDeleteProdFound.setColorOver(new java.awt.Color(232, 113, 122));
+        btnDeleteProdFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeleteProdFound.setRadius(15);
 
+        javax.swing.GroupLayout myPanelBoxShadow4Layout = new javax.swing.GroupLayout(myPanelBoxShadow4);
+        myPanelBoxShadow4.setLayout(myPanelBoxShadow4Layout);
+        myPanelBoxShadow4Layout.setHorizontalGroup(
+            myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(imgProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblProductNameFound, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(22, 22, 22)
+                                .addComponent(lblCodeProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(70, 70, 70)
+                                .addComponent(jLabel14)
+                                .addGap(13, 13, 13)
+                                .addComponent(lblPriceProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(48, 48, 48)
+                                .addComponent(lblQuantityProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnViewProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        myPanelBoxShadow4Layout.setVerticalGroup(
+            myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(imgProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(lblProductNameFound)
+                .addGap(17, 17, 17)
+                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(lblCodeProductFound))
+                .addGap(14, 14, 14)
+                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(lblPriceProdFound))
+                .addGap(14, 14, 14)
+                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(lblQuantityProductFound))
+                .addGap(11, 11, 11)
+                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+
+        ucProduct.add(myPanelBoxShadow4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 481, 231));
+
+        scpProduct.setBackground(new java.awt.Color(255, 250, 245));
+        scpProduct.setBorder(null);
         scpProduct.setHorizontalScrollBar(null);
-        ucProduct.add(scpProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 660, 410));
+        ucProduct.add(scpProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 890, 450));
+
+        myPanel2.setBackground(new java.awt.Color(109, 216, 234));
+        myPanel2.setRoundBottomLeft(15);
+        myPanel2.setRoundBottomRight(15);
+        myPanel2.setRoundTopLeft(15);
+        myPanel2.setRoundTopRight(15);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(21, 123, 142));
+        jLabel4.setText("right here");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(21, 123, 142));
+        jLabel17.setText("Work with the products");
+
+        myPanel3.setBackground(new java.awt.Color(109, 216, 234));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Add a product");
+
+        pnlAddNewPrd.setBackground(new java.awt.Color(10, 200, 186));
+        pnlAddNewPrd.setShadowColor(new java.awt.Color(0, 110, 101));
+        pnlAddNewPrd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddNewProductClick(evt);
+            }
+        });
+
+        lblAddNewProd.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
+        lblAddNewProd.setForeground(new java.awt.Color(255, 255, 255));
+        lblAddNewProd.setText("+");
+        lblAddNewProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAddNewProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddNewProductClick(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlAddNewPrdLayout = new javax.swing.GroupLayout(pnlAddNewPrd);
+        pnlAddNewPrd.setLayout(pnlAddNewPrdLayout);
+        pnlAddNewPrdLayout.setHorizontalGroup(
+            pnlAddNewPrdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAddNewPrdLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblAddNewProd)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+        pnlAddNewPrdLayout.setVerticalGroup(
+            pnlAddNewPrdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAddNewPrdLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblAddNewProd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
+        );
+
+        javax.swing.GroupLayout myPanel3Layout = new javax.swing.GroupLayout(myPanel3);
+        myPanel3.setLayout(myPanel3Layout);
+        myPanel3Layout.setHorizontalGroup(
+            myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlAddNewPrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        myPanel3Layout.setVerticalGroup(
+            myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pnlAddNewPrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(myPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel18)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/action-r.png"))); // NOI18N
+        jLabel20.setText("jLabel20");
+
+        javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
+        myPanel2.setLayout(myPanel2Layout);
+        myPanel2Layout.setHorizontalGroup(
+            myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17)
+                    .addGroup(myPanel2Layout.createSequentialGroup()
+                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        myPanel2Layout.setVerticalGroup(
+            myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(myPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 63, Short.MAX_VALUE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        ucProduct.add(myPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 390, 210));
 
         tpnMain.addTab("tab1", ucProduct);
 
@@ -996,9 +1185,15 @@ public class FormMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-        
-
-    private MyPanelBoxShadow createItemProdComponent(Integer i,int numcol, int numrow,String name,String srcImg, String price,String quantity){
+    private void settingScrollPane() {
+        MyScrollBar scrb =  new MyScrollBar();
+        scrb.setForeground(new Color(24,145,143));
+        scpProduct.setVerticalScrollBar(scrb);
+      
+    }    
+    
+    private MyPanelBoxShadow createItemProdComponent(Integer i,int numcol, int numrow,String code,String name,String srcImg, String price,String quantity){
+        //Dung de khai bao cac items
         MyPanelBoxShadow pnlItemProd_t = new MyPanelBoxShadow();
         pnlItemProd_t.setBackground(new java.awt.Color(255, 255, 255));
         pnlItemProd_t.setPreferredSize(new java.awt.Dimension(284, 200));
@@ -1036,9 +1231,46 @@ public class FormMain extends javax.swing.JFrame {
         btnDetail.setColorOver(new java.awt.Color(47, 173, 171));
         btnDetail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDetail.setRadius(20);
-        
 
+        //Bat su kien click cho items
+        pnlItemProd_t.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                idProductSelected = i.toString();
+                setProductSelected();
+            }
+        });
+        imgItemProd_t.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                idProductSelected = i.toString();
+                 setProductSelected();
+            }
+        });
+        lblItemNameProd_t.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                idProductSelected = i.toString();
+                 setProductSelected();
+            }
+        });
         
+        lblItemPriceProd_t.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                idProductSelected = i.toString();
+                 setProductSelected();
+            }
+        });
+        lblItemQuantityProd_t.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                idProductSelected = i.toString();
+                 setProductSelected();
+            }
+        });
+        
+        //Dat vi tri  cho items
         javax.swing.GroupLayout pnlItemProdLayout = new javax.swing.GroupLayout(pnlItemProd_t);
         pnlItemProd_t.setLayout(pnlItemProdLayout);
         pnlItemProdLayout.setHorizontalGroup(
@@ -1083,7 +1315,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
     
-        pnlItemProd_t.setBounds((22+284)*numcol+22,(10+300)*numrow +10,284,300);
+       pnlItemProd_t.setBounds((10+284)*numcol+5,(10+300)*numrow +10,284,300);
        return pnlItemProd_t;
     
     }
@@ -1095,69 +1327,47 @@ public class FormMain extends javax.swing.JFrame {
         }
         JPanel pnl = new JPanel();
         pnl.setLayout(null);
-       pnl.setPreferredSize(new Dimension(660,0));
+        pnl.setBackground(Color.white);
+        pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width,0));
         Runnable a = new Runnable() {
             @Override
             public void run() {
-                try {
-                    int col = 0;
-                    int row = 0;
-                    for (int i = 0; i < 30; i++) {
-                        MyPanelBoxShadow pn = createItemProdComponent(i, col, row, "ahihi", "ahihi", "ahihi", "ahihi");
-                        pnl.add((Component) pn);
-                        col++; // Di chuyển sang cột tiếp theo
-                        if (col >= 2) { // Nếu đã điền vào hai cột, di chuyển xuống hàng tiếp theo
-                            col = 0;
-                            row++;
-                            SwingUtilities.invokeLater(new Runnable() {
-                                public void run() {
-                                    int height = pnl.getPreferredSize().height + pn.getHeight() + 10;
-                                    pnl.setPreferredSize(new Dimension(660, height));
-                                }
-                            });
-                        }
-                        Thread.sleep(500);
+                int col = 0;
+                int row = 0;
+                for (int i = 0; i < 30; i++) {
+                    MyPanelBoxShadow pn = createItemProdComponent(i, col, row,"Code of product", "ahihi", "ahihi", "ahihi", "ahihi");
+                    pnl.add((Component) pn);
+                    col++; // Di chuyển sang cột tiếp theo
+                    if (col >= 3) { // Nếu đã điền vào hai cột, di chuyển xuống hàng tiếp theo
+                        col = 0;
+                        row++;
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                int height = pnl.getPreferredSize().height + pn.getHeight() + 10;
+                                pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
+                            }
+                        });
                     }
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            scpProduct.setViewportView(pnl);
-                        }
-                    });
                     
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FormMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-
-//                int col = 0;
-//                int row = 0;
-//                for (int i = 0; i < 30; i++) {
-//                    MyPanelBoxShadow pn = createItemProdComponent(i, col, row, "ahihi", "ahihi", "ahihi", "ahihi");
-//                    pnl.add((Component) pn);
-//                    col++; // Di chuyển sang cột tiếp theo
-//                    if (col >= 2) { // Nếu đã điền vào hai cột, di chuyển xuống hàng tiếp theo
-//                        col = 0;
-//                        row++;
-//                        SwingUtilities.invokeLater(new Runnable() {
-//                            public void run() {
-//                                int height = pnl.getPreferredSize().height + pn.getHeight() + 10;
-//                                pnl.setPreferredSize(new Dimension(660, height));
-//                            }
-//                        });
-//                    }
-//                    
-//                }
-//                SwingUtilities.invokeLater(new Runnable() {
-//                    public void run() {
-//                        scpProduct.setViewportView(pnl);
-//                    }
-//                });
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        scpProduct.setViewportView(pnl);
+                    }
+                });
 
             }
         };
         return a;
         
     }
+    private void setProductSelected() {
+        lblProductNameFound.setText("CurrentNameProduct");
+        lblCodeProductFound.setText(idProductSelected);
+        lblPriceProdFound.setText("Current Price");
+        lblQuantityProductFound.setText("Current Quantity");
+    }
+    
     private void renderItemWithThread() {
         Thread a = new Thread(renderItem());
         a.start();
@@ -1224,6 +1434,11 @@ public class FormMain extends javax.swing.JFrame {
          tpnMain.setSelectedIndex(6);   
         setPresentTabVisible(evt,"Account");
     }//GEN-LAST:event_AccountClick
+
+    private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
+        // TODO add your handling code here:
+        jLabel18.setText("add");
+    }//GEN-LAST:event_AddNewProductClick
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1280,6 +1495,7 @@ public class FormMain extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.qlchtl.views.MyControls.MyButton btnDeleteProdFound;
     private com.qlchtl.views.MyControls.MyButton btnViewProductFound;
     private javax.swing.JLabel iconAccount;
     private javax.swing.JLabel iconClient;
@@ -1295,10 +1511,13 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1307,10 +1526,12 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAccount;
+    private javax.swing.JLabel lblAddNewProd;
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblGoSearch;
     private javax.swing.JLabel lblInvoice;
+    private javax.swing.JLabel lblPriceProdFound;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProductNameFound;
     private javax.swing.JLabel lblQuantityProductFound;
@@ -1319,11 +1540,14 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblStaff;
     private javax.swing.JLabel lblTabName;
     private com.qlchtl.views.MyControls.MyPanel myPanel1;
+    private com.qlchtl.views.MyControls.MyPanel myPanel2;
+    private com.qlchtl.views.MyControls.MyPanel myPanel3;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow1;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow2;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow3;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow4;
     private javax.swing.JPanel pnlAccount;
+    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
     private com.qlchtl.views.MyControls.MyPanel pnlChange;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlInvoice;
