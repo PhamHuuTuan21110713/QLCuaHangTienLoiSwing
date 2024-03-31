@@ -4,8 +4,10 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.TaiKhoanDao;
+import com.qlchtl.entity.taikhoan;
+import com.qlchtl.utils.MsgBox;
 import java.awt.Color;
-
 /**
  *
  * @author Dell
@@ -16,10 +18,12 @@ public class LogIn extends javax.swing.JFrame {
      * Creates new form LogIn
      */
     public LogIn() {
-        initComponents();
-        setLocationRelativeTo(null);
+    initComponents();
+    setLocationRelativeTo(null);
+    txtPassword.setText(""); // Đặt nội dung của JPasswordField thành chuỗi rỗng
     }
-
+    
+    private boolean passwordVisible = false;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,8 +49,8 @@ public class LogIn extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        txtPassword = new javax.swing.JTextField();
         btnShowPass = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         btnLoggin = new com.qlchtl.views.MyControls.MyButton();
         lblForgetPass = new javax.swing.JLabel();
 
@@ -168,11 +172,17 @@ public class LogIn extends javax.swing.JFrame {
 
         myPanel3.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 67, -1, -1));
 
-        txtPassword.setBorder(null);
-        myPanel3.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 35, 170, 30));
-
         btnShowPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/view.png"))); // NOI18N
+        btnShowPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnShowPassMouseClicked(evt);
+            }
+        });
         myPanel3.add(btnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
+
+        txtPassword.setText("jPasswordField1");
+        txtPassword.setBorder(null);
+        myPanel3.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 170, 30));
 
         myPanel1.add(myPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, 260, 80));
 
@@ -184,6 +194,9 @@ public class LogIn extends javax.swing.JFrame {
         btnLoggin.setFont(new java.awt.Font("Montserrat ExtraBold", 1, 14)); // NOI18N
         btnLoggin.setRadius(50);
         btnLoggin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLogginMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnLogginAncestorMoved(evt);
             }
@@ -210,7 +223,7 @@ public class LogIn extends javax.swing.JFrame {
 
         jPanel2.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 720, 470));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 910, 560));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 0, 910, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -234,6 +247,21 @@ public class LogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
         lblForgetPass.setForeground(new Color(47,41,91));
     }//GEN-LAST:event_lblForgetPassMouseExited
+
+    private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
+        // TODO add your handling code here:
+         dangNhap();
+    }//GEN-LAST:event_btnLogginMouseClicked
+
+    private void btnShowPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassMouseClicked
+        if (passwordVisible) {
+            txtPassword.setEchoChar('*'); 
+            passwordVisible = false;
+        } else {
+            txtPassword.setEchoChar((char) 0); 
+            passwordVisible = true;
+        }
+    }//GEN-LAST:event_btnShowPassMouseClicked
 
     /**
      * @param args the command line arguments
@@ -269,6 +297,31 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
     }
+     TaiKhoanDao dao = new TaiKhoanDao();
+
+    void dangNhap() {
+        String taikhoan = txtAccount.getText();
+        String matKhau = new String(txtPassword.getPassword()); 
+        taikhoan acc = dao.selectById(taikhoan);
+        if(acc == null){
+            MsgBox.alert(this, "Sai tên đăng nhập!");
+        }
+        else if(!matKhau.equals(acc.getMatKhau())){
+            MsgBox.alert(this, "Sai mật khẩu!");
+        }
+        else if(acc.getTaiKhoan().equals("admin")){
+            this.dispose();
+            FormMain formMenuAdmin = new FormMain();
+            formMenuAdmin.setVisible(true);
+        }
+        else{
+            JFHoaDon formNhanVien = new JFHoaDon();
+            formNhanVien.setVisible(true);
+            this.dispose();
+        }
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnLoggin;
@@ -290,6 +343,6 @@ public class LogIn extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyPanel myPanel2;
     private com.qlchtl.views.MyControls.MyPanel myPanel3;
     private javax.swing.JTextField txtAccount;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

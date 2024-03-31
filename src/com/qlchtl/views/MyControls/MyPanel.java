@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  * @author Dell
  */
 public class MyPanel extends JPanel{
-     public int getRoundTopLeft() {
+    public int getRoundTopLeft() {
         return roundTopLeft;
     }
 
