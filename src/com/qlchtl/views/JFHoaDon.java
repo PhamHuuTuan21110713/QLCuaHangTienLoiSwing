@@ -499,7 +499,7 @@ public class JFHoaDon extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel2.setText("Cửa hàng bách hóa");
+        jLabel2.setText("Xirkle k");
 
         jLabel3.setText("Address:  Ahi hi hi ");
 
