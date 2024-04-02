@@ -8,6 +8,7 @@ import com.qlchtl.dao.TaiKhoanDao;
 import com.qlchtl.entity.taikhoan;
 import com.qlchtl.utils.MsgBox;
 import java.awt.Color;
+import javax.swing.JFrame;
 /**
  *
  * @author Dell
@@ -250,7 +251,11 @@ public class LogIn extends javax.swing.JFrame {
 
     private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
         // TODO add your handling code here:
-         dangNhap();
+//         dangNhap();
+         FormMain frm = new FormMain(this);
+         frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+         frm.setVisible(true);
+         this.setVisible(false);
     }//GEN-LAST:event_btnLogginMouseClicked
 
     private void btnShowPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassMouseClicked
@@ -311,7 +316,7 @@ public class LogIn extends javax.swing.JFrame {
         }
         else if(acc.getTaiKhoan().equals("admin")){
             this.dispose();
-            FormMain formMenuAdmin = new FormMain();
+            FormMain formMenuAdmin = new FormMain(this);
             formMenuAdmin.setVisible(true);
         }
         else{

@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jdk.jfr.Frequency;
@@ -38,9 +39,11 @@ public class FormMain extends javax.swing.JFrame {
     /**
      * Creates new form FormMain
      */
+    private LogIn lgin;
     private String idProductSelected;
-    public FormMain() {
+    public FormMain(LogIn lgin) {
         initComponents();
+        this.lgin = lgin;
         setLocationRelativeTo(null);
         settingScrollPane();
         renderItemWithThread();
@@ -90,8 +93,8 @@ public class FormMain extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         lblGoSearch = new javax.swing.JLabel();
-        myPanelBoxShadow2 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        jLabel5 = new javax.swing.JLabel();
+        pnlHome = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
+        lblHome = new javax.swing.JLabel();
         lblTabName = new javax.swing.JLabel();
         tpnMain = new javax.swing.JTabbedPane();
         ucProduct = new javax.swing.JPanel();
@@ -116,8 +119,10 @@ public class FormMain extends javax.swing.JFrame {
         pnlAddNewPrd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblAddNewProd = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        pnlPromotionProd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
+        lblPromotionProd = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         ucStaff = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         ucClient = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         ucInvoice = new javax.swing.JPanel();
@@ -128,8 +133,14 @@ public class FormMain extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         ucAccount = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        HomePanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(250, 250, 250));
         pnlMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -749,33 +760,43 @@ public class FormMain extends javax.swing.JFrame {
 
         jPanel2.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 5, 300, 40));
 
-        myPanelBoxShadow2.setBackground(new java.awt.Color(205, 247, 244));
-        myPanelBoxShadow2.setShadowOpacity(0.2F);
-        myPanelBoxShadow2.setShadowSize(2);
-        myPanelBoxShadow2.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
+        pnlHome.setBackground(new java.awt.Color(205, 247, 244));
+        pnlHome.setShadowOpacity(0.2F);
+        pnlHome.setShadowSize(2);
+        pnlHome.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
+        pnlHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeClick(evt);
+            }
+        });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/user (1).png"))); // NOI18N
-        jLabel5.setPreferredSize(new java.awt.Dimension(30, 24));
-        jLabel5.setVerifyInputWhenFocusTarget(false);
+        lblHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/user (1).png"))); // NOI18N
+        lblHome.setPreferredSize(new java.awt.Dimension(30, 24));
+        lblHome.setVerifyInputWhenFocusTarget(false);
+        lblHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeClick(evt);
+            }
+        });
 
-        javax.swing.GroupLayout myPanelBoxShadow2Layout = new javax.swing.GroupLayout(myPanelBoxShadow2);
-        myPanelBoxShadow2.setLayout(myPanelBoxShadow2Layout);
-        myPanelBoxShadow2Layout.setHorizontalGroup(
-            myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
+        pnlHome.setLayout(pnlHomeLayout);
+        pnlHomeLayout.setHorizontalGroup(
+            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addComponent(lblHome, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        myPanelBoxShadow2Layout.setVerticalGroup(
-            myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow2Layout.createSequentialGroup()
+        pnlHomeLayout.setVerticalGroup(
+            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.add(myPanelBoxShadow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 5, 35, 40));
+        jPanel2.add(pnlHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 5, 35, 40));
 
         lblTabName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTabName.setForeground(new java.awt.Color(21, 123, 142));
@@ -805,6 +826,11 @@ public class FormMain extends javax.swing.JFrame {
         btnViewProductFound.setColorOver(new java.awt.Color(47, 173, 171));
         btnViewProductFound.setFont(new java.awt.Font("Segoe UI Variable", 1, 14)); // NOI18N
         btnViewProductFound.setRadius(15);
+        btnViewProductFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DetailProdFoundClick(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 102, 102));
@@ -979,17 +1005,57 @@ public class FormMain extends javax.swing.JFrame {
         );
         myPanel3Layout.setVerticalGroup(
             myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pnlAddNewPrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(myPanel3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel18)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
+                .addComponent(pnlAddNewPrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/action-r.png"))); // NOI18N
         jLabel20.setText("jLabel20");
+
+        pnlPromotionProd.setBackground(new java.awt.Color(10, 200, 186));
+        pnlPromotionProd.setPreferredSize(new java.awt.Dimension(56, 56));
+        pnlPromotionProd.setShadowColor(new java.awt.Color(0, 110, 101));
+        pnlPromotionProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PromotionProdClick(evt);
+            }
+        });
+
+        lblPromotionProd.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblPromotionProd.setForeground(new java.awt.Color(255, 255, 255));
+        lblPromotionProd.setText("V");
+        lblPromotionProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPromotionProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PromotionProdClick(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlPromotionProdLayout = new javax.swing.GroupLayout(pnlPromotionProd);
+        pnlPromotionProd.setLayout(pnlPromotionProdLayout);
+        pnlPromotionProdLayout.setHorizontalGroup(
+            pnlPromotionProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPromotionProdLayout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(lblPromotionProd)
+                .addGap(19, 19, 19))
+        );
+        pnlPromotionProdLayout.setVerticalGroup(
+            pnlPromotionProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPromotionProdLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(lblPromotionProd)
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Promotions");
 
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
@@ -1000,12 +1066,17 @@ public class FormMain extends javax.swing.JFrame {
                 .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
                     .addGroup(myPanel2Layout.createSequentialGroup()
-                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
-                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(myPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(pnlPromotionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 173, Short.MAX_VALUE)))
+                .addGap(12, 12, 12))
         );
         myPanel2Layout.setVerticalGroup(
             myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1018,8 +1089,15 @@ public class FormMain extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 63, Short.MAX_VALUE))
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(myPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pnlPromotionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(myPanel2Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel15)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 197, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1029,23 +1107,15 @@ public class FormMain extends javax.swing.JFrame {
 
         ucStaff.setBackground(new java.awt.Color(247, 247, 247));
 
-        jLabel6.setText("Staff");
-
         javax.swing.GroupLayout ucStaffLayout = new javax.swing.GroupLayout(ucStaff);
         ucStaff.setLayout(ucStaffLayout);
         ucStaffLayout.setHorizontalGroup(
             ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucStaffLayout.createSequentialGroup()
-                .addGap(189, 189, 189)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(684, Short.MAX_VALUE))
+            .addGap(0, 910, Short.MAX_VALUE)
         );
         ucStaffLayout.setVerticalGroup(
             ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucStaffLayout.createSequentialGroup()
-                .addGap(164, 164, 164)
-                .addComponent(jLabel6)
-                .addContainerGap(535, Short.MAX_VALUE))
+            .addGap(0, 715, Short.MAX_VALUE)
         );
 
         tpnMain.addTab("tab2", ucStaff);
@@ -1165,6 +1235,19 @@ public class FormMain extends javax.swing.JFrame {
 
         tpnMain.addTab("tab7", ucAccount);
 
+        javax.swing.GroupLayout HomePanelLayout = new javax.swing.GroupLayout(HomePanel);
+        HomePanel.setLayout(HomePanelLayout);
+        HomePanelLayout.setHorizontalGroup(
+            HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 910, Short.MAX_VALUE)
+        );
+        HomePanelLayout.setVerticalGroup(
+            HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 715, Short.MAX_VALUE)
+        );
+
+        tpnMain.addTab("tab8", HomePanel);
+
         pnlMain.add(tpnMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 910, 750));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1267,6 +1350,14 @@ public class FormMain extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 idProductSelected = i.toString();
                  setProductSelected();
+            }
+        });
+        btnDetail.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                DetailProduct dtpd = new DetailProduct(code);
+                dtpd.setVisible(true);
+                dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
         
@@ -1437,8 +1528,35 @@ public class FormMain extends javax.swing.JFrame {
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
         // TODO add your handling code here:
-        jLabel18.setText("add");
+        AddProduct addPrdForm = new AddProduct();
+        addPrdForm.setVisible(true);
+        addPrdForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }//GEN-LAST:event_AddNewProductClick
+
+    private void PromotionProdClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PromotionProdClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PromotionProdClick
+
+    private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
+        // TODO add your handling code here:
+        tpnMain.setSelectedIndex(7); 
+         setPresentTabVisible(evt,"Home");
+    }//GEN-LAST:event_HomeClick
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this.lgin.setVisible(true);
+        
+    }//GEN-LAST:event_formWindowClosed
+
+    private void DetailProdFoundClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DetailProdFoundClick
+        // TODO add your handling code here:
+        DetailProduct dtpd = new DetailProduct(this.idProductSelected);
+        dtpd.setVisible(true);
+        dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+    }//GEN-LAST:event_DetailProdFoundClick
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1488,13 +1606,14 @@ public class FormMain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMain().setVisible(true);
+                new FormMain(new LogIn()).setVisible(true);
             }
         });
     }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel HomePanel;
     private com.qlchtl.views.MyControls.MyButton btnDeleteProdFound;
     private com.qlchtl.views.MyControls.MyButton btnViewProductFound;
     private javax.swing.JLabel iconAccount;
@@ -1511,6 +1630,7 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1518,8 +1638,6 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1530,10 +1648,12 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblGoSearch;
+    private javax.swing.JLabel lblHome;
     private javax.swing.JLabel lblInvoice;
     private javax.swing.JLabel lblPriceProdFound;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProductNameFound;
+    private javax.swing.JLabel lblPromotionProd;
     private javax.swing.JLabel lblQuantityProductFound;
     private javax.swing.JLabel lblRank;
     private javax.swing.JLabel lblShift;
@@ -1543,17 +1663,18 @@ public class FormMain extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyPanel myPanel2;
     private com.qlchtl.views.MyControls.MyPanel myPanel3;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow1;
-    private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow2;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow3;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow4;
     private javax.swing.JPanel pnlAccount;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
     private com.qlchtl.views.MyControls.MyPanel pnlChange;
     private javax.swing.JPanel pnlClient;
+    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlHome;
     private javax.swing.JPanel pnlInvoice;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlProduct;
+    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlPromotionProd;
     private com.qlchtl.views.MyControls.MyPanel pnlSelected;
     private javax.swing.JPanel pnlShift;
     private javax.swing.JPanel pnlStaff;
