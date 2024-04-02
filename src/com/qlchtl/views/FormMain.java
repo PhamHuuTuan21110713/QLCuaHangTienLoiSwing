@@ -1528,7 +1528,10 @@ public class FormMain extends javax.swing.JFrame {
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
         // TODO add your handling code here:
-        jLabel18.setText("add");
+        AddProduct addPrdForm = new AddProduct();
+        addPrdForm.setVisible(true);
+        addPrdForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }//GEN-LAST:event_AddNewProductClick
 
     private void PromotionProdClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PromotionProdClick
