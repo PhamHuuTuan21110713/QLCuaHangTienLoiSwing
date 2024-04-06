@@ -8,6 +8,9 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.SanPham;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyButton;
 import com.qlchtl.views.MyControls.MyPanel;
@@ -22,6 +25,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -851,6 +856,11 @@ public class FormMain extends javax.swing.JFrame {
         btnViewProductFound.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DetailProdFoundClick(evt);
+            }
+        });
+        btnViewProductFound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewProductFoundActionPerformed(evt);
             }
         });
 
@@ -1704,7 +1714,7 @@ public class FormMain extends javax.swing.JFrame {
         return pnlItemStaff;
     }
     
-    private MyPanelBoxShadow createItemProdComponent(Integer i,int numcol, int numrow,String code,String name,String srcImg, String price,String quantity){
+    private MyPanelBoxShadow createItemProdComponent(int numcol, int numrow, String code, String name, String srcImg, String price, String quantity){
         //Dung de khai bao cac items
         MyPanelBoxShadow pnlItemProd_t = new MyPanelBoxShadow();
         pnlItemProd_t.setBackground(new java.awt.Color(255, 255, 255));
@@ -1712,11 +1722,30 @@ public class FormMain extends javax.swing.JFrame {
         pnlItemProd_t.setShadowOpacity(0.2F);
         
         JLabel imgItemProd_t = new JLabel();
-        imgItemProd_t.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/hp.png"))); // NOI18N
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+srcImg;
+
+
+//        imgItemProd_t.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagePath))); // NOI18N
+        // Lấy hình ảnh từ đường dẫn
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+
+// Thay đổi kích thước của hình ảnh
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
+
+// Tạo ImageIcon từ hình ảnh đã thay đổi kích thước
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+
+// Đặt hình ảnh vào JLabel hoặc nơi cần hiển thị
+        imgItemProd_t.setIcon(scaledImageIcon);
+
+
+
 
         JLabel lblItemNameProd_t = new JLabel();
         lblItemNameProd_t.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblItemNameProd_t.setText(name+i.toString());
+        lblItemNameProd_t.setText(name);
         lblItemNameProd_t.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         JLabel dollaricon = new JLabel();
@@ -1880,7 +1909,9 @@ public class FormMain extends javax.swing.JFrame {
         return a;
     }
 
-    private Runnable renderProdItem(){ 
+    SanPhamDao sanPhamDao = new SanPhamDao();
+    private Runnable renderProdItem(){
+        List<SanPham> listsp = sanPhamDao.selectAll();
         Component viewport = scpProduct.getViewport().getView();
         if (viewport instanceof JPanel) {
             scpProduct.setViewportView(null);
@@ -1894,8 +1925,10 @@ public class FormMain extends javax.swing.JFrame {
             public void run() {
                 int col = 0;
                 int row = 0;
-                for (int i = 0; i < 30; i++) {
-                    MyPanelBoxShadow pn = createItemProdComponent(i, col, row,"Code of product", "ahihi", "ahihi", "ahihi", "ahihi");
+
+
+                for (SanPham cd : listsp) {
+                    MyPanelBoxShadow pn = createItemProdComponent(col, row,"Code of product", cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
                     pnl.add((Component) pn);
                     col++; 
                     if (col >= 3) { 
@@ -2053,6 +2086,10 @@ public class FormMain extends javax.swing.JFrame {
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }//GEN-LAST:event_DetailProdFoundClick
+
+    private void btnViewProductFoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProductFoundActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewProductFoundActionPerformed
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
