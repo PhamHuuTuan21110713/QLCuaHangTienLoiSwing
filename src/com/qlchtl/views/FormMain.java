@@ -1533,6 +1533,10 @@ public class FormMain extends javax.swing.JFrame {
                 int row = 0;
                 for (SanPham cd : listsp) {
                     MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row,cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
+                    if(col==0 && row == 0) {
+                        idProductSelected = cd.getMaSP();
+                        setProductSelected(cd.getImg(),cd.getTenSP(),cd.getTienGoc(),cd.getTrangThai());
+                    }
                     pnl.add((Component) pn);
                     col++; 
                     if (col >= 3) { 
