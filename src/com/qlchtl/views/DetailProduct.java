@@ -4,7 +4,18 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.ChiTietKhuyenMaiDao;
+import com.qlchtl.dao.ChuongTrinhKhuyenMaiDao;
+import com.qlchtl.dao.KhoDao;
+import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.ChiTietKhuyenMai;
+import com.qlchtl.entity.ChuongTrinhKhuyenMai;
+import com.qlchtl.entity.Kho;
+import com.qlchtl.entity.SanPham;
+
 import java.awt.Color;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -17,6 +28,21 @@ public class DetailProduct extends javax.swing.JFrame  {
      * Creates new form DetailProduct
      */
     private String idProduct;
+
+    SanPhamDao sanPhamDao = new SanPhamDao();
+    KhoDao khoDAo = new KhoDao();
+    ChiTietKhuyenMaiDao ctkmDao = new ChiTietKhuyenMaiDao();
+    ChuongTrinhKhuyenMaiDao chuongTrinhKhuyenMaiDao = new ChuongTrinhKhuyenMaiDao();
+
+
+    SanPham sp = sanPhamDao.selectById(FormMain.maSp);
+    Kho kho = khoDAo.selectById(FormMain.maSp);
+    ChiTietKhuyenMai ctkm = ctkmDao.selectById(kho.getMaSP());
+    List<ChuongTrinhKhuyenMai> chuongTrinhKhuyenMai = chuongTrinhKhuyenMaiDao.selectAll();
+
+
+
+
     public DetailProduct(String idProduct) {
         initComponents();
         this.idProduct = idProduct;
@@ -130,7 +156,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtNameProduct.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         txtNameProduct.setForeground(new java.awt.Color(21, 123, 142));
         txtNameProduct.setRows(5);
-        txtNameProduct.setText("Headphone version 0.2");
+        txtNameProduct.setText(sp.getTenSP());
         txtNameProduct.setBorder(null);
         txtNameProduct.setFocusable(false);
         jScrollPane1.setViewportView(txtNameProduct);
@@ -165,7 +191,15 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtPromotionProd.setBackground(new java.awt.Color(255, 255, 255));
         txtPromotionProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtPromotionProd.setForeground(new java.awt.Color(102, 102, 102));
-        txtPromotionProd.setText("None");
+
+        if (ctkm != null) {
+            txtPromotionProd.setText(ctkm.getMaCT());
+        } else {
+            txtPromotionProd.setText("None");
+        }
+
+
+
         txtPromotionProd.setBorder(null);
         txtPromotionProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +212,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtCodePrd.setBackground(new java.awt.Color(255, 255, 255));
         txtCodePrd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtCodePrd.setForeground(new java.awt.Color(102, 102, 102));
-        txtCodePrd.setText("21110713");
+        txtCodePrd.setText(sp.getMaSP());
         txtCodePrd.setBorder(null);
         jPanel1.add(txtCodePrd, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, 120, 20));
 
@@ -186,7 +220,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtPlacePrd.setBackground(new java.awt.Color(255, 255, 255));
         txtPlacePrd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtPlacePrd.setForeground(new java.awt.Color(102, 102, 102));
-        txtPlacePrd.setText("Đà Nẵng");
+        txtPlacePrd.setText(sp.getNoiSanXuat());
         txtPlacePrd.setBorder(null);
         jPanel1.add(txtPlacePrd, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 120, 160, 20));
 
@@ -194,7 +228,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtStatePrd.setBackground(new java.awt.Color(255, 255, 255));
         txtStatePrd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtStatePrd.setForeground(new java.awt.Color(102, 102, 102));
-        txtStatePrd.setText("Còn hàng");
+        txtStatePrd.setText(sp.getTrangThai());
         txtStatePrd.setBorder(null);
         txtStatePrd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +241,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtRootPriceProd.setBackground(new java.awt.Color(255, 255, 255));
         txtRootPriceProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtRootPriceProd.setForeground(new java.awt.Color(102, 102, 102));
-        txtRootPriceProd.setText("12.000");
+        txtRootPriceProd.setText(sp.getTienGoc());
         txtRootPriceProd.setBorder(null);
         txtRootPriceProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,7 +254,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtQuantityProd.setBackground(new java.awt.Color(255, 255, 255));
         txtQuantityProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtQuantityProd.setForeground(new java.awt.Color(102, 102, 102));
-        txtQuantityProd.setText("10");
+        txtQuantityProd.setText(String.valueOf(kho.getSoLuong()));
         txtQuantityProd.setBorder(null);
         txtQuantityProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,7 +271,12 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtImportDatePrd.setBackground(new java.awt.Color(255, 255, 255));
         txtImportDatePrd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtImportDatePrd.setForeground(new java.awt.Color(102, 102, 102));
-        txtImportDatePrd.setText("2024/11/20");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = sp.getNgayNhapHang().format(formatter);
+        txtImportDatePrd.setText(formattedDate);
+
+
         txtImportDatePrd.setBorder(null);
         txtImportDatePrd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,7 +293,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtSupplier.setBackground(new java.awt.Color(255, 255, 255));
         txtSupplier.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtSupplier.setForeground(new java.awt.Color(102, 102, 102));
-        txtSupplier.setText("21110713");
+        txtSupplier.setText(sp.getMaNCC());
         txtSupplier.setBorder(null);
         txtSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,7 +310,12 @@ public class DetailProduct extends javax.swing.JFrame  {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Code program");
 
-        cboCodePromotionProd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        String[] promotionNames = new String[chuongTrinhKhuyenMai.size()];
+        for (int i = 0; i < chuongTrinhKhuyenMai.size(); i++) {
+            promotionNames[i] = chuongTrinhKhuyenMai.get(i).getTenChuongTrinh(); // Giả sử getTenChuongTrinh() là phương thức để lấy tên chương trình
+        }
+        cboCodePromotionProd.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNames));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("Start day");
@@ -282,7 +326,10 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtStartDayProd.setBackground(new java.awt.Color(240, 240, 240));
         txtStartDayProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtStartDayProd.setForeground(new java.awt.Color(102, 102, 102));
-        txtStartDayProd.setText("2024/11/20");
+
+//        ChuongTrinhKhuyenMai chuongTrinhKM = chuongTrinhKhuyenMaiDao.selectByName();
+
+        txtStartDayProd.setText("1");
         txtStartDayProd.setBorder(null);
 
         txtEndDayProd.setBackground(new java.awt.Color(240, 240, 240));
@@ -343,7 +390,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtPricePrd.setBackground(new java.awt.Color(255, 255, 255));
         txtPricePrd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtPricePrd.setForeground(new java.awt.Color(102, 102, 102));
-        txtPricePrd.setText("12.000");
+        txtPricePrd.setText(sp.getTienThanhToan());
         txtPricePrd.setBorder(null);
         txtPricePrd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,8 +400,19 @@ public class DetailProduct extends javax.swing.JFrame  {
         jPanel1.add(txtPricePrd, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 210, 160, 20));
 
         jLabel1.setBackground(new java.awt.Color(109, 216, 234));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/prod_prf.png")));
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 320, 316));
+
+
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+sp.getImg();
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+
+        jLabel1.setIcon(scaledImageIcon);
+
+
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 320, 316));
 
         myPanel2.setBackground(new java.awt.Color(240, 240, 240));
 

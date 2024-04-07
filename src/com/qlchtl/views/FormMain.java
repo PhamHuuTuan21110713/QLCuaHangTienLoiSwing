@@ -1,26 +1,34 @@
 package com.qlchtl.views;
 
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
+import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import java.awt.Color;
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
 import java.util.List;
+
 
 public class FormMain extends javax.swing.JFrame {
 
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
+
+    SanPhamDao sanPhamDao = new SanPhamDao();
+    KhoDao khoDAo = new KhoDao();
+    public static String maSp;
+
+
     
     public String getIdProductSelected(){
         return this.idProductSelected;
@@ -35,6 +43,7 @@ public class FormMain extends javax.swing.JFrame {
     public void setIdStaffSelected(String a) {
         this.idStaffSelected = a;
     }
+
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
@@ -826,11 +835,26 @@ public class FormMain extends javax.swing.JFrame {
         myPanelBoxShadow4.setShadowOpacity(0.2F);
         myPanelBoxShadow4.setShadowSize(10);
 
-        imgProductFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/headphone.png"))); // NOI18N
+
+        SanPham sp = sanPhamDao.spLIMIT();
+        Kho kho = khoDAo.selectById(sp.getMaSP());
+        maSp = sp.getMaSP();
+
+
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+sp.getImg();
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+
+
+
+        imgProductFound.setIcon(scaledImageIcon); // NOI18N
         imgProductFound.setText("jLabel4");
 
         lblProductNameFound.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
-        lblProductNameFound.setText("Head Phone VGR Version 12");
+        lblProductNameFound.setText(sp.getTenSP());
 
         btnViewProductFound.setForeground(new java.awt.Color(255, 255, 255));
         btnViewProductFound.setText("View Detail");
@@ -857,7 +881,7 @@ public class FormMain extends javax.swing.JFrame {
 
         lblCodeProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCodeProductFound.setForeground(new java.awt.Color(102, 102, 102));
-        lblCodeProductFound.setText("103122431");
+        lblCodeProductFound.setText(sp.getMaSP());
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(10, 200, 186));
@@ -869,7 +893,7 @@ public class FormMain extends javax.swing.JFrame {
 
         lblPriceProdFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPriceProdFound.setForeground(new java.awt.Color(10, 200, 186));
-        lblPriceProdFound.setText("12.000");
+        lblPriceProdFound.setText(sp.getTienGoc());
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(102, 102, 102));
@@ -877,7 +901,7 @@ public class FormMain extends javax.swing.JFrame {
 
         lblQuantityProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblQuantityProductFound.setForeground(new java.awt.Color(102, 102, 102));
-        lblQuantityProductFound.setText("10");
+        lblQuantityProductFound.setText( String.valueOf(kho.getSoLuong()));
 
         btnDeleteProdFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteProdFound.setText("Delete");
@@ -1473,6 +1497,7 @@ public class FormMain extends javax.swing.JFrame {
         scpStaff.setVerticalScrollBar(scrbstaff);
     }    
 
+
     private Runnable renderStaffItem() {
         Component viewport = scpStaff.getViewport().getView();
         if (viewport instanceof JPanel) {
@@ -1492,7 +1517,7 @@ public class FormMain extends javax.swing.JFrame {
                     MyPanelBoxShadow pn = itf.createItemStaffComponent(i, col, row, "Code of product", "ahihi", "ahihi", "1", "ahihi");
                     pnl.add((Component) pn);
                     col++; 
-                    if (col >= 1) { 
+                    if (col >= 1) {
                         col = 0;
                         row++;
                         SwingUtilities.invokeLater(new Runnable() {
@@ -1514,8 +1539,8 @@ public class FormMain extends javax.swing.JFrame {
         return a;
     }
 
-    SanPhamDao sanPhamDao = new SanPhamDao();
-    private Runnable renderProdItem(){
+
+    private Runnable renderProdItem() {
         List<SanPham> listsp = sanPhamDao.selectAll();
         Component viewport = scpProduct.getViewport().getView();
         if (viewport instanceof JPanel) {
@@ -1524,43 +1549,46 @@ public class FormMain extends javax.swing.JFrame {
         JPanel pnl = new JPanel();
         pnl.setLayout(null);
         pnl.setBackground(Color.white);
+
         pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width,0));
         ItemProduct itpd = new ItemProduct(this);
+
         Runnable a = new Runnable() {
             @Override
             public void run() {
                 int col = 0;
                 int row = 0;
                 for (SanPham cd : listsp) {
+
                     MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row,cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
                     if(col==0 && row == 0) {
                         idProductSelected = cd.getMaSP();
                         setProductSelected(cd.getImg(),cd.getTenSP(),cd.getTienGoc(),cd.getTrangThai());
                     }
                     pnl.add((Component) pn);
-                    col++; 
-                    if (col >= 3) { 
+                    col++;
+                    if (col > 2) {
                         col = 0;
                         row++;
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                int height = pnl.getPreferredSize().height + pn.getHeight() + 10;
-                                pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
-                            }
-                        });
                     }
-                    
+                    final int finalRow = row;
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            int height = (finalRow + 1) * pn.getHeight() + 10 * (finalRow + 1); // Cập nhật chiều cao của panel
+                            pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
+                        }
+                    });
                 }
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         scpProduct.setViewportView(pnl);
                     }
                 });
-
             }
         };
         return a;
     }
+
     
     public void setStaffFound(String name, String state, String phone) {
         lblNameStaffFound.setText(name);
@@ -1568,6 +1596,7 @@ public class FormMain extends javax.swing.JFrame {
         lblStateStaffFound.setText(state);
         lblPhoneStaffFound.setText(phone);
     }
+
     public void setProductSelected(String urlImage,String name, String price, String quantity) {
         String imagePath = "/com/qlchtl/image/imageSanPham/"+urlImage;
         java.net.URL imageURL = getClass().getResource(imagePath);
@@ -1580,6 +1609,7 @@ public class FormMain extends javax.swing.JFrame {
         lblCodeProductFound.setText(idProductSelected);
         lblPriceProdFound.setText(price);
         lblQuantityProductFound.setText(quantity);
+
     }
     
     private void renderItemStaffWithThread() {
@@ -1680,7 +1710,12 @@ public class FormMain extends javax.swing.JFrame {
 
     private void DetailProdFoundClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DetailProdFoundClick
         // TODO add your handling code here:
+        if(idProductSelected != null){
+            maSp = idProductSelected;
+        }
+
         DetailProduct dtpd = new DetailProduct(this.idProductSelected);
+        System.out.println(idProductSelected);
         dtpd.setVisible(true);
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
