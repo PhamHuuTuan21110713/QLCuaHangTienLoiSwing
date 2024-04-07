@@ -8,20 +8,40 @@ package com.qlchtl.entity;
  *
  * @author admin
  */
-public class taikhoan {
+public class TaiKhoan {
     private String maTaiKhoan;
     private String taiKhoan;
     private String matKhau;
     private String maNhanVien;
+    private int isRole;
 
-    public taikhoan(String maTaiKhoan, String taiKhoan, String matKhau, String maNhanVien) {
+    public TaiKhoan(String maTaiKhoan, String taiKhoan, String matKhau, String maNhanVien, int isRole) {
+        this.maTaiKhoan = maTaiKhoan;
+        this.taiKhoan = taiKhoan;
+        this.matKhau = matKhau;
+        this.maNhanVien = maNhanVien;
+        this.isRole = isRole;
+    }
+
+    public TaiKhoan(String maTaiKhoan, String taiKhoan, String matKhau, String maNhanVien) {
         this.maTaiKhoan = maTaiKhoan;
         this.taiKhoan = taiKhoan;
         this.matKhau = matKhau;
         this.maNhanVien = maNhanVien;
     }
 
-    public taikhoan() {
+    public int getIsRole() {
+        return isRole;
+    }
+
+    public void setIsRole(int isRole) {
+        this.isRole = isRole;
+    }
+
+
+
+
+    public TaiKhoan() {
 
     }
 

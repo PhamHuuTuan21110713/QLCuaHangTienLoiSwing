@@ -353,7 +353,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         jPanel1.add(txtPricePrd, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 210, 160, 20));
 
         jLabel1.setBackground(new java.awt.Color(109, 216, 234));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/prod_prf.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/prod_prf.png")));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 320, 316));
 
         myPanel2.setBackground(new java.awt.Color(240, 240, 240));

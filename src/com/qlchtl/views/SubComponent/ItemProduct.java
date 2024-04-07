@@ -23,7 +23,7 @@ public class ItemProduct {
     public ItemProduct(FormMain parentFrame) {
         this.parentFrame = parentFrame;
     }
-    public MyPanelBoxShadow createItemProdComponent(Integer i,int numcol, int numrow,String code,String name,String srcImg, String price,String quantity){
+    public MyPanelBoxShadow createItemProdComponent(int numcol, int numrow,String code,String name,String srcImg, String price,String quantity){
         //Dung de khai bao cac items
         MyPanelBoxShadow pnlItemProd_t = new MyPanelBoxShadow();
         pnlItemProd_t.setBackground(new java.awt.Color(255, 255, 255));
@@ -31,11 +31,27 @@ public class ItemProduct {
         pnlItemProd_t.setShadowOpacity(0.2F);
         
         JLabel imgItemProd_t = new JLabel();
-        imgItemProd_t.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/hp.png"))); // NOI18N
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+srcImg;
+
+
+//        imgItemProd_t.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagePath))); // NOI18N
+        // Lấy hình ảnh từ đường dẫn
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+
+// Thay đổi kích thước của hình ảnh
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
+
+// Tạo ImageIcon từ hình ảnh đã thay đổi kích thước
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+
+// Đặt hình ảnh vào JLabel hoặc nơi cần hiển thị
+        imgItemProd_t.setIcon(scaledImageIcon);
 
         JLabel lblItemNameProd_t = new JLabel();
         lblItemNameProd_t.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblItemNameProd_t.setText(name+i.toString());
+        lblItemNameProd_t.setText(name);
         lblItemNameProd_t.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         JLabel dollaricon = new JLabel();
@@ -66,33 +82,33 @@ public class ItemProduct {
         //Bat su kien click cho items
         pnlItemProd_t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ProductClick(e,code);
+                ProductClick(e,code,srcImg,name,price,quantity);
             }
         });
         imgItemProd_t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ProductClick(e,code);
+                ProductClick(e,code,srcImg,name,price,quantity);
             }
         });
         lblItemNameProd_t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-               ProductClick(e,code);
+                ProductClick(e,code,srcImg,name,price,quantity);
             }
         });
         
         lblItemPriceProd_t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                 ProductClick(e,code);
+                  ProductClick(e,code,srcImg,name,price,quantity);
             }
         });
         lblItemQuantityProd_t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                ProductClick(e,code);
+                 ProductClick(e,code,srcImg,name,price,quantity);
             }
         });
         btnDetail.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-               DetailProductClick(e,code);
+               ProductClick(e,code,srcImg,name,price,quantity);
             }
         });
         
@@ -145,9 +161,9 @@ public class ItemProduct {
        return pnlItemProd_t;
     
     }
-    private void ProductClick(MouseEvent evt, String code) {
+    private void ProductClick(MouseEvent evt, String code,String url, String name, String price, String quantity) {
         parentFrame.setIdProductSelected(code);
-        parentFrame.setProductSelected("Current Name","Current Price", "Current Quantity");
+        parentFrame.setProductSelected(url,name,price, quantity);
     }
     
     private void DetailProductClick(MouseEvent evt, String code) {

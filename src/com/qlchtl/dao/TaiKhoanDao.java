@@ -1,6 +1,6 @@
 package com.qlchtl.dao;
 
-import com.qlchtl.entity.taikhoan;
+import com.qlchtl.entity.TaiKhoan;
 import com.qlchtl.utils.XJdbc;
 
 import java.sql.ResultSet;
@@ -8,25 +8,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaiKhoanDao extends qlchSysDao<taikhoan,String> {
+public class TaiKhoanDao extends qlchSysDao<TaiKhoan,String> {
 
     @Override
-    public void insert(taikhoan entity) {
-        String sql="INSERT INTO taikhoan(MaTK, TaiKhoan, MatKhau,MaNV) VALUES(?, ?, ?,?)";
+    public void insert(TaiKhoan entity) {
+        String sql="INSERT INTO taikhoan(MaTK, TaiKhoan, MatKhau,MaNV, role) VALUES(?, ?, ?,?,?)";
         XJdbc.update(sql,
                 entity.getMaTaiKhoan(),
                 entity.getTaiKhoan(),
                 entity.getMatKhau(),
-                entity.getMaNhanVien());
+                entity.getMaNhanVien(),
+                entity.getIsRole());
 
     }
 
     @Override
-    public void update(taikhoan entity) {
-        String sql="UPDATE taikhoan SET TaiKhoan=?, MatKhau=? WHERE MaTK=?";
+    public void update(TaiKhoan entity) {
+        String sql="UPDATE taikhoan SET TaiKhoan=?, MatKhau=?, role = ? WHERE MaTK=?";
         XJdbc.update(sql,
                 entity.getTaiKhoan(),
                 entity.getMatKhau(),
+                entity.getIsRole(),
                 entity.getMaTaiKhoan());
     }
 
@@ -37,32 +39,33 @@ public class TaiKhoanDao extends qlchSysDao<taikhoan,String> {
     }
 
     @Override
-    public taikhoan selectById(String TaiKhoan) {
+    public TaiKhoan selectById(String TaiKhoan) {
         String sql="SELECT * FROM taikhoan WHERE TaiKhoan=?";
-        List<taikhoan> list = selectBySql(sql, TaiKhoan);
+        List<com.qlchtl.entity.TaiKhoan> list = selectBySql(sql, TaiKhoan);
         return list.size() > 0 ? list.get(0) : null;
     }
 
     @Override
-    public List<taikhoan> selectAll() {
+    public List<TaiKhoan> selectAll() {
         String sql="SELECT * FROM taikhoan";
         return selectBySql(sql);
 
     }
 
     @Override
-    protected List<taikhoan> selectBySql(String sql, Object... args) {
-        List<taikhoan> list = new ArrayList<>();
+    protected List<TaiKhoan> selectBySql(String sql, Object... args) {
+        List<TaiKhoan> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
                 rs = XJdbc.query(sql, args);
                 while(rs.next()){
-                    taikhoan entity=new taikhoan();
+                    TaiKhoan entity=new TaiKhoan();
                     entity.setMaTaiKhoan(rs.getString("MaTK"));
                     entity.setTaiKhoan(rs.getString("TaiKhoan"));
                     entity.setMatKhau(rs.getString("MatKhau"));
                     entity.setMaNhanVien(rs.getString("MaNV"));
+                    entity.setIsRole(rs.getInt("Role"));
                     list.add(entity);
                 }
             }

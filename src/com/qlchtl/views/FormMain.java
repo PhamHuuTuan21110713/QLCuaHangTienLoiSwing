@@ -4,6 +4,9 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.SanPham;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import java.awt.Color;
@@ -11,6 +14,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
+import java.util.List;
 
 public class FormMain extends javax.swing.JFrame {
 
@@ -110,8 +114,8 @@ public class FormMain extends javax.swing.JFrame {
         pnlAddNewPrd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblAddNewProd = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        pnlPromotionProd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        lblPromotionProd = new javax.swing.JLabel();
+        pnlAddToStore = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
+        lblAddToStore = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         ucStaff = new javax.swing.JPanel();
         pnlScrollStaff = new javax.swing.JPanel();
@@ -841,6 +845,11 @@ public class FormMain extends javax.swing.JFrame {
                 DetailProdFoundClick(evt);
             }
         });
+        btnViewProductFound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewProductFoundActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 102, 102));
@@ -937,7 +946,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnViewProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         ucProduct.add(myPanelBoxShadow4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 481, 231));
@@ -1027,45 +1036,45 @@ public class FormMain extends javax.swing.JFrame {
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/action-r.png"))); // NOI18N
         jLabel20.setText("jLabel20");
 
-        pnlPromotionProd.setBackground(new java.awt.Color(10, 200, 186));
-        pnlPromotionProd.setPreferredSize(new java.awt.Dimension(56, 56));
-        pnlPromotionProd.setShadowColor(new java.awt.Color(0, 110, 101));
-        pnlPromotionProd.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlAddToStore.setBackground(new java.awt.Color(10, 200, 186));
+        pnlAddToStore.setPreferredSize(new java.awt.Dimension(56, 56));
+        pnlAddToStore.setShadowColor(new java.awt.Color(0, 110, 101));
+        pnlAddToStore.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PromotionProdClick(evt);
+                AddToStoreClick(evt);
             }
         });
 
-        lblPromotionProd.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblPromotionProd.setForeground(new java.awt.Color(255, 255, 255));
-        lblPromotionProd.setText("V");
-        lblPromotionProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblPromotionProd.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblAddToStore.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblAddToStore.setForeground(new java.awt.Color(255, 255, 255));
+        lblAddToStore.setText("V");
+        lblAddToStore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAddToStore.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PromotionProdClick(evt);
+                AddToStoreClick(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlPromotionProdLayout = new javax.swing.GroupLayout(pnlPromotionProd);
-        pnlPromotionProd.setLayout(pnlPromotionProdLayout);
-        pnlPromotionProdLayout.setHorizontalGroup(
-            pnlPromotionProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPromotionProdLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlAddToStoreLayout = new javax.swing.GroupLayout(pnlAddToStore);
+        pnlAddToStore.setLayout(pnlAddToStoreLayout);
+        pnlAddToStoreLayout.setHorizontalGroup(
+            pnlAddToStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAddToStoreLayout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(lblPromotionProd)
+                .addComponent(lblAddToStore)
                 .addGap(19, 19, 19))
         );
-        pnlPromotionProdLayout.setVerticalGroup(
-            pnlPromotionProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPromotionProdLayout.createSequentialGroup()
+        pnlAddToStoreLayout.setVerticalGroup(
+            pnlAddToStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAddToStoreLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(lblPromotionProd)
+                .addComponent(lblAddToStore)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Promotions");
+        jLabel15.setText("Add product to Store");
 
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
@@ -1081,7 +1090,7 @@ public class FormMain extends javax.swing.JFrame {
                             .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(myPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(pnlPromotionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pnlAddToStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1102,7 +1111,7 @@ public class FormMain extends javax.swing.JFrame {
                         .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(myPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlPromotionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(pnlAddToStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(myPanel2Layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel15)))
@@ -1505,7 +1514,9 @@ public class FormMain extends javax.swing.JFrame {
         return a;
     }
 
-    private Runnable renderProdItem(){ 
+    SanPhamDao sanPhamDao = new SanPhamDao();
+    private Runnable renderProdItem(){
+        List<SanPham> listsp = sanPhamDao.selectAll();
         Component viewport = scpProduct.getViewport().getView();
         if (viewport instanceof JPanel) {
             scpProduct.setViewportView(null);
@@ -1520,8 +1531,8 @@ public class FormMain extends javax.swing.JFrame {
             public void run() {
                 int col = 0;
                 int row = 0;
-                for (int i = 0; i < 30; i++) {
-                    MyPanelBoxShadow pn = itpd.createItemProdComponent(i, col, row,"Code of product", "ahihi", "ahihi", "ahihi", "ahihi");
+                for (SanPham cd : listsp) {
+                    MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row,cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
                     pnl.add((Component) pn);
                     col++; 
                     if (col >= 3) { 
@@ -1553,7 +1564,14 @@ public class FormMain extends javax.swing.JFrame {
         lblStateStaffFound.setText(state);
         lblPhoneStaffFound.setText(phone);
     }
-    public void setProductSelected(String name, String price, String quantity) {
+    public void setProductSelected(String urlImage,String name, String price, String quantity) {
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+urlImage;
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+        imgProductFound.setIcon(scaledImageIcon);
         lblProductNameFound.setText(name);
         lblCodeProductFound.setText(idProductSelected);
         lblPriceProdFound.setText(price);
@@ -1640,9 +1658,9 @@ public class FormMain extends javax.swing.JFrame {
         
     }//GEN-LAST:event_AddNewProductClick
 
-    private void PromotionProdClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PromotionProdClick
+    private void AddToStoreClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddToStoreClick
         // TODO add your handling code here:
-    }//GEN-LAST:event_PromotionProdClick
+    }//GEN-LAST:event_AddToStoreClick
 
     private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
         // TODO add your handling code here:
@@ -1663,6 +1681,10 @@ public class FormMain extends javax.swing.JFrame {
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }//GEN-LAST:event_DetailProdFoundClick
+
+    private void btnViewProductFoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProductFoundActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewProductFoundActionPerformed
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1759,6 +1781,7 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblAddNewProd;
+    private javax.swing.JLabel lblAddToStore;
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblCodeStaffFound;
@@ -1771,7 +1794,6 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblPriceProdFound;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProductNameFound;
-    private javax.swing.JLabel lblPromotionProd;
     private javax.swing.JLabel lblQuantityProductFound;
     private javax.swing.JLabel lblRank;
     private javax.swing.JLabel lblShift;
@@ -1787,6 +1809,7 @@ public class FormMain extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow4;
     private javax.swing.JPanel pnlAccount;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
+    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddToStore;
     private com.qlchtl.views.MyControls.MyPanel pnlChange;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlHeaderStaff;
@@ -1795,7 +1818,6 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlProduct;
-    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlPromotionProd;
     private javax.swing.JPanel pnlScrollStaff;
     private com.qlchtl.views.MyControls.MyPanel pnlSelected;
     private javax.swing.JPanel pnlShift;

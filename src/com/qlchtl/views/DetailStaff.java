@@ -35,7 +35,7 @@ public class DetailStaff extends javax.swing.JFrame {
         cboRankStaff = new javax.swing.JComboBox<>();
         myPanel2 = new com.qlchtl.views.MyControls.MyPanel();
         myPanel3 = new com.qlchtl.views.MyControls.MyPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblAvatar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtBirthdayStaff = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -50,8 +50,13 @@ public class DetailStaff extends javax.swing.JFrame {
         rdoMale = new javax.swing.JRadioButton();
         rdoFemale = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        btnUpdateStaff = new com.qlchtl.views.MyControls.MyButton();
+        btnConfirm = new com.qlchtl.views.MyControls.MyButton();
         cboStateStaff = new javax.swing.JComboBox<>();
+        btnUpdateStaff1 = new com.qlchtl.views.MyControls.MyButton();
+        myPanel4 = new com.qlchtl.views.MyControls.MyPanel();
+        jLabel1 = new javax.swing.JLabel();
+        scpStaffSchedule = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,8 +125,8 @@ public class DetailStaff extends javax.swing.JFrame {
         myPanel3.setOpaque(true);
         myPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/staff.jpg"))); // NOI18N
-        myPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
+        lblAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/staff.jpg"))); // NOI18N
+        myPanel3.add(lblAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
 
         myPanel2.add(myPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 23, 137, 160));
 
@@ -207,13 +212,13 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel8.setText("State");
         myPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(661, 15, -1, -1));
 
-        btnUpdateStaff.setForeground(new java.awt.Color(30, 136, 56));
-        btnUpdateStaff.setText("Update");
-        btnUpdateStaff.setColorClick(new java.awt.Color(100, 227, 131));
-        btnUpdateStaff.setColorOver(new java.awt.Color(19, 173, 57));
-        btnUpdateStaff.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnUpdateStaff.setRadius(15);
-        myPanel2.add(btnUpdateStaff, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 87, 89, 43));
+        btnConfirm.setForeground(new java.awt.Color(30, 136, 56));
+        btnConfirm.setText("Confirm");
+        btnConfirm.setColorClick(new java.awt.Color(100, 227, 131));
+        btnConfirm.setColorOver(new java.awt.Color(19, 173, 57));
+        btnConfirm.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnConfirm.setRadius(15);
+        myPanel2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 89, 43));
 
         cboStateStaff.setBackground(new java.awt.Color(148, 209, 235));
         cboStateStaff.setEditable(true);
@@ -223,6 +228,61 @@ public class DetailStaff extends javax.swing.JFrame {
         cboStateStaff.setEnabled(false);
         myPanel2.add(cboStateStaff, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 92, -1));
 
+        btnUpdateStaff1.setForeground(new java.awt.Color(30, 136, 56));
+        btnUpdateStaff1.setText("Update");
+        btnUpdateStaff1.setColorClick(new java.awt.Color(100, 227, 131));
+        btnUpdateStaff1.setColorOver(new java.awt.Color(19, 173, 57));
+        btnUpdateStaff1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnUpdateStaff1.setRadius(15);
+        myPanel2.add(btnUpdateStaff1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 87, 89, 43));
+
+        myPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        myPanel4.setRoundBottomLeft(20);
+        myPanel4.setRoundBottomRight(20);
+        myPanel4.setRoundTopLeft(20);
+        myPanel4.setRoundTopRight(20);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("Employee schedule");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scpStaffSchedule.setViewportView(jTable1);
+
+        javax.swing.GroupLayout myPanel4Layout = new javax.swing.GroupLayout(myPanel4);
+        myPanel4.setLayout(myPanel4Layout);
+        myPanel4Layout.setHorizontalGroup(
+            myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myPanel4Layout.createSequentialGroup()
+                .addGroup(myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(myPanel4Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(myPanel4Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(scpStaffSchedule, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        myPanel4Layout.setVerticalGroup(
+            myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myPanel4Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(scpStaffSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -231,7 +291,8 @@ public class DetailStaff extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(myPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
-                    .addComponent(myPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(myPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(myPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -241,7 +302,9 @@ public class DetailStaff extends javax.swing.JFrame {
                 .addComponent(myPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(myPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(myPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -296,7 +359,8 @@ public class DetailStaff extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.qlchtl.views.MyControls.MyButton btnUpdateStaff;
+    private com.qlchtl.views.MyControls.MyButton btnConfirm;
+    private com.qlchtl.views.MyControls.MyButton btnUpdateStaff1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboRankStaff;
     private javax.swing.JComboBox<String> cboStateStaff;
@@ -309,11 +373,15 @@ public class DetailStaff extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblAvatar;
     private com.qlchtl.views.MyControls.MyPanel myPanel1;
     private com.qlchtl.views.MyControls.MyPanel myPanel2;
     private com.qlchtl.views.MyControls.MyPanel myPanel3;
+    private com.qlchtl.views.MyControls.MyPanel myPanel4;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
+    private javax.swing.JScrollPane scpStaffSchedule;
     private javax.swing.JTextField txtAddressStaff;
     private javax.swing.JTextField txtBirthdayStaff;
     private javax.swing.JTextField txtCodeStaff;

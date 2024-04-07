@@ -4,8 +4,10 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.TaiKhoanDao;
-import com.qlchtl.entity.taikhoan;
+import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.TaiKhoan;
 import com.qlchtl.utils.MsgBox;
 import java.awt.Color;
 import javax.swing.JFrame;
@@ -205,6 +207,11 @@ public class LogIn extends javax.swing.JFrame {
                 btnLogginMouseExited(evt);
             }
         });
+        btnLoggin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogginActionPerformed(evt);
+            }
+        });
         myPanel1.add(btnLoggin, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 200, 50));
 
         lblForgetPass.setBackground(new java.awt.Color(47, 41, 91));
@@ -268,6 +275,10 @@ public class LogIn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnShowPassMouseClicked
 
+    private void btnLogginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -302,31 +313,51 @@ public class LogIn extends javax.swing.JFrame {
             }
         });
     }
-     TaiKhoanDao dao = new TaiKhoanDao();
+     TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
+     NhanVienDao nhanVienDao = new NhanVienDao();
+
 
     void dangNhap() {
         String taikhoan = txtAccount.getText();
-        String matKhau = new String(txtPassword.getPassword()); 
-        taikhoan acc = dao.selectById(taikhoan);
-        if(acc == null){
-            MsgBox.alert(this, "Sai tên đăng nhập!");
-        }
-        else if(!matKhau.equals(acc.getMatKhau())){
-            MsgBox.alert(this, "Sai mật khẩu!");
-        }
-        else if(acc.getTaiKhoan().equals("admin")){
-            this.dispose();
-            FormMain formMenuAdmin = new FormMain(this);
-            formMenuAdmin.setVisible(true);
-        }
-        else{
-            JFHoaDon formNhanVien = new JFHoaDon();
-            formNhanVien.setVisible(true);
-            this.dispose();
+        String matKhau = new String(txtPassword.getPassword());
+
+        if (taikhoan.isEmpty() || matKhau.isEmpty()) {
+            MsgBox.alert(this, "Vui lòng nhập tài khoản và mật khẩu.");
+        } else {
+            TaiKhoan acc = taiKhoanDao.selectById(taikhoan);
+
+            if(acc == null) {
+                MsgBox.alert(this, "Sai tên đăng nhập!");
+            } else {
+                String manv = acc.getMaNhanVien();
+
+                if(manv == null || manv.isEmpty()) {
+                    MsgBox.alert(this, "Mã nhân viên này không tồn tại");
+                } else {
+                    NhanVien nhanVien = nhanVienDao.selectById(manv);
+
+                    if(!matKhau.equals(acc.getMatKhau())) {
+                        MsgBox.alert(this, "Sai mật khẩu!");
+                    } else if(nhanVien == null) {
+                        MsgBox.alert(this, "Tài khoản nhân viên không tồn tại!");
+                    } else if(!nhanVien.isTrangThai()) {
+                        MsgBox.alert(this, "Tài khoản nhân viên đã bị khóa, vui lòng liên hệ admin biết thêm thông tin!");
+                    } else if(acc.getIsRole() == 1) {
+                        this.dispose();
+                        FormMain formMenuAdmin = new FormMain(this);
+                        formMenuAdmin.setVisible(true);
+                    } else {
+                        JFHoaDon formNhanVien = new JFHoaDon();
+                        formNhanVien.setVisible(true);
+                        this.dispose();
+                    }
+                }
+            }
         }
     }
 
-    
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnLoggin;
