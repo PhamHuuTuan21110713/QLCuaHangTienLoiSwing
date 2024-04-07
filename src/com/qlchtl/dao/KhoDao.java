@@ -30,6 +30,12 @@ public class KhoDao extends qlchSysDao<Kho,String>{
                 kho.getMaSP());
     }
 
+    public void updateSL(Kho kho) {
+        String sql = "UPDATE kho SET SoLuong = ? WHERE MaSP = ?";
+        XJdbc.update(sql,
+                kho.getSoLuong(),
+                kho.getMaSP());
+    }
     @Override
     public void delete(String id) {
 

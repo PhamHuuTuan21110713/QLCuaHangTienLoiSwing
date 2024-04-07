@@ -26,6 +26,7 @@ public class FormMain extends javax.swing.JFrame {
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
+
     public static String maSp;
 
 
@@ -897,7 +898,7 @@ public class FormMain extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel16.setText("Quantity:");
+        jLabel16.setText("State:");
 
         lblQuantityProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblQuantityProductFound.setForeground(new java.awt.Color(102, 102, 102));

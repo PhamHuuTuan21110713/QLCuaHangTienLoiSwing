@@ -12,10 +12,19 @@ import com.qlchtl.entity.ChiTietKhuyenMai;
 import com.qlchtl.entity.ChuongTrinhKhuyenMai;
 import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.SanPham;
+import com.qlchtl.utils.DateConverter;
+import com.qlchtl.utils.MsgBox;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 import javax.swing.JFrame;
 
 /**
@@ -28,11 +37,13 @@ public class DetailProduct extends javax.swing.JFrame  {
      * Creates new form DetailProduct
      */
     private String idProduct;
+    public  String selectedPromotion ;
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
     ChiTietKhuyenMaiDao ctkmDao = new ChiTietKhuyenMaiDao();
     ChuongTrinhKhuyenMaiDao chuongTrinhKhuyenMaiDao = new ChuongTrinhKhuyenMaiDao();
+
 
 
     SanPham sp = sanPhamDao.selectById(FormMain.maSp);
@@ -311,13 +322,30 @@ public class DetailProduct extends javax.swing.JFrame  {
         jLabel12.setText("Code program");
 
 
-        String[] promotionNames = new String[chuongTrinhKhuyenMai.size()];
-        for (int i = 0; i < chuongTrinhKhuyenMai.size(); i++) {
-            promotionNames[i] = chuongTrinhKhuyenMai.get(i).getTenChuongTrinh(); // Giả sử getTenChuongTrinh() là phương thức để lấy tên chương trình
+
+
+        ChiTietKhuyenMaiDao chiTietKhuyenMaiDao = new ChiTietKhuyenMaiDao();
+        List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiDao.selectAll();
+
+        Map<String, ChiTietKhuyenMai> promotionMap = new HashMap<>();
+        for (ChiTietKhuyenMai promotion : chiTietKhuyenMai) {
+            promotionMap.put(promotion.getMaCT(), promotion);
         }
-        cboCodePromotionProd.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNames));
+
+        Set<String> uniquePromotionNames = new HashSet<>();
+        uniquePromotionNames.add("None");
+        for (ChiTietKhuyenMai promotion : chiTietKhuyenMai) {
+            uniquePromotionNames.add(promotion.getMaCT());
+        }
+        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+
+        cboCodePromotionProd.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
+
+
+
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
         jLabel13.setText("Start day");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -327,16 +355,58 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtStartDayProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtStartDayProd.setForeground(new java.awt.Color(102, 102, 102));
 
-//        ChuongTrinhKhuyenMai chuongTrinhKM = chuongTrinhKhuyenMaiDao.selectByName();
 
-        txtStartDayProd.setText("1");
+        txtStartDayProd.setText("0");
         txtStartDayProd.setBorder(null);
 
         txtEndDayProd.setBackground(new java.awt.Color(240, 240, 240));
         txtEndDayProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtEndDayProd.setForeground(new java.awt.Color(102, 102, 102));
-        txtEndDayProd.setText("2024/11/20");
+        txtEndDayProd.setText("0");
         txtEndDayProd.setBorder(null);
+
+
+
+
+
+
+        String initialPromotionCode;
+        if (ctkm != null) {
+            initialPromotionCode = ctkm.getMaCT();
+        } else {
+            initialPromotionCode = "None";
+        }
+        cboCodePromotionProd.setSelectedItem(initialPromotionCode);
+
+        ItemListener itemListener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedPromotionCode = (String) e.getItem();
+                    if (selectedPromotionCode != null) {
+                        if (selectedPromotionCode.equals("None")) {
+                            txtStartDayProd.setText("0");
+                            txtEndDayProd.setText("0");
+                            txtPromotionProd.setText("None");
+                        } else {
+                            ChiTietKhuyenMai selectedPromotion = promotionMap.get(selectedPromotionCode);
+                            if (selectedPromotion != null) {
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                String formattedDateStart = String.valueOf(selectedPromotion.getNgayApDung().format(formatter));
+                                txtStartDayProd.setText(formattedDateStart);
+
+                                String formattedDateEnd = String.valueOf(selectedPromotion.getNgayKetThuc().format(formatter));
+                                txtEndDayProd.setText(formattedDateEnd);
+                                txtPromotionProd.setText(selectedPromotion.getMaCT());
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        cboCodePromotionProd.addItemListener(itemListener);
+        itemListener.itemStateChanged(new ItemEvent(cboCodePromotionProd, ItemEvent.SELECTED, initialPromotionCode, ItemEvent.SELECTED));
 
         javax.swing.GroupLayout myPanel1Layout = new javax.swing.GroupLayout(myPanel1);
         myPanel1.setLayout(myPanel1Layout);
@@ -429,6 +499,7 @@ public class DetailProduct extends javax.swing.JFrame  {
                 ConfirmClick(evt);
             }
         });
+
 
         btnCancelProd.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelProd.setText("Cancel");
@@ -536,6 +607,7 @@ public class DetailProduct extends javax.swing.JFrame  {
 
     private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
         // TODO add your handling code here:
+ 
         setButton(false);
         setTextField(false);
     }//GEN-LAST:event_ConfirmClick
@@ -611,4 +683,107 @@ public class DetailProduct extends javax.swing.JFrame  {
     private javax.swing.JTextField txtStatePrd;
     private javax.swing.JTextField txtSupplier;
     // End of variables declaration//GEN-END:variables
+
+
+    Kho getKhoFromKho() {
+        Kho kho = new Kho();
+        kho.setMaSP(txtCodePrd.getText());
+        int soLuong = 0;
+        try {
+            soLuong = Integer.parseInt(txtQuantityProd.getText());
+            kho.setSoLuong(soLuong);
+        } catch (NumberFormatException e) {
+            MsgBox.alert(this, "Số lượng hàng không hợp lệ!");
+        }
+
+        return kho;
+    }
+
+    ChiTietKhuyenMai getChiTietKhuyenMai(){
+        ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
+        ctkm.setMaSP(txtCodePrd.getText());
+        ctkm.setMaCT(txtPromotionProd.getText());
+        return ctkm;
+    }
+
+
+    SanPham getFormSanPham() {
+        SanPham sp = new SanPham();
+        sp.setMaSP(txtCodePrd.getText());
+        sp.setTenSP(txtNameProduct.getText());
+        sp.setNoiSanXuat(txtPlacePrd.getText());
+        sp.setTrangThai(txtStatePrd.getText());
+        sp.setTienGoc(txtRootPriceProd.getText());
+        sp.setTienThanhToan(txtPricePrd.getText());
+        String inputDate = txtImportDatePrd.getText();
+        if (isValidDate(inputDate, "MM/dd/yyyy")) {
+            LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            sp.setNgayNhapHang(convertedDate);
+        } else {
+            MsgBox.alert(this, "Ngày nhập hàng không hợp lệ!");
+        }
+        sp.setMaNCC(txtSupplier.getText());
+        return sp;
+    }
+    public static boolean isValidDate(String inputDate, String format) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            LocalDate.parse(inputDate, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+
+    void fillTable(){
+        SanPham sp = sanPhamDao.selectById(FormMain.maSp);
+        txtCodePrd.setText(sp.getMaSP());
+        txtNameProduct.setText(sp.getTenSP());
+        txtPlacePrd.setText(sp.getNoiSanXuat());
+        txtStatePrd.setText(sp.getTrangThai());
+        txtRootPriceProd.setText(sp.getTienGoc());
+        txtPricePrd.setText(sp.getTienThanhToan());
+        String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        txtImportDatePrd.setText(importDate);
+        txtSupplier.setText(sp.getMaNCC());
+
+
+        Kho kho = khoDAo.selectById(FormMain.maSp);
+        kho.setMaSP(txtCodePrd.getText());
+
+        int soLuong = Integer.parseInt(txtQuantityProd.getText());
+        kho.setSoLuong(soLuong);
+
+        ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
+        ctkm.setMaSP(txtCodePrd.getText());
+        ctkm.setMaCT(txtPromotionProd.getText());
+
+
+    }
+
+    void update(){
+        SanPham modelsp = getFormSanPham();
+        Kho modelKho = getKhoFromKho();
+        ChiTietKhuyenMai modelCtkm = getChiTietKhuyenMai();
+        try {
+
+            sanPhamDao.update(modelsp);
+            khoDAo.updateSL(modelKho);
+
+            if (txtPromotionProd.getText().equals("None")) {
+                ctkmDao.delete(txtCodePrd.getText(),txtPromotionProd.getText());
+            }
+            else{
+                ctkmDao.updateMACT(modelCtkm);
+            }
+
+            this.fillTable();
+            MsgBox.alert(this, "Cập nhật thành công!");
+        }
+        catch (Exception e) {
+            MsgBox.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
 }
