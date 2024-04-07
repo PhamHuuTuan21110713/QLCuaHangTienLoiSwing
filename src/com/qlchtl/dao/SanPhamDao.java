@@ -40,6 +40,20 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
                 sanPham.getMaSP());
     }
 
+    public void updatekHinh(SanPham sanPham) {
+        String sql = "UPDATE sanpham SET TenSP = ?, NoiSanXuat = ?, TrangThai = ?, TienGoc = ?, TienThanhToan = ?, " +
+                "NgayNhapHang = ?, MaNCC = ? WHERE MaSP = ?";
+        XJdbc.update(sql,
+                sanPham.getTenSP(),
+                sanPham.getNoiSanXuat(),
+                sanPham.getTrangThai(),
+                sanPham.getTienGoc(),
+                sanPham.getTienThanhToan(),
+                sanPham.getNgayNhapHang(),
+                sanPham.getMaNCC(),
+                sanPham.getMaSP());
+    }
+
     @Override
     public void delete(String maSP) {
         String sql = "DELETE FROM sanpham WHERE MaSP = ?";
