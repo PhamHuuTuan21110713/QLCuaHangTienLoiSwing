@@ -9,6 +9,11 @@ public class Kho {
     public Kho() {
     }
 
+    public Kho(String maSP, int soLuong) {
+        this.maSP = maSP;
+        this.soLuong = soLuong;
+    }
+
     public Kho(String maCH, String maSP, String tenKho, int soLuong) {
         this.maCH = maCH;
         this.maSP = maSP;

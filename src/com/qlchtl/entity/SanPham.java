@@ -17,6 +17,17 @@ public class SanPham {
 
     public SanPham(){}
 
+    public SanPham(String maSP, String tenSP, String noiSanXuat, String trangThai, String tienGoc, String tienThanhToan, LocalDate ngayNhapHang, String maNCC) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.noiSanXuat = noiSanXuat;
+        this.trangThai = trangThai;
+        this.tienGoc = tienGoc;
+        this.tienThanhToan = tienThanhToan;
+        this.ngayNhapHang = ngayNhapHang;
+        this.maNCC = maNCC;
+    }
+
     public SanPham(String maSP, String tenSP, String noiSanXuat, String trangThai, String tienGoc, String tienThanhToan, LocalDate ngayNhapHang, String maNCC, String img) {
         this.maSP = maSP;
         this.tenSP = tenSP;

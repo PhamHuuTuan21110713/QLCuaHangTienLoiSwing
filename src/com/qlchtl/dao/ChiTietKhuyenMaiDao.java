@@ -29,6 +29,15 @@ public class ChiTietKhuyenMaiDao {
                 entity.getMaCT());
     }
 
+
+
+    public void updateMACT(ChiTietKhuyenMai entity) {
+        String sql = "UPDATE chitietkhuyenmai SET  MaCT=? WHERE MaSP=? ";
+        XJdbc.update(sql,
+                entity.getMaCT(),
+                entity.getMaSP());
+    }
+
     public void delete(String maSP, String maCT) {
         String sql = "DELETE FROM chitietkhuyenmai WHERE MaSP=? AND MaCT=?";
         XJdbc.update(sql, maSP, maCT);
@@ -36,6 +45,13 @@ public class ChiTietKhuyenMaiDao {
 
     public ChiTietKhuyenMai selectById(String maSP) {
         String sql = "SELECT * FROM chitietkhuyenmai WHERE MaSP=?";
+        List<ChiTietKhuyenMai> list = selectBySql(sql, maSP);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+
+    public ChiTietKhuyenMai selectByMaCT(String maSP) {
+        String sql = "SELECT * FROM chitietkhuyenmai WHERE MaCT=?";
         List<ChiTietKhuyenMai> list = selectBySql(sql, maSP);
         return list.size() > 0 ? list.get(0) : null;
     }

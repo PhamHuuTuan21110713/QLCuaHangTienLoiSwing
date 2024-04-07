@@ -19,6 +19,11 @@ public class ChiTietKhuyenMai {
     public ChiTietKhuyenMai() {
     }
 
+    public ChiTietKhuyenMai(String maSP,String maCT) {
+        this.maSP = maSP;
+        this.maCT = maCT;
+    }
+
     public ChiTietKhuyenMai(String maSP, String maCT, LocalDate ngayApDung, LocalDate ngayKetThuc) {
         this.maSP = maSP;
         this.maCT = maCT;
