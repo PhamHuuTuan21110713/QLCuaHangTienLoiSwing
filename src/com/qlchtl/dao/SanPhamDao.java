@@ -59,6 +59,13 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
         return selectBySql(sql);
     }
 
+
+    public  SanPham spLIMIT (){
+        String sql = "SELECT * FROM sanpham LIMIT 1";
+        List<SanPham> list = selectBySql(sql);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
     protected List<SanPham> selectBySql(String sql, Object... args) {
         List<SanPham> list = new ArrayList<>();
         try (ResultSet rs = XJdbc.query(sql, args)) {
