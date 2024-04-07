@@ -624,7 +624,7 @@
                               <Component id="iconAccount" min="-2" pref="37" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="lblAccount" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="84" max="32767" attributes="0"/>
+                              <EmptySpace pref="82" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1053,7 +1053,7 @@
                                   <Component id="btnViewProductFound" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   <Component id="btnDeleteProdFound" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="33" max="32767" attributes="0"/>
+                              <EmptySpace pref="27" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1255,7 +1255,7 @@
                                           <Component id="myPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                              <Component id="pnlPromotionProd" min="-2" max="-2" attributes="0"/>
+                                              <Component id="pnlAddToStore" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jLabel15" max="32767" attributes="0"/>
                                           </Group>
@@ -1282,7 +1282,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="pnlPromotionProd" min="-2" max="-2" attributes="0"/>
+                                              <Component id="pnlAddToStore" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -1429,7 +1429,7 @@
                         <Property name="text" type="java.lang.String" value="jLabel20"/>
                       </Properties>
                     </Component>
-                    <Container class="com.qlchtl.views.MyControls.MyPanelBoxShadow" name="pnlPromotionProd">
+                    <Container class="com.qlchtl.views.MyControls.MyPanelBoxShadow" name="pnlAddToStore">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ba" green="c8" red="a" type="rgb"/>
@@ -1442,7 +1442,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PromotionProdClick"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddToStoreClick"/>
                       </Events>
 
                       <Layout>
@@ -1450,7 +1450,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace pref="21" max="32767" attributes="0"/>
-                                  <Component id="lblPromotionProd" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAddToStore" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1459,14 +1459,14 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                  <Component id="lblPromotionProd" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAddToStore" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="10" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JLabel" name="lblPromotionProd">
+                        <Component class="javax.swing.JLabel" name="lblAddToStore">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="24" style="1"/>
@@ -1480,7 +1480,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PromotionProdClick"/>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddToStoreClick"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -1493,7 +1493,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Promotions"/>
+                        <Property name="text" type="java.lang.String" value="Add product to Store"/>
                       </Properties>
                     </Component>
                   </SubComponents>

@@ -79,8 +79,4 @@ public class XJdbc {
             throw new RuntimeException(e);
         }
     }
-
-    
-
-
 }
