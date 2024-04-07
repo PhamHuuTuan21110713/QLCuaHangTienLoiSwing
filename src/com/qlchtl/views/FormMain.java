@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.qlchtl.views;
 
 import java.awt.Component;
@@ -12,42 +8,33 @@ import javax.swing.SwingUtilities;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
-import com.qlchtl.views.MyControls.MyButton;
-import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.MyControls.MyScrollBar;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
-import jdk.jfr.Frequency;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
-import org.w3c.dom.css.RGBColor;
-/**
- *
- * @author Dell
- */
+import com.qlchtl.views.SubComponent.ItemProduct;
+import com.qlchtl.views.SubComponent.ItemStaff;
+import java.util.List;
+
 public class FormMain extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormMain
-     */
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
+    
+    public String getIdProductSelected(){
+        return this.idProductSelected;
+    }
+    public void setIdProductSelected(String a) {
+        this.idProductSelected = a;
+    }
+    
+    public String getIdStaffSelected(){
+        return this.idStaffSelected;
+    }
+    public void setIdStaffSelected(String a) {
+        this.idStaffSelected = a;
+    }
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
@@ -127,8 +114,8 @@ public class FormMain extends javax.swing.JFrame {
         pnlAddNewPrd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblAddNewProd = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        pnlPromotionProd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        lblPromotionProd = new javax.swing.JLabel();
+        pnlAddToStore = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
+        lblAddToStore = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         ucStaff = new javax.swing.JPanel();
         pnlScrollStaff = new javax.swing.JPanel();
@@ -959,7 +946,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnViewProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         ucProduct.add(myPanelBoxShadow4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 481, 231));
@@ -1049,45 +1036,45 @@ public class FormMain extends javax.swing.JFrame {
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/action-r.png"))); // NOI18N
         jLabel20.setText("jLabel20");
 
-        pnlPromotionProd.setBackground(new java.awt.Color(10, 200, 186));
-        pnlPromotionProd.setPreferredSize(new java.awt.Dimension(56, 56));
-        pnlPromotionProd.setShadowColor(new java.awt.Color(0, 110, 101));
-        pnlPromotionProd.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlAddToStore.setBackground(new java.awt.Color(10, 200, 186));
+        pnlAddToStore.setPreferredSize(new java.awt.Dimension(56, 56));
+        pnlAddToStore.setShadowColor(new java.awt.Color(0, 110, 101));
+        pnlAddToStore.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PromotionProdClick(evt);
+                AddToStoreClick(evt);
             }
         });
 
-        lblPromotionProd.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblPromotionProd.setForeground(new java.awt.Color(255, 255, 255));
-        lblPromotionProd.setText("V");
-        lblPromotionProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblPromotionProd.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblAddToStore.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblAddToStore.setForeground(new java.awt.Color(255, 255, 255));
+        lblAddToStore.setText("V");
+        lblAddToStore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAddToStore.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PromotionProdClick(evt);
+                AddToStoreClick(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlPromotionProdLayout = new javax.swing.GroupLayout(pnlPromotionProd);
-        pnlPromotionProd.setLayout(pnlPromotionProdLayout);
-        pnlPromotionProdLayout.setHorizontalGroup(
-            pnlPromotionProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPromotionProdLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlAddToStoreLayout = new javax.swing.GroupLayout(pnlAddToStore);
+        pnlAddToStore.setLayout(pnlAddToStoreLayout);
+        pnlAddToStoreLayout.setHorizontalGroup(
+            pnlAddToStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAddToStoreLayout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(lblPromotionProd)
+                .addComponent(lblAddToStore)
                 .addGap(19, 19, 19))
         );
-        pnlPromotionProdLayout.setVerticalGroup(
-            pnlPromotionProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPromotionProdLayout.createSequentialGroup()
+        pnlAddToStoreLayout.setVerticalGroup(
+            pnlAddToStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAddToStoreLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(lblPromotionProd)
+                .addComponent(lblAddToStore)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Promotions");
+        jLabel15.setText("Add product to Store");
 
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
@@ -1103,7 +1090,7 @@ public class FormMain extends javax.swing.JFrame {
                             .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(myPanel2Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(pnlPromotionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pnlAddToStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1124,7 +1111,7 @@ public class FormMain extends javax.swing.JFrame {
                         .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(myPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlPromotionProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(pnlAddToStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(myPanel2Layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel15)))
@@ -1485,390 +1472,7 @@ public class FormMain extends javax.swing.JFrame {
         scrbstaff.setForeground(new Color(24,145,143));
         scpStaff.setVerticalScrollBar(scrbstaff);
     }    
-    
-    private MyPanelBoxShadow createItemStaffComponent(Integer i,int numcol, int numrow,String code,String name,String gender, String state,String phone) {
-        
-        MyPanelBoxShadow  pnlItemStaff = new MyPanelBoxShadow();
-        pnlItemStaff.setBackground(new java.awt.Color(255, 255, 255));
-        pnlItemStaff.setShadowSize(3);
-        pnlItemStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
-            }
-        });
-        
-        MyPanelBoxShadow pnlAvatarStaff = new MyPanelBoxShadow();
-        pnlAvatarStaff.setPreferredSize(new java.awt.Dimension(74, 74));
-        pnlAvatarStaff.setTypeShape(java.lang.Boolean.TRUE);
-        pnlAvatarStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
-            }
-        });
-        
-        MyPanel pnlStateStaff = new MyPanel();
-        if(state == "0"){
-            pnlStateStaff.setBackground(new java.awt.Color(230, 30, 80));
-        } else if(state == "1"){
-             pnlStateStaff.setBackground(new java.awt.Color(52, 235, 146));
-        }
-        
-        pnlStateStaff.setPreferredSize(new java.awt.Dimension(15, 15));
-        pnlStateStaff.setRoundBottomLeft(15);
-        pnlStateStaff.setRoundBottomRight(15);
-        pnlStateStaff.setRoundTopLeft(15);
-        pnlStateStaff.setRoundTopRight(15);
-        
-        javax.swing.GroupLayout pnlStateStaffLayout = new javax.swing.GroupLayout(pnlStateStaff);
-        pnlStateStaff.setLayout(pnlStateStaffLayout);
-        pnlStateStaffLayout.setHorizontalGroup(
-            pnlStateStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
-        pnlStateStaffLayout.setVerticalGroup(
-            pnlStateStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
-        );
 
-        javax.swing.GroupLayout pnlAvatarStaffLayout = new javax.swing.GroupLayout(pnlAvatarStaff);
-        pnlAvatarStaff.setLayout(pnlAvatarStaffLayout);
-        pnlAvatarStaffLayout.setHorizontalGroup(
-            pnlAvatarStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAvatarStaffLayout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(pnlStateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
-        );
-        pnlAvatarStaffLayout.setVerticalGroup(
-            pnlAvatarStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAvatarStaffLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlStateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        JLabel lblNameStaff = new JLabel();
-        lblNameStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblNameStaff.setForeground(new java.awt.Color(51, 51, 51));
-        lblNameStaff.setText(name + i.toString());
-        lblNameStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
-            }
-        });
-        
-        JLabel lblCodeStaff = new JLabel();
-        lblCodeStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCodeStaff.setForeground(new java.awt.Color(51, 51, 51));
-        lblCodeStaff.setText(code);
-        lblCodeStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
-            }
-        });
-        
-        JLabel lblPhoneStaff = new JLabel();
-        lblPhoneStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPhoneStaff.setForeground(new java.awt.Color(51, 51, 51));
-        lblPhoneStaff.setText(phone);
-        lblPhoneStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
-            }
-        });
-        
-        JLabel lblPhoneStaff1 = new JLabel();
-        lblPhoneStaff1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPhoneStaff1.setForeground(new java.awt.Color(51, 51, 51));
-        lblPhoneStaff1.setText(gender);
-        lblPhoneStaff1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
-            }
-        });
-        
-        MyPanelBoxShadow pnlDetailStaff = new MyPanelBoxShadow();
-        pnlDetailStaff.setBackground(new java.awt.Color(24, 145, 143));
-        pnlDetailStaff.setPreferredSize(new java.awt.Dimension(40, 40));
-        pnlDetailStaff.setShadowColor(new java.awt.Color(24, 145, 143));
-        pnlDetailStaff.setShadowOpacity(0.8F);
-        pnlDetailStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DetailStaffClick(evt,code);
-            }
-        });
-
-        JLabel lblDetailStaff = new JLabel();
-        lblDetailStaff.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblDetailStaff.setForeground(new java.awt.Color(255, 255, 255));
-        lblDetailStaff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDetailStaff.setText(">");
-        lblDetailStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DetailStaffClick(evt,code);
-            }
-        });
-
-        javax.swing.GroupLayout pnlDetailStaffLayout = new javax.swing.GroupLayout(pnlDetailStaff);
-        pnlDetailStaff.setLayout(pnlDetailStaffLayout);
-        pnlDetailStaffLayout.setHorizontalGroup(
-            pnlDetailStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailStaffLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDetailStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        pnlDetailStaffLayout.setVerticalGroup(
-            pnlDetailStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetailStaffLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblDetailStaff)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-
-        MyPanelBoxShadow pnlDeleteStaff = new MyPanelBoxShadow();
-        pnlDeleteStaff.setBackground(new java.awt.Color(230, 30, 80));
-        pnlDeleteStaff.setPreferredSize(new java.awt.Dimension(40, 40));
-        pnlDeleteStaff.setShadowColor(new java.awt.Color(230, 30, 80));
-        pnlDeleteStaff.setShadowOpacity(0.8F);
-        pnlDeleteStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DeleteStaffClick(evt,code);
-            }
-        });
-
-        JLabel lblDeleteStaff = new JLabel();
-        lblDeleteStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblDeleteStaff.setForeground(new java.awt.Color(255, 255, 255));
-        lblDeleteStaff.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDeleteStaff.setText("X");
-        lblDeleteStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DeleteStaffClick(evt, code);
-            }
-        });
-
-        javax.swing.GroupLayout pnlDeleteStaffLayout = new javax.swing.GroupLayout(pnlDeleteStaff);
-        pnlDeleteStaff.setLayout(pnlDeleteStaffLayout);
-        pnlDeleteStaffLayout.setHorizontalGroup(
-            pnlDeleteStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDeleteStaffLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblDeleteStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlDeleteStaffLayout.setVerticalGroup(
-            pnlDeleteStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDeleteStaffLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblDeleteStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout pnlItemStaffLayout = new javax.swing.GroupLayout(pnlItemStaff);
-        pnlItemStaff.setLayout(pnlItemStaffLayout);
-        pnlItemStaffLayout.setHorizontalGroup(
-            pnlItemStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlItemStaffLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(pnlAvatarStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNameStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(lblCodeStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(lblPhoneStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
-                .addComponent(lblPhoneStaff1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(pnlDeleteStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlDetailStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
-        );
-        pnlItemStaffLayout.setVerticalGroup(
-            pnlItemStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlItemStaffLayout.createSequentialGroup()
-                .addGroup(pnlItemStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlItemStaffLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlAvatarStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
-                    .addGroup(pnlItemStaffLayout.createSequentialGroup()
-                        .addGroup(pnlItemStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlItemStaffLayout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addGroup(pnlItemStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNameStaff)
-                                    .addComponent(lblCodeStaff)
-                                    .addComponent(lblPhoneStaff)
-                                    .addComponent(lblPhoneStaff1)))
-                            .addGroup(pnlItemStaffLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(pnlItemStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pnlDeleteStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(pnlDetailStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 25, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        pnlItemStaff.setBounds((5+850)*numcol+5,(10+95)*numrow,850,95);
-        return pnlItemStaff;
-    }
-    
-    private MyPanelBoxShadow createItemProdComponent(int numcol, int numrow, String code, String name, String srcImg, String price, String quantity){
-        //Dung de khai bao cac items
-        MyPanelBoxShadow pnlItemProd_t = new MyPanelBoxShadow();
-        pnlItemProd_t.setBackground(new java.awt.Color(255, 255, 255));
-        pnlItemProd_t.setPreferredSize(new java.awt.Dimension(284, 200));
-        pnlItemProd_t.setShadowOpacity(0.2F);
-        
-        JLabel imgItemProd_t = new JLabel();
-        String imagePath = "/com/qlchtl/image/imageSanPham/"+srcImg;
-
-
-//        imgItemProd_t.setIcon(new javax.swing.ImageIcon(getClass().getResource(imagePath))); // NOI18N
-        // Lấy hình ảnh từ đường dẫn
-        java.net.URL imageURL = getClass().getResource(imagePath);
-        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
-
-// Thay đổi kích thước của hình ảnh
-        java.awt.Image originalImage = originalImageIcon.getImage();
-        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
-
-// Tạo ImageIcon từ hình ảnh đã thay đổi kích thước
-        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
-
-// Đặt hình ảnh vào JLabel hoặc nơi cần hiển thị
-        imgItemProd_t.setIcon(scaledImageIcon);
-
-
-
-
-        JLabel lblItemNameProd_t = new JLabel();
-        lblItemNameProd_t.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblItemNameProd_t.setText(name);
-        lblItemNameProd_t.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        JLabel dollaricon = new JLabel();
-        dollaricon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        dollaricon.setForeground(new java.awt.Color(10, 200, 186));
-        dollaricon.setText("$");
-
-        JLabel lblItemPriceProd_t = new JLabel();
-        lblItemPriceProd_t.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblItemPriceProd_t.setForeground(new java.awt.Color(10, 200, 186));
-        lblItemPriceProd_t.setText(price);
-
-        JLabel lblItemQuantityProd_t = new JLabel();
-        lblItemQuantityProd_t.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblItemQuantityProd_t.setForeground(new java.awt.Color(102, 102, 102));
-        lblItemQuantityProd_t.setText(quantity);
-
-        MyButton btnDetail = new MyButton();
-        btnDetail.setForeground(new java.awt.Color(255, 255, 255));
-        btnDetail.setText("Detail");
-        btnDetail.setBorderColor(new java.awt.Color(24, 145, 143));
-        btnDetail.setColor(new java.awt.Color(24, 145, 143));
-        btnDetail.setColorClick(new java.awt.Color(19, 120, 118));
-        btnDetail.setColorOver(new java.awt.Color(47, 173, 171));
-        btnDetail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDetail.setRadius(20);
-
-        //Bat su kien click cho items
-        pnlItemProd_t.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                idProductSelected = code;
-                setProductSelected("Current Name","Current Price", "Current Quantity");
-            }
-        });
-        imgItemProd_t.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                idProductSelected = code;
-                setProductSelected("Current Name","Current Price", "Current Quantity");
-            }
-        });
-        lblItemNameProd_t.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                idProductSelected = code;
-                setProductSelected("Current Name","Current Price", "Current Quantity");
-            }
-        });
-        
-        lblItemPriceProd_t.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                idProductSelected = code;
-                setProductSelected("Current Name","Current Price", "Current Quantity");
-            }
-        });
-        lblItemQuantityProd_t.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                idProductSelected = code;
-                setProductSelected("Current Name","Current Price", "Current Quantity");
-            }
-        });
-        btnDetail.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                DetailProduct dtpd = new DetailProduct(code);
-                dtpd.setVisible(true);
-                dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            }
-        });
-        
-        //Dat vi tri  cho items
-        javax.swing.GroupLayout pnlItemProdLayout = new javax.swing.GroupLayout(pnlItemProd_t);
-        pnlItemProd_t.setLayout(pnlItemProdLayout);
-        pnlItemProdLayout.setHorizontalGroup(
-            pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlItemProdLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlItemProdLayout.createSequentialGroup()
-                            .addComponent(imgItemProd_t, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlItemProdLayout.createSequentialGroup()
-                            .addComponent(lblItemNameProd_t, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(15, 15, 15)))
-                    .addGroup(pnlItemProdLayout.createSequentialGroup()
-                        .addGroup(pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblItemQuantityProd_t, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pnlItemProdLayout.createSequentialGroup()
-                                .addComponent(dollaricon, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblItemPriceProd_t, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
-        );
-        pnlItemProdLayout.setVerticalGroup(
-            pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlItemProdLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imgItemProd_t, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblItemNameProd_t)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlItemProdLayout.createSequentialGroup()
-                        .addGroup(pnlItemProdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dollaricon)
-                            .addComponent(lblItemPriceProd_t))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblItemQuantityProd_t))
-                    .addComponent(btnDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-    
-       pnlItemProd_t.setBounds((10+284)*numcol+5,(10+300)*numrow +10,284,300);
-       return pnlItemProd_t;
-    
-    }
-    
     private Runnable renderStaffItem() {
         Component viewport = scpStaff.getViewport().getView();
         if (viewport instanceof JPanel) {
@@ -1878,13 +1482,14 @@ public class FormMain extends javax.swing.JFrame {
         pnl.setLayout(null);
         pnl.setBackground(Color.white);
         pnl.setPreferredSize(new Dimension(scpStaff.getPreferredSize().width, 0));
+        ItemStaff itf = new ItemStaff(this);
         Runnable a = new Runnable() {
             @Override
             public void run() {
                 int col = 0;
                 int row = 0;
                 for (int i = 0; i < 30; i++) {
-                    MyPanelBoxShadow pn = createItemStaffComponent(i, col, row, "Code of product", "ahihi", "ahihi", "1", "ahihi");
+                    MyPanelBoxShadow pn = itf.createItemStaffComponent(i, col, row, "Code of product", "ahihi", "ahihi", "1", "ahihi");
                     pnl.add((Component) pn);
                     col++; 
                     if (col >= 1) { 
@@ -1920,15 +1525,14 @@ public class FormMain extends javax.swing.JFrame {
         pnl.setLayout(null);
         pnl.setBackground(Color.white);
         pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width,0));
+        ItemProduct itpd = new ItemProduct(this);
         Runnable a = new Runnable() {
             @Override
             public void run() {
                 int col = 0;
                 int row = 0;
-
-
                 for (SanPham cd : listsp) {
-                    MyPanelBoxShadow pn = createItemProdComponent(col, row,"Code of product", cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
+                    MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row,cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
                     pnl.add((Component) pn);
                     col++; 
                     if (col >= 3) { 
@@ -1952,16 +1556,22 @@ public class FormMain extends javax.swing.JFrame {
             }
         };
         return a;
-        
     }
     
-    private void setStaffFound(String name, String state, String phone) {
+    public void setStaffFound(String name, String state, String phone) {
         lblNameStaffFound.setText(name);
         lblCodeStaffFound.setText(this.idStaffSelected);
         lblStateStaffFound.setText(state);
         lblPhoneStaffFound.setText(phone);
     }
-    private void setProductSelected(String name, String price, String quantity) {
+    public void setProductSelected(String urlImage,String name, String price, String quantity) {
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+urlImage;
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+        imgProductFound.setIcon(scaledImageIcon);
         lblProductNameFound.setText(name);
         lblCodeProductFound.setText(idProductSelected);
         lblPriceProdFound.setText(price);
@@ -1992,22 +1602,7 @@ public class FormMain extends javax.swing.JFrame {
         }
         pnlChange.setLocation(0, (int)res.getLocation().y);
     }//GEN-LAST:event_menuItemHover
-
-    private void StaffItemClick(MouseEvent e, String code) {
-        this.idStaffSelected = code;
-        setStaffFound("Current Name", "Current state", "Current Phone");
-    }
-    
-    private void DeleteStaffClick(MouseEvent e, String i) {
-        this.idStaffSelected = i;
-        
-    }
-    
-    private void DetailStaffClick (MouseEvent e, String i) {
-        this.idStaffSelected = i;
-        
-    }
-    
+ 
     private void menuItemLeave(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemLeave
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItemLeave
@@ -2063,9 +1658,9 @@ public class FormMain extends javax.swing.JFrame {
         
     }//GEN-LAST:event_AddNewProductClick
 
-    private void PromotionProdClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PromotionProdClick
+    private void AddToStoreClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddToStoreClick
         // TODO add your handling code here:
-    }//GEN-LAST:event_PromotionProdClick
+    }//GEN-LAST:event_AddToStoreClick
 
     private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
         // TODO add your handling code here:
@@ -2186,6 +1781,7 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblAddNewProd;
+    private javax.swing.JLabel lblAddToStore;
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblCodeStaffFound;
@@ -2198,7 +1794,6 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblPriceProdFound;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProductNameFound;
-    private javax.swing.JLabel lblPromotionProd;
     private javax.swing.JLabel lblQuantityProductFound;
     private javax.swing.JLabel lblRank;
     private javax.swing.JLabel lblShift;
@@ -2214,6 +1809,7 @@ public class FormMain extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow4;
     private javax.swing.JPanel pnlAccount;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
+    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddToStore;
     private com.qlchtl.views.MyControls.MyPanel pnlChange;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlHeaderStaff;
@@ -2222,7 +1818,6 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlProduct;
-    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlPromotionProd;
     private javax.swing.JPanel pnlScrollStaff;
     private com.qlchtl.views.MyControls.MyPanel pnlSelected;
     private javax.swing.JPanel pnlShift;
