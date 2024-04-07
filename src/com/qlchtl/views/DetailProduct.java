@@ -37,7 +37,8 @@ public class DetailProduct extends javax.swing.JFrame  {
      * Creates new form DetailProduct
      */
     private String idProduct;
-    public  String selectedPromotion ;
+    public  String selectedCt ;
+
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
@@ -60,6 +61,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         this.setLocationRelativeTo(null);
         setButton(false);
         setTextField(false);
+        selectedCt = txtPromotionProd.getText();
     }
     
     private void setButton(Boolean state) {
@@ -607,7 +609,7 @@ public class DetailProduct extends javax.swing.JFrame  {
 
     private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
         // TODO add your handling code here:
- 
+ update();
         setButton(false);
         setTextField(false);
     }//GEN-LAST:event_ConfirmClick
@@ -716,8 +718,8 @@ public class DetailProduct extends javax.swing.JFrame  {
         sp.setTienGoc(txtRootPriceProd.getText());
         sp.setTienThanhToan(txtPricePrd.getText());
         String inputDate = txtImportDatePrd.getText();
-        if (isValidDate(inputDate, "MM/dd/yyyy")) {
-            LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        if (isValidDate(inputDate, "dd/MM/yyyy")) {
+            LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             sp.setNgayNhapHang(convertedDate);
         } else {
             MsgBox.alert(this, "Ngày nhập hàng không hợp lệ!");
@@ -744,7 +746,8 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtStatePrd.setText(sp.getTrangThai());
         txtRootPriceProd.setText(sp.getTienGoc());
         txtPricePrd.setText(sp.getTienThanhToan());
-        String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+
+        String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         txtImportDatePrd.setText(importDate);
         txtSupplier.setText(sp.getMaNCC());
 
@@ -762,20 +765,52 @@ public class DetailProduct extends javax.swing.JFrame  {
 
     }
 
+    ChiTietKhuyenMai getChiTietKhuyenMaiFull(){
+        ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
+        ctkm.setMaSP(txtCodePrd.getText());
+        ctkm.setMaCT(txtPromotionProd.getText());
+
+        String inputFormat = "dd/MM/yyyy";
+        String outputFormat = "yyyy/MM/dd";
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern(outputFormat);
+
+        String inputDate = txtStartDayProd.getText();
+        String convertedDate = DateConverter.convertDate(inputDate, inputFormat, outputFormat);
+        LocalDate startDate = LocalDate.parse(convertedDate, outputFormatter);
+        ctkm.setNgayApDung(startDate);
+
+        String inputDateEnd = txtEndDayProd.getText();
+        String convertedDateEnd = DateConverter.convertDate(inputDateEnd, inputFormat, outputFormat);
+        LocalDate endDate = LocalDate.parse(convertedDateEnd, outputFormatter);
+        ctkm.setNgayKetThuc(endDate);
+
+
+        return ctkm;
+    }
+
     void update(){
         SanPham modelsp = getFormSanPham();
         Kho modelKho = getKhoFromKho();
         ChiTietKhuyenMai modelCtkm = getChiTietKhuyenMai();
+        ChiTietKhuyenMai modelCtkmfull = getChiTietKhuyenMaiFull();
         try {
 
-            sanPhamDao.update(modelsp);
+            sanPhamDao.updatekHinh(modelsp);
             khoDAo.updateSL(modelKho);
-
-            if (txtPromotionProd.getText().equals("None")) {
-                ctkmDao.delete(txtCodePrd.getText(),txtPromotionProd.getText());
+            if(selectedCt.equals("None")){
+                ctkmDao.insert(modelCtkmfull);
+                System.out.println("a"+modelCtkmfull.getMaCT() + modelCtkmfull.getMaSP() + modelCtkmfull.getNgayApDung());
             }
             else{
-                ctkmDao.updateMACT(modelCtkm);
+
+                if (txtPromotionProd.getText().equals("None")) {
+                    ctkmDao.delete(txtCodePrd.getText(),ctkm.getMaCT());
+                    System.out.println(txtCodePrd.getText()+ txtPromotionProd.getText());
+                }
+                else{
+                    System.out.println(1);
+                    ctkmDao.updateMACT(modelCtkm);
+                }
             }
 
             this.fillTable();
