@@ -7,6 +7,7 @@ import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.SanPham;
+import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import java.awt.Color;
@@ -15,6 +16,9 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -602,7 +606,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAccount)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -836,26 +840,11 @@ public class FormMain extends javax.swing.JFrame {
         myPanelBoxShadow4.setShadowOpacity(0.2F);
         myPanelBoxShadow4.setShadowSize(10);
 
-
-        SanPham sp = sanPhamDao.spLIMIT();
-        Kho kho = khoDAo.selectById(sp.getMaSP());
-        maSp = sp.getMaSP();
-
-
-        String imagePath = "/com/qlchtl/image/imageSanPham/"+sp.getImg();
-        java.net.URL imageURL = getClass().getResource(imagePath);
-        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
-        java.awt.Image originalImage = originalImageIcon.getImage();
-        java.awt.Image scaledImage = originalImage.getScaledInstance(200, 170, java.awt.Image.SCALE_SMOOTH);
-        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
-
-
-
-        imgProductFound.setIcon(scaledImageIcon); // NOI18N
+        imgProductFound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/headphone.png"))); // NOI18N
         imgProductFound.setText("jLabel4");
 
         lblProductNameFound.setFont(new java.awt.Font("Corbel", 1, 18)); // NOI18N
-        lblProductNameFound.setText(sp.getTenSP());
+        lblProductNameFound.setText("Head Phone VGR Version 12");
 
         btnViewProductFound.setForeground(new java.awt.Color(255, 255, 255));
         btnViewProductFound.setText("View Detail");
@@ -882,7 +871,7 @@ public class FormMain extends javax.swing.JFrame {
 
         lblCodeProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCodeProductFound.setForeground(new java.awt.Color(102, 102, 102));
-        lblCodeProductFound.setText(sp.getMaSP());
+        lblCodeProductFound.setText("103122431");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(10, 200, 186));
@@ -894,20 +883,15 @@ public class FormMain extends javax.swing.JFrame {
 
         lblPriceProdFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPriceProdFound.setForeground(new java.awt.Color(10, 200, 186));
-        lblPriceProdFound.setText(sp.getTienGoc());
+        lblPriceProdFound.setText("12.000");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel16.setText("State:");
+        jLabel16.setText("Quantity:");
 
         lblQuantityProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblQuantityProductFound.setForeground(new java.awt.Color(102, 102, 102));
-        if(kho.getSoLuong()!=0){
-            lblQuantityProductFound.setText("Còn Hàng");
-        }
-        else{
-            lblQuantityProductFound.setText("Hết Hàng");
-        }
+        lblQuantityProductFound.setText("10");
 
         btnDeleteProdFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteProdFound.setText("Delete");
@@ -917,6 +901,11 @@ public class FormMain extends javax.swing.JFrame {
         btnDeleteProdFound.setColorOver(new java.awt.Color(232, 113, 122));
         btnDeleteProdFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDeleteProdFound.setRadius(15);
+        btnDeleteProdFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteProdFoundMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout myPanelBoxShadow4Layout = new javax.swing.GroupLayout(myPanelBoxShadow4);
         myPanelBoxShadow4.setLayout(myPanelBoxShadow4Layout);
@@ -1566,7 +1555,7 @@ public class FormMain extends javax.swing.JFrame {
                 int row = 0;
                 int size = 0;
                 for (SanPham cd : listsp) {
-                    if(!cd.getTrangThai().equals("10")) {
+                    if(!cd.getTrangThai().equals("0")) {
                         Kho kho = khoDAo.selectById(cd.getMaSP());
                         size++;
                         MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row, cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), String.valueOf(kho.getSoLuong()));
@@ -1751,6 +1740,11 @@ public class FormMain extends javax.swing.JFrame {
     private void btnViewProductFoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProductFoundActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewProductFoundActionPerformed
+
+    private void btnDeleteProdFoundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteProdFoundMouseClicked
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_btnDeleteProdFoundMouseClicked
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1900,4 +1894,25 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel ucShift;
     private javax.swing.JPanel ucStaff;
     // End of variables declaration//GEN-END:variables
+
+
+    SanPham getFormSanPham() {
+        SanPham sp = new SanPham();
+        sp.setMaSP(lblCodeProductFound.getText());
+        sp.setTrangThai("0");
+        return sp;
+
+    }
+
+    void delete() {
+        SanPham sp = getFormSanPham();
+        try {
+            sanPhamDao.updateTrangThai(sp);
+            MsgBox.alert(this, "Cập nhật thành công!");
+            renderItemProdWithThread();
+        } catch (Exception e) {
+            MsgBox.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
 }
