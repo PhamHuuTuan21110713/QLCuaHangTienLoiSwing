@@ -38,7 +38,11 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
                 sanPham.getMaNCC(),
                 sanPham.getImg(),
                 sanPham.getMaSP());
+
     }
+
+
+
 
     public void updatekHinh(SanPham sanPham) {
         String sql = "UPDATE sanpham SET TenSP = ?, NoiSanXuat = ?, TrangThai = ?, TienGoc = ?, TienThanhToan = ?, " +

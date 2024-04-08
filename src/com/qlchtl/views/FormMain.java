@@ -902,7 +902,12 @@ public class FormMain extends javax.swing.JFrame {
 
         lblQuantityProductFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblQuantityProductFound.setForeground(new java.awt.Color(102, 102, 102));
-        lblQuantityProductFound.setText( String.valueOf(kho.getSoLuong()));
+        if(kho.getSoLuong()!=0){
+            lblQuantityProductFound.setText("Còn Hàng");
+        }
+        else{
+            lblQuantityProductFound.setText("Hết Hàng");
+        }
 
         btnDeleteProdFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteProdFound.setText("Delete");
@@ -1559,26 +1564,38 @@ public class FormMain extends javax.swing.JFrame {
             public void run() {
                 int col = 0;
                 int row = 0;
+                int size = 0;
                 for (SanPham cd : listsp) {
-
-                    MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row,cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
-                    if(col==0 && row == 0) {
-                        idProductSelected = cd.getMaSP();
-                        setProductSelected(cd.getImg(),cd.getTenSP(),cd.getTienGoc(),cd.getTrangThai());
-                    }
-                    pnl.add((Component) pn);
-                    col++;
-                    if (col > 2) {
-                        col = 0;
-                        row++;
-                    }
-                    final int finalRow = row;
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            int height = (finalRow + 1) * pn.getHeight() + 10 * (finalRow + 1); // Cập nhật chiều cao của panel
-                            pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
+                    if(!cd.getTrangThai().equals("10")) {
+                        Kho kho = khoDAo.selectById(cd.getMaSP());
+                        size++;
+                        MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row, cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), String.valueOf(kho.getSoLuong()));
+                        if (col == 0 && row == 0) {
+                            idProductSelected = cd.getMaSP();
+                            setProductSelected(cd.getImg(), cd.getTenSP(), cd.getTienGoc(), String.valueOf(kho.getSoLuong()));
                         }
-                    });
+                        pnl.add((Component) pn);
+                        col++;
+                        if (col > 2) {
+                            col = 0;
+                            row++;
+
+                        }
+                        final int finalRow = row;
+                        final int finalSize = size;
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                int height = 0;
+                                if(finalSize%3==0){
+                                     height = (finalRow ) * pn.getHeight() + 10 * (finalRow );
+                                }
+                                else {
+                                     height = (finalRow +1 ) * pn.getHeight() + 10 * (finalRow +1);
+                                }
+                                pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
+                            }
+                        });
+                    }
                 }
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1598,6 +1615,8 @@ public class FormMain extends javax.swing.JFrame {
         lblPhoneStaffFound.setText(phone);
     }
 
+
+
     public void setProductSelected(String urlImage,String name, String price, String quantity) {
         String imagePath = "/com/qlchtl/image/imageSanPham/"+urlImage;
         java.net.URL imageURL = getClass().getResource(imagePath);
@@ -1609,7 +1628,14 @@ public class FormMain extends javax.swing.JFrame {
         lblProductNameFound.setText(name);
         lblCodeProductFound.setText(idProductSelected);
         lblPriceProdFound.setText(price);
-        lblQuantityProductFound.setText(quantity);
+
+        if(!quantity.equals("0")){
+            lblQuantityProductFound.setText("Còn Hàng");
+        }
+        else{
+            lblQuantityProductFound.setText("Hết Hàng");
+
+        }
 
     }
     
