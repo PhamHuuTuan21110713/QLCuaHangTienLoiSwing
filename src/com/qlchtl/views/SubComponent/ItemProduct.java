@@ -67,7 +67,16 @@ public class ItemProduct {
         JLabel lblItemQuantityProd_t = new JLabel();
         lblItemQuantityProd_t.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblItemQuantityProd_t.setForeground(new java.awt.Color(102, 102, 102));
-        lblItemQuantityProd_t.setText(quantity);
+
+
+        if(!quantity.equals("0")){
+            lblItemQuantityProd_t.setText("Còn Hàng");
+        }
+        else{
+            lblItemQuantityProd_t.setText("Hết Hàng");
+
+        }
+
 
         MyButton btnDetail = new MyButton();
         btnDetail.setForeground(new java.awt.Color(255, 255, 255));

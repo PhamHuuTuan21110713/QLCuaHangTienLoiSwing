@@ -71,9 +71,9 @@ public class DetailProduct extends javax.swing.JFrame  {
     private void setTextField(Boolean state) {
         txtNameProduct.setFocusable(state);
         txtNameProduct.setEditable(state);
-        txtCodePrd.setEditable(state);
+//        txtCodePrd.setEditable(state);
         txtPlacePrd.setEditable(state);
-        txtStatePrd.setEditable(state);
+//        txtStatePrd.setEditable(state);
         txtRootPriceProd.setEditable(state);
         txtPricePrd.setEditable(state);
         txtQuantityProd.setEditable(state);
@@ -85,9 +85,9 @@ public class DetailProduct extends javax.swing.JFrame  {
         setButton(state);
         if (state) {
             txtNameProduct.setBackground(new Color(240, 240, 240));
-            txtCodePrd.setBackground(new Color(240, 240, 240));
+//            txtCodePrd.setBackground(new Color(240, 240, 240));
             txtPlacePrd.setBackground(new Color(240, 240, 240));
-            txtStatePrd.setBackground(new Color(240, 240, 240));
+//            txtStatePrd.setBackground(new Color(240, 240, 240));
             txtRootPriceProd.setBackground(new Color(240, 240, 240));
             txtPricePrd.setBackground(new Color(240, 240, 240));
             txtQuantityProd.setBackground(new Color(240, 240, 240));
@@ -200,6 +200,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         jLabel7.setText("Quantity");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 70, -1));
 
+
         txtPromotionProd.setEditable(false);
         txtPromotionProd.setBackground(new java.awt.Color(255, 255, 255));
         txtPromotionProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -241,7 +242,17 @@ public class DetailProduct extends javax.swing.JFrame  {
         txtStatePrd.setBackground(new java.awt.Color(255, 255, 255));
         txtStatePrd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtStatePrd.setForeground(new java.awt.Color(102, 102, 102));
-        txtStatePrd.setText(sp.getTrangThai());
+
+
+        if(kho.getSoLuong()!=0){
+            txtStatePrd.setText("Còn Hàng");
+        }
+        else{
+            txtStatePrd.setText("Hết Hàng");
+        }
+
+
+
         txtStatePrd.setBorder(null);
         txtStatePrd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -714,7 +725,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         sp.setMaSP(txtCodePrd.getText());
         sp.setTenSP(txtNameProduct.getText());
         sp.setNoiSanXuat(txtPlacePrd.getText());
-        sp.setTrangThai(txtStatePrd.getText());
+        sp.setTrangThai("1");
         sp.setTienGoc(txtRootPriceProd.getText());
         sp.setTienThanhToan(txtPricePrd.getText());
         String inputDate = txtImportDatePrd.getText();
@@ -739,18 +750,6 @@ public class DetailProduct extends javax.swing.JFrame  {
 
 
     void fillTable(){
-        SanPham sp = sanPhamDao.selectById(FormMain.maSp);
-        txtCodePrd.setText(sp.getMaSP());
-        txtNameProduct.setText(sp.getTenSP());
-        txtPlacePrd.setText(sp.getNoiSanXuat());
-        txtStatePrd.setText(sp.getTrangThai());
-        txtRootPriceProd.setText(sp.getTienGoc());
-        txtPricePrd.setText(sp.getTienThanhToan());
-
-        String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        txtImportDatePrd.setText(importDate);
-        txtSupplier.setText(sp.getMaNCC());
-
 
         Kho kho = khoDAo.selectById(FormMain.maSp);
         kho.setMaSP(txtCodePrd.getText());
@@ -761,6 +760,24 @@ public class DetailProduct extends javax.swing.JFrame  {
         ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
         ctkm.setMaSP(txtCodePrd.getText());
         ctkm.setMaCT(txtPromotionProd.getText());
+
+
+        SanPham sp = sanPhamDao.selectById(FormMain.maSp);
+        txtCodePrd.setText(sp.getMaSP());
+        txtNameProduct.setText(sp.getTenSP());
+        txtPlacePrd.setText(sp.getNoiSanXuat());
+        if(soLuong!=0){
+            txtStatePrd.setText("Còn Hàng");
+        }
+        else{
+            txtStatePrd.setText("Hết Hàng");
+        }
+        txtRootPriceProd.setText(sp.getTienGoc());
+        txtPricePrd.setText(sp.getTienThanhToan());
+
+        String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        txtImportDatePrd.setText(importDate);
+        txtSupplier.setText(sp.getMaNCC());
 
 
     }
