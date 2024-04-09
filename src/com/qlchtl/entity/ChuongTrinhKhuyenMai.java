@@ -8,9 +8,9 @@ public class ChuongTrinhKhuyenMai {
     public ChuongTrinhKhuyenMai() {
     }
 
-    public ChuongTrinhKhuyenMai(String maCT, String tenChuongTrinh, int phanTramGiamGia) {
+    public ChuongTrinhKhuyenMai(String maCT, String TenChuongTrinh, int phanTramGiamGia) {
         this.maCT = maCT;
-        this.tenChuongTrinh = tenChuongTrinh;
+        this.tenChuongTrinh = TenChuongTrinh;
         this.phanTramGiamGia = phanTramGiamGia;
     }
 
