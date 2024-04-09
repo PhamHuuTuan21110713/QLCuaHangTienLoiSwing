@@ -49,12 +49,14 @@ public class FormMain extends javax.swing.JFrame {
         this.idStaffSelected = a;
     }
 
+
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
         setLocationRelativeTo(null);
         settingScrollPane();
-        renderItemProdWithThread();
+        List<SanPham> listsanPham = sanPhamDao.selectAll();
+        renderItemProdWithThread(listsanPham);
        
     }
 
@@ -606,7 +608,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAccount)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -781,6 +783,11 @@ public class FormMain extends javax.swing.JFrame {
 
         lblGoSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/enter.png"))); // NOI18N
         lblGoSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblGoSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGoSearchMouseClicked(evt);
+            }
+        });
         myPanel1.add(lblGoSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 10, -1, -1));
 
         jPanel2.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 5, 300, 40));
@@ -1535,8 +1542,7 @@ public class FormMain extends javax.swing.JFrame {
     }
 
 
-    private Runnable renderProdItem() {
-        List<SanPham> listsp = sanPhamDao.selectAll();
+    private Runnable renderProdItem(List<SanPham> listsp) {
         Component viewport = scpProduct.getViewport().getView();
         if (viewport instanceof JPanel) {
             scpProduct.setViewportView(null);
@@ -1576,7 +1582,7 @@ public class FormMain extends javax.swing.JFrame {
                             public void run() {
                                 int height = 0;
                                 if(finalSize%3==0){
-                                     height = (finalRow ) * pn.getHeight() + 10 * (finalRow );
+                                     height = finalRow * pn.getHeight() + 10 * finalRow;
                                 }
                                 else {
                                      height = (finalRow +1 ) * pn.getHeight() + 10 * (finalRow +1);
@@ -1633,8 +1639,8 @@ public class FormMain extends javax.swing.JFrame {
         a.start();
     }
     
-    private void renderItemProdWithThread() {
-        Thread a = new Thread(renderProdItem());
+    private void renderItemProdWithThread( List<SanPham> listsp) {
+        Thread a = new Thread(renderProdItem(listsp));
         a.start();
     }
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
@@ -1745,6 +1751,11 @@ public class FormMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         delete();
     }//GEN-LAST:event_btnDeleteProdFoundMouseClicked
+
+    private void lblGoSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGoSearchMouseClicked
+        // TODO add your handling code here:
+        searchName();
+    }//GEN-LAST:event_lblGoSearchMouseClicked
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1901,7 +1912,6 @@ public class FormMain extends javax.swing.JFrame {
         sp.setMaSP(lblCodeProductFound.getText());
         sp.setTrangThai("0");
         return sp;
-
     }
 
     void delete() {
@@ -1909,10 +1919,25 @@ public class FormMain extends javax.swing.JFrame {
         try {
             sanPhamDao.updateTrangThai(sp);
             MsgBox.alert(this, "Cập nhật thành công!");
-            renderItemProdWithThread();
+            List<SanPham> listsp = sanPhamDao.selectAll();
+            renderItemProdWithThread(listsp);
         } catch (Exception e) {
             MsgBox.alert(this, "Cập nhật thất bại!");
         }
+    }
+
+    void searchName(){
+        String nameProduct = txtSearch.getText();
+        List<SanPham> searchProduct = sanPhamDao.selectByName(nameProduct);
+        if(searchProduct.size() > 0){
+            renderItemProdWithThread(searchProduct);
+        }
+        else{
+            MsgBox.alert(this, "Không có sản phẩm nào được tìm thấy");
+            List<SanPham> listsp = sanPhamDao.selectAll();
+            renderItemProdWithThread(listsp);
+        }
+        txtSearch.setText("");
     }
 
 }
