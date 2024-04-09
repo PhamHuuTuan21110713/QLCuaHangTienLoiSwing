@@ -4,10 +4,12 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.views.DetailStaff;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
@@ -252,11 +254,15 @@ public class ItemStaff {
         parentForm.setStaffFound("Current Name", "Current state", "Current Phone");
     }
     
-    private void DeleteStaffClick(MouseEvent e, String i) {
-       parentForm.setIdStaffSelected(i);
+    private void DeleteStaffClick(MouseEvent e, String code) {
+       parentForm.setIdStaffSelected(code);
+       
     }
     
-     private void DetailStaffClick (MouseEvent e, String i) {
-        parentForm.setIdStaffSelected(i);
+     private void DetailStaffClick (MouseEvent e, String code) {
+        parentForm.setIdStaffSelected(code);
+        DetailStaff dtst = new DetailStaff(code);
+        dtst.setVisible(true);
+        dtst.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 }

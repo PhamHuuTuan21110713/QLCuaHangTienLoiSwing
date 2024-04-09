@@ -108,7 +108,7 @@ public class ItemProduct {
         });
         btnDetail.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-               ProductClick(e,code,srcImg,name,price,quantity);
+              DetailProductClick(e,code);
             }
         });
         
