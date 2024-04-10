@@ -188,8 +188,8 @@
                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jlblSDTKhach" min="-2" pref="153" max="-2" attributes="0"/>
-                      <Component id="jlblidKhach" min="-2" pref="153" max="-2" attributes="0"/>
                       <Component id="jlblTenKhach" min="-2" pref="153" max="-2" attributes="0"/>
+                      <Component id="jComboBox1" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
               </Group>
@@ -265,9 +265,9 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jlblidKhach" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jlblTenKhach" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -279,7 +279,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                               <Component id="myPanel4" max="32767" attributes="0"/>
@@ -571,6 +571,7 @@
             </Component>
             <Component class="javax.swing.JComboBox" name="jcbIDSanPham">
               <Properties>
+                <Property name="editable" type="boolean" value="true"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
                     <StringItem index="0" value="Item 1"/>
@@ -730,11 +731,6 @@
             <Property name="text" type="java.lang.String" value="Nguy&#x1ec5;n V&#x103;n A"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jlblidKhach">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="21110714"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jlblSDTKhach">
           <Properties>
             <Property name="text" type="java.lang.String" value="0123456789"/>
@@ -820,6 +816,22 @@
             </Property>
             <Property name="radius" type="int" value="20"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox1">
+          <Properties>
+            <Property name="editable" type="boolean" value="true"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

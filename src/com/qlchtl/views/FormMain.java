@@ -10,6 +10,7 @@ import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
+import com.qlchtl.views.SubComponent.ClientForm;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -58,8 +59,13 @@ public class FormMain extends javax.swing.JFrame {
         List<SanPham> listsanPham = sanPhamDao.selectAll();
         renderItemProdWithThread(listsanPham);
        
+
     }
 
+    private void setTupTabbedPane() {
+        
+        tpnMain.addTab("", new ClientForm(this));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,9 +136,6 @@ public class FormMain extends javax.swing.JFrame {
         pnlAddNewPrd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblAddNewProd = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        pnlAddToStore = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        lblAddToStore = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         ucStaff = new javax.swing.JPanel();
         pnlScrollStaff = new javax.swing.JPanel();
         pnlHeaderStaff = new javax.swing.JPanel();
@@ -150,17 +153,6 @@ public class FormMain extends javax.swing.JFrame {
         lblPhoneStaffFound = new javax.swing.JLabel();
         btnDetailStaffFound = new com.qlchtl.views.MyControls.MyButton();
         btnDeleteStaffFound = new com.qlchtl.views.MyControls.MyButton();
-        ucClient = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        ucInvoice = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        ucRank = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        ucShift = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        ucAccount = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        HomePanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1062,46 +1054,6 @@ public class FormMain extends javax.swing.JFrame {
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/action-r.png"))); // NOI18N
         jLabel20.setText("jLabel20");
 
-        pnlAddToStore.setBackground(new java.awt.Color(10, 200, 186));
-        pnlAddToStore.setPreferredSize(new java.awt.Dimension(56, 56));
-        pnlAddToStore.setShadowColor(new java.awt.Color(0, 110, 101));
-        pnlAddToStore.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddToStoreClick(evt);
-            }
-        });
-
-        lblAddToStore.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblAddToStore.setForeground(new java.awt.Color(255, 255, 255));
-        lblAddToStore.setText("V");
-        lblAddToStore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblAddToStore.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddToStoreClick(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlAddToStoreLayout = new javax.swing.GroupLayout(pnlAddToStore);
-        pnlAddToStore.setLayout(pnlAddToStoreLayout);
-        pnlAddToStoreLayout.setHorizontalGroup(
-            pnlAddToStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAddToStoreLayout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(lblAddToStore)
-                .addGap(19, 19, 19))
-        );
-        pnlAddToStoreLayout.setVerticalGroup(
-            pnlAddToStoreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAddToStoreLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lblAddToStore)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Add product to Store");
-
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
         myPanel2Layout.setHorizontalGroup(
@@ -1111,15 +1063,10 @@ public class FormMain extends javax.swing.JFrame {
                 .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17)
                     .addGroup(myPanel2Layout.createSequentialGroup()
-                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(myPanel2Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(pnlAddToStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 173, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
         );
@@ -1134,13 +1081,6 @@ public class FormMain extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(myPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlAddToStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(myPanel2Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel15)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 197, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1342,134 +1282,6 @@ public class FormMain extends javax.swing.JFrame {
 
         tpnMain.addTab("tab2", ucStaff);
 
-        ucClient.setBackground(new java.awt.Color(247, 247, 247));
-
-        jLabel7.setText("Clinet");
-
-        javax.swing.GroupLayout ucClientLayout = new javax.swing.GroupLayout(ucClient);
-        ucClient.setLayout(ucClientLayout);
-        ucClientLayout.setHorizontalGroup(
-            ucClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucClientLayout.createSequentialGroup()
-                .addGap(325, 325, 325)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(548, Short.MAX_VALUE))
-        );
-        ucClientLayout.setVerticalGroup(
-            ucClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucClientLayout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(jLabel7)
-                .addContainerGap(554, Short.MAX_VALUE))
-        );
-
-        tpnMain.addTab("tab3", ucClient);
-
-        ucInvoice.setBackground(new java.awt.Color(247, 247, 247));
-
-        jLabel8.setText("Invoice");
-
-        javax.swing.GroupLayout ucInvoiceLayout = new javax.swing.GroupLayout(ucInvoice);
-        ucInvoice.setLayout(ucInvoiceLayout);
-        ucInvoiceLayout.setHorizontalGroup(
-            ucInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucInvoiceLayout.createSequentialGroup()
-                .addGap(377, 377, 377)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(496, Short.MAX_VALUE))
-        );
-        ucInvoiceLayout.setVerticalGroup(
-            ucInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucInvoiceLayout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jLabel8)
-                .addContainerGap(537, Short.MAX_VALUE))
-        );
-
-        tpnMain.addTab("tab4", ucInvoice);
-
-        ucRank.setBackground(new java.awt.Color(247, 247, 247));
-
-        jLabel9.setText("Rank");
-
-        javax.swing.GroupLayout ucRankLayout = new javax.swing.GroupLayout(ucRank);
-        ucRank.setLayout(ucRankLayout);
-        ucRankLayout.setHorizontalGroup(
-            ucRankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucRankLayout.createSequentialGroup()
-                .addGap(335, 335, 335)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(538, Short.MAX_VALUE))
-        );
-        ucRankLayout.setVerticalGroup(
-            ucRankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucRankLayout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(jLabel9)
-                .addContainerGap(487, Short.MAX_VALUE))
-        );
-
-        tpnMain.addTab("tab5", ucRank);
-
-        ucShift.setBackground(new java.awt.Color(247, 247, 247));
-
-        jLabel10.setText("Shift");
-
-        javax.swing.GroupLayout ucShiftLayout = new javax.swing.GroupLayout(ucShift);
-        ucShift.setLayout(ucShiftLayout);
-        ucShiftLayout.setHorizontalGroup(
-            ucShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucShiftLayout.createSequentialGroup()
-                .addGap(414, 414, 414)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(453, Short.MAX_VALUE))
-        );
-        ucShiftLayout.setVerticalGroup(
-            ucShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucShiftLayout.createSequentialGroup()
-                .addGap(156, 156, 156)
-                .addComponent(jLabel10)
-                .addContainerGap(543, Short.MAX_VALUE))
-        );
-
-        tpnMain.addTab("tab6", ucShift);
-
-        ucAccount.setBackground(new java.awt.Color(247, 247, 247));
-
-        jLabel11.setText("Account");
-
-        javax.swing.GroupLayout ucAccountLayout = new javax.swing.GroupLayout(ucAccount);
-        ucAccount.setLayout(ucAccountLayout);
-        ucAccountLayout.setHorizontalGroup(
-            ucAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucAccountLayout.createSequentialGroup()
-                .addGap(344, 344, 344)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(523, Short.MAX_VALUE))
-        );
-        ucAccountLayout.setVerticalGroup(
-            ucAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ucAccountLayout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addComponent(jLabel11)
-                .addContainerGap(555, Short.MAX_VALUE))
-        );
-
-        tpnMain.addTab("tab7", ucAccount);
-
-        javax.swing.GroupLayout HomePanelLayout = new javax.swing.GroupLayout(HomePanel);
-        HomePanel.setLayout(HomePanelLayout);
-        HomePanelLayout.setHorizontalGroup(
-            HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 910, Short.MAX_VALUE)
-        );
-        HomePanelLayout.setVerticalGroup(
-            HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 715, Short.MAX_VALUE)
-        );
-
-        tpnMain.addTab("tab8", HomePanel);
-
         pnlMain.add(tpnMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 910, 750));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1492,9 +1304,13 @@ public class FormMain extends javax.swing.JFrame {
 
     private void settingScrollPane() {
         MyScrollBar scrbprod =  new MyScrollBar();
+        scrbprod.setUnitIncrement(50);
+        scrbprod.setBlockIncrement(50);
         scrbprod.setForeground(new Color(24,145,143));
         scpProduct.setVerticalScrollBar(scrbprod);
          MyScrollBar scrbstaff =  new MyScrollBar();
+         scrbstaff.setUnitIncrement(30);
+        scrbstaff.setBlockIncrement(30);
         scrbstaff.setForeground(new Color(24,145,143));
         scpStaff.setVerticalScrollBar(scrbstaff);
     }    
@@ -1540,7 +1356,7 @@ public class FormMain extends javax.swing.JFrame {
         };
         return a;
     }
-
+    
 
     private Runnable renderProdItem(List<SanPham> listsp) {
         Component viewport = scpProduct.getViewport().getView();
@@ -1561,6 +1377,7 @@ public class FormMain extends javax.swing.JFrame {
                 int row = 0;
                 int size = 0;
                 for (SanPham cd : listsp) {
+
                     if(!cd.getTrangThai().equals("0")) {
                         Kho kho = khoDAo.selectById(cd.getMaSP());
                         size++;
@@ -1676,6 +1493,7 @@ public class FormMain extends javax.swing.JFrame {
         setPresentTabVisible(evt,"Product");
     }//GEN-LAST:event_ProductClick
 
+    
     private void ClientClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientClick
         // TODO add your handling code here:
          tpnMain.setSelectedIndex(2);   
@@ -1713,10 +1531,6 @@ public class FormMain extends javax.swing.JFrame {
         addPrdForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }//GEN-LAST:event_AddNewProductClick
-
-    private void AddToStoreClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddToStoreClick
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddToStoreClick
 
     private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
         // TODO add your handling code here:
@@ -1812,7 +1626,6 @@ public class FormMain extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel HomePanel;
     private com.qlchtl.views.MyControls.MyButton btnAddStaff;
     private com.qlchtl.views.MyControls.MyButton btnDeleteProdFound;
     private com.qlchtl.views.MyControls.MyButton btnDeleteStaffFound;
@@ -1827,12 +1640,9 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel iconStaff;
     private javax.swing.JLabel imgProductFound;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1845,14 +1655,10 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblAddNewProd;
-    private javax.swing.JLabel lblAddToStore;
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblCodeStaffFound;
@@ -1880,7 +1686,6 @@ public class FormMain extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow4;
     private javax.swing.JPanel pnlAccount;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
-    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddToStore;
     private com.qlchtl.views.MyControls.MyPanel pnlChange;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlHeaderStaff;
@@ -1897,12 +1702,7 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JScrollPane scpStaff;
     private javax.swing.JTabbedPane tpnMain;
     private javax.swing.JTextField txtSearch;
-    private javax.swing.JPanel ucAccount;
-    private javax.swing.JPanel ucClient;
-    private javax.swing.JPanel ucInvoice;
     private javax.swing.JPanel ucProduct;
-    private javax.swing.JPanel ucRank;
-    private javax.swing.JPanel ucShift;
     private javax.swing.JPanel ucStaff;
     // End of variables declaration//GEN-END:variables
 
