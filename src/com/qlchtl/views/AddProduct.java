@@ -51,14 +51,17 @@ public class AddProduct extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        txtInputDateProd = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
+        txtInputDateProd = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
         PriceProd1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         btnCancel = new com.qlchtl.views.MyControls.MyButton();
         btnConfirm1 = new com.qlchtl.views.MyControls.MyButton();
-        jdateahihi = new com.toedter.calendar.JDateChooser();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtQuantityProd = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,11 +259,6 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel6.setText("Input date");
         jPanel12.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, -1));
 
-        txtInputDateProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtInputDateProd.setForeground(new java.awt.Color(102, 102, 102));
-        txtInputDateProd.setBorder(null);
-        jPanel12.add(txtInputDateProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 188, 31));
-
         jPanel13.setBackground(new java.awt.Color(102, 102, 102));
         jPanel13.setForeground(new java.awt.Color(102, 102, 102));
         jPanel13.setPreferredSize(new java.awt.Dimension(185, 2));
@@ -277,6 +275,9 @@ public class AddProduct extends javax.swing.JFrame {
         );
 
         jPanel12.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        txtInputDateProd.setBorder(null);
+        jPanel12.add(txtInputDateProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 190, 30));
 
         jPanel1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, 200, 60));
 
@@ -311,8 +312,36 @@ public class AddProduct extends javax.swing.JFrame {
         btnConfirm1.setRadius(20);
         jPanel1.add(btnConfirm1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 360, 130, 50));
 
-        jdateahihi.setDateFormatString("dd-MM-yyyy");
-        jPanel1.add(jdateahihi, new org.netbeans.lib.awtextra.AbsoluteConstraints(558, 290, 180, -1));
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setText("Quantity");
+        jPanel8.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, -1));
+
+        txtQuantityProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtQuantityProd.setForeground(new java.awt.Color(102, 102, 102));
+        txtQuantityProd.setBorder(null);
+        jPanel8.add(txtQuantityProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 188, 31));
+
+        jPanel9.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel9.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel9.setPreferredSize(new java.awt.Dimension(185, 2));
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 185, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 2, Short.MAX_VALUE)
+        );
+
+        jPanel8.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 200, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -377,6 +406,7 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -390,7 +420,8 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private com.toedter.calendar.JDateChooser jdateahihi;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblImageProd;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow1;
     private javax.swing.JTextField txtCodeProd;
@@ -398,5 +429,6 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JTextField txtManuFacPlaceProd;
     private javax.swing.JTextField txtNameProd;
     private javax.swing.JTextField txtPriceProd;
+    private javax.swing.JTextField txtQuantityProd;
     // End of variables declaration//GEN-END:variables
 }

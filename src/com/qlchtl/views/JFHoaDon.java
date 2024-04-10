@@ -64,7 +64,6 @@ public class JFHoaDon extends javax.swing.JFrame {
         jlblTenNhanvien = new javax.swing.JLabel();
         jlblSDTNhanvien = new javax.swing.JLabel();
         jlblTenKhach = new javax.swing.JLabel();
-        jlblidKhach = new javax.swing.JLabel();
         jlblSDTKhach = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -73,6 +72,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jbtnCreate = new com.qlchtl.views.MyControls.MyButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         myPanel1 = new com.qlchtl.views.MyControls.MyPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -184,6 +184,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
 
+        jcbIDSanPham.setEditable(true);
         jcbIDSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -300,8 +301,6 @@ public class JFHoaDon extends javax.swing.JFrame {
 
         jlblTenKhach.setText("Nguyễn Văn A");
 
-        jlblidKhach.setText("21110714");
-
         jlblSDTKhach.setText("0123456789");
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -342,6 +341,9 @@ public class JFHoaDon extends javax.swing.JFrame {
         jbtnCreate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jbtnCreate.setRadius(20);
 
+        jComboBox1.setEditable(true);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout myPanel3Layout = new javax.swing.GroupLayout(myPanel3);
         myPanel3.setLayout(myPanel3Layout);
         myPanel3Layout.setHorizontalGroup(
@@ -381,8 +383,8 @@ public class JFHoaDon extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlblSDTKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblidKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlblTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(88, 88, 88))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -440,8 +442,8 @@ public class JFHoaDon extends javax.swing.JFrame {
                             .addGroup(myPanel3Layout.createSequentialGroup()
                                 .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel15)
-                                    .addComponent(jlblidKhach))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel16)
                                     .addComponent(jlblTenKhach))
@@ -449,7 +451,7 @@ public class JFHoaDon extends javax.swing.JFrame {
                                 .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel17)
                                     .addComponent(jlblSDTKhach))))
-                        .addGap(106, 106, 106)
+                        .addGap(160, 160, 160)
                         .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(myPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -666,6 +668,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -709,7 +712,6 @@ public class JFHoaDon extends javax.swing.JFrame {
     private javax.swing.JLabel jlblSDTNhanvien;
     private javax.swing.JLabel jlblTenKhach;
     private javax.swing.JLabel jlblTenNhanvien;
-    private javax.swing.JLabel jlblidKhach;
     private javax.swing.JTable jtbInvoice;
     private javax.swing.JTextField jtxtQuantity;
     private com.qlchtl.views.MyControls.MyPanel myPanel1;

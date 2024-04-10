@@ -597,7 +597,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAccount)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
