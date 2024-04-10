@@ -4,6 +4,25 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.NhaCungCapDao;
+import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.ChiTietKhuyenMai;
+import com.qlchtl.entity.Kho;
+import com.qlchtl.entity.NhaCungCap;
+import com.qlchtl.entity.SanPham;
+import com.qlchtl.utils.MsgBox;
+import com.qlchtl.utils.XImage;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  *
  * @author Dell
@@ -14,9 +33,18 @@ public class AddProduct extends javax.swing.JFrame {
      * Creates new form AddProduct
      */
     public AddProduct() {
+        fileChooser = new javax.swing.JFileChooser();
         initComponents();
         this.setLocationRelativeTo(null);
     }
+
+
+    final String[] firstPromotionName = {null};
+    NhaCungCapDao nhaCungCapDao = new NhaCungCapDao();
+    List<NhaCungCap> listNCC = nhaCungCapDao.selectAll();
+
+
+    SanPhamDao sanPhamDao = new SanPhamDao();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,7 +54,7 @@ public class AddProduct extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        fileChooser = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         myPanelBoxShadow1 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblImageProd = new javax.swing.JLabel();
@@ -85,6 +113,11 @@ public class AddProduct extends javax.swing.JFrame {
         btnAddImage.setColorOver(new java.awt.Color(89, 179, 177));
         btnAddImage.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddImage.setRadius(20);
+        btnAddImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddImageActionPerformed(evt);
+            }
+        });
 
         btnClearImage.setForeground(new java.awt.Color(255, 255, 255));
         btnClearImage.setText("Clear Image");
@@ -288,7 +321,31 @@ public class AddProduct extends javax.swing.JFrame {
         PriceProd1.setText("Supplier code");
         jPanel14.add(PriceProd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+
+        Set<String> uniquePromotionNames = new HashSet<>();
+        for (NhaCungCap promotion : listNCC) {
+            uniquePromotionNames.add(promotion.getMaNCC());
+        }
+        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
+
+
+        if (promotionNamesWithNone.length > 0) {
+            firstPromotionName[0] = promotionNamesWithNone[0];
+        }
+        jComboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) jComboBox1.getSelectedItem();
+                firstPromotionName[0] = selectedItem;
+            }
+        });
+
+
+
+
         jComboBox1.setBorder(null);
         jPanel14.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, 30));
 
@@ -310,6 +367,11 @@ public class AddProduct extends javax.swing.JFrame {
         btnConfirm1.setColorOver(new java.awt.Color(204, 204, 204));
         btnConfirm1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnConfirm1.setRadius(20);
+        btnConfirm1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirm1MouseClicked(evt);
+            }
+        });
         jPanel1.add(btnConfirm1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 360, 130, 50));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -359,6 +421,16 @@ public class AddProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddImageActionPerformed
+        // TODO add your handling code here:
+        chonAnh();
+    }//GEN-LAST:event_btnAddImageActionPerformed
+
+    private void btnConfirm1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirm1MouseClicked
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnConfirm1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -366,7 +438,7 @@ public class AddProduct extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -429,6 +501,65 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JTextField txtManuFacPlaceProd;
     private javax.swing.JTextField txtNameProd;
     private javax.swing.JTextField txtPriceProd;
+
+    private javax.swing.JFileChooser fileChooser;
+
+
     private javax.swing.JTextField txtQuantityProd;
+
     // End of variables declaration//GEN-END:variables
+
+    String img;
+
+    void chonAnh() {
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            XImage.save(file); // lưu hình vào thư mục logos
+            ImageIcon icon = XImage.read(file.getName());
+            java.awt.Image originalImage = icon.getImage();
+            java.awt.Image scaledImage = originalImage.getScaledInstance(270, 270, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+            lblImageProd.setIcon(scaledImageIcon);
+            lblImageProd.setToolTipText(file.getName());
+            img = file.getName();
+        }
+    }
+
+
+    SanPham getFormSanPham() {
+        SanPham sp = new SanPham();
+        sp.setMaSP(txtCodeProd.getText());
+        sp.setTenSP(txtNameProd.getText());
+        sp.setNoiSanXuat(txtManuFacPlaceProd.getText());
+        sp.setTrangThai("1");
+        sp.setTienGoc(txtPriceProd.getText());
+        sp.setTienThanhToan(txtPriceProd.getText());
+        sp.setNgayNhapHang(LocalDate.now());
+        sp.setMaNCC(firstPromotionName[0]);
+        sp.setImg(img);
+        return sp;
+    }
+
+    void resetText(){
+        txtCodeProd.setText("");
+        txtNameProd.setText("");
+        txtManuFacPlaceProd.setText("");
+        txtPriceProd.setText("");
+        txtInputDateProd.setText("");
+        lblImageProd.setText("");
+        jComboBox1.setSelectedIndex(0);
+
+    }
+
+    void insert(){
+        SanPham modelsp = getFormSanPham();
+        try {
+            sanPhamDao.insert(modelsp);
+            MsgBox.alert(this, "Thêm sản phẩm thành công!");
+        }
+        catch (Exception e) {
+            MsgBox.alert(this, "Thêm sản phẩm thất bại!");
+        }
+        resetText();
+    }
 }
