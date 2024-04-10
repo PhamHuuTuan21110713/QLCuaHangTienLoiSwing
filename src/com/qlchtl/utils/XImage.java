@@ -61,7 +61,7 @@ public class XImage {
      * @return ảnh đọc được
      */
     public static ImageIcon read(String fileName){
-        File path = new File("/src/com/qlchtl/image/imageSanPham", fileName);
+        File path = new File("src/com/qlchtl/image/imageSanPham", fileName);
         return new ImageIcon(path.getAbsolutePath());
     }
 }
