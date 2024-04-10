@@ -58,6 +58,7 @@ public class AddProduct extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         btnCancel = new com.qlchtl.views.MyControls.MyButton();
         btnConfirm1 = new com.qlchtl.views.MyControls.MyButton();
+        jdateahihi = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -310,6 +311,9 @@ public class AddProduct extends javax.swing.JFrame {
         btnConfirm1.setRadius(20);
         jPanel1.add(btnConfirm1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 360, 130, 50));
 
+        jdateahihi.setDateFormatString("dd-MM-yyyy");
+        jPanel1.add(jdateahihi, new org.netbeans.lib.awtextra.AbsoluteConstraints(558, 290, 180, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -386,6 +390,7 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private com.toedter.calendar.JDateChooser jdateahihi;
     private javax.swing.JLabel lblImageProd;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow1;
     private javax.swing.JTextField txtCodeProd;

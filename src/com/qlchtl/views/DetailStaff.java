@@ -80,12 +80,10 @@ public class DetailStaff extends javax.swing.JFrame {
         myPanel1.setRoundTopLeft(10);
         myPanel1.setRoundTopRight(10);
 
-        txtNameDetailStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtNameDetailStaff.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         txtNameDetailStaff.setText("Phạm Hữu Tuấn");
         txtNameDetailStaff.setBorder(null);
 
-        txtCodeStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtCodeStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtCodeStaff.setForeground(new java.awt.Color(102, 102, 102));
         txtCodeStaff.setText("21110713");
@@ -144,7 +142,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel2.setText("Date of birth");
         myPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 15, 82, -1));
 
-        txtBirthdayStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtBirthdayStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBirthdayStaff.setText("24/11/2003");
         txtBirthdayStaff.setBorder(null);
@@ -155,7 +152,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel3.setText("Date of work");
         myPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 77, 82, -1));
 
-        txtWorkdayStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtWorkdayStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtWorkdayStaff.setText("24/11/2003");
         txtWorkdayStaff.setBorder(null);
@@ -166,7 +162,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel4.setText("Phone number");
         myPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 136, -1, -1));
 
-        txtPhoneStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtPhoneStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtPhoneStaff.setText("0928895717");
         txtPhoneStaff.setBorder(null);
@@ -177,7 +172,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel5.setText("Address");
         myPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 15, 82, -1));
 
-        txtAddressStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtAddressStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtAddressStaff.setText("Ho Chi Minh");
         txtAddressStaff.setBorder(null);
@@ -188,7 +182,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel6.setText("Identification card");
         myPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 77, -1, -1));
 
-        txtIndentifyStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtIndentifyStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtIndentifyStaff.setText("0323123123");
         txtIndentifyStaff.setBorder(null);
@@ -229,7 +222,6 @@ public class DetailStaff extends javax.swing.JFrame {
         myPanel2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 89, 43));
 
         cboStateStaff.setBackground(new java.awt.Color(148, 209, 235));
-        cboStateStaff.setEditable(true);
         cboStateStaff.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cboStateStaff.setForeground(new java.awt.Color(10, 144, 201));
         cboStateStaff.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
