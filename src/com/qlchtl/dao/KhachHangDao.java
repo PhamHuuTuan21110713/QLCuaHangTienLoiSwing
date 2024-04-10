@@ -6,6 +6,7 @@ package com.qlchtl.dao;
 
 import com.qlchtl.entity.ChiTietHoaDon;
 import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.XJdbc;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,4 +66,14 @@ public class KhachHangDao {
                 khachhang.getSoDiemHienCo()+diemCong,
                 khachhang.getMaKH());
    }
+   public KhachHang selectById(String maKH) {
+        String sql = "SELECT * FROM sanpham WHERE MaKH = ?";
+        List<KhachHang> list = selectBySql(sql, maKH);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    public List<KhachHang> selectAll() {
+        String sql = "SELECT * FROM khachhang";
+        return selectBySql(sql);
+    }
 }
