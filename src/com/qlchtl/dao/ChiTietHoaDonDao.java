@@ -37,7 +37,7 @@ public class ChiTietHoaDonDao {
     {
         String sql="SELECT * FROM ChiTietHoaDon WHERE MaHD=?";
         List<ChiTietHoaDon> list=selectBySql(sql, maHD);
-        return !list.isEmpty() ?list.getFirst():null;
+        return !list.isEmpty() ?list.get(0):null;
     }
     public List<ChiTietHoaDon> selectBySql(String sql, Object... args)
     {
