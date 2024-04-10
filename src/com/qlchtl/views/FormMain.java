@@ -1,27 +1,40 @@
 package com.qlchtl.views;
 
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
+import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.SanPham;
+import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import com.qlchtl.views.SubComponent.ClientForm;
 import java.awt.Color;
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 
 public class FormMain extends javax.swing.JFrame {
 
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
+
+    SanPhamDao sanPhamDao = new SanPhamDao();
+    KhoDao khoDAo = new KhoDao();
+
+    public static String maSp;
+
+
     
     public String getIdProductSelected(){
         return this.idProductSelected;
@@ -36,6 +49,7 @@ public class FormMain extends javax.swing.JFrame {
     public void setIdStaffSelected(String a) {
         this.idStaffSelected = a;
     }
+
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
@@ -583,7 +597,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAccount)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -878,6 +892,11 @@ public class FormMain extends javax.swing.JFrame {
         btnDeleteProdFound.setColorOver(new java.awt.Color(232, 113, 122));
         btnDeleteProdFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDeleteProdFound.setRadius(15);
+        btnDeleteProdFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteProdFoundMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout myPanelBoxShadow4Layout = new javax.swing.GroupLayout(myPanelBoxShadow4);
         myPanelBoxShadow4.setLayout(myPanelBoxShadow4Layout);
@@ -1288,6 +1307,7 @@ public class FormMain extends javax.swing.JFrame {
         scpStaff.setVerticalScrollBar(scrbstaff);
     }    
 
+
     private Runnable renderStaffItem() {
         Component viewport = scpStaff.getViewport().getView();
         if (viewport instanceof JPanel) {
@@ -1307,7 +1327,7 @@ public class FormMain extends javax.swing.JFrame {
                     MyPanelBoxShadow pn = itf.createItemStaffComponent(i, col, row, "Code of product", "ahihi", "ahihi", "1", "ahihi");
                     pnl.add((Component) pn);
                     col++; 
-                    if (col >= 1) { 
+                    if (col >= 1) {
                         col = 0;
                         row++;
                         SwingUtilities.invokeLater(new Runnable() {
@@ -1329,7 +1349,7 @@ public class FormMain extends javax.swing.JFrame {
         return a;
     }
     
-    SanPhamDao sanPhamDao = new SanPhamDao();
+
     private Runnable renderProdItem() {
         List<SanPham> listsp = sanPhamDao.selectAll();
         Component viewport = scpProduct.getViewport().getView();
@@ -1348,26 +1368,39 @@ public class FormMain extends javax.swing.JFrame {
             public void run() {
                 int col = 0;
                 int row = 0;
+                int size = 0;
                 for (SanPham cd : listsp) {
 
-                    MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row,cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), cd.getTrangThai());
-                    if(col==0 && row == 0) {
-                        idProductSelected = cd.getMaSP();
-                        setProductSelected(cd.getImg(),cd.getTenSP(),cd.getTienGoc(),cd.getTrangThai());
-                    }
-                    pnl.add((Component) pn);
-                    col++;
-                    if (col > 2) {
-                        col = 0;
-                        row++;
-                    }
-                    final int finalRow = row;
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            int height = (finalRow + 1) * pn.getHeight() + 10 * (finalRow + 1); // Cập nhật chiều cao của panel
-                            pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
+                    if(!cd.getTrangThai().equals("0")) {
+                        Kho kho = khoDAo.selectById(cd.getMaSP());
+                        size++;
+                        MyPanelBoxShadow pn = itpd.createItemProdComponent(col, row, cd.getMaSP(), cd.getTenSP(), cd.getImg(), cd.getTienGoc(), String.valueOf(kho.getSoLuong()));
+                        if (col == 0 && row == 0) {
+                            idProductSelected = cd.getMaSP();
+                            setProductSelected(cd.getImg(), cd.getTenSP(), cd.getTienGoc(), String.valueOf(kho.getSoLuong()));
                         }
-                    });
+                        pnl.add((Component) pn);
+                        col++;
+                        if (col > 2) {
+                            col = 0;
+                            row++;
+
+                        }
+                        final int finalRow = row;
+                        final int finalSize = size;
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                int height = 0;
+                                if(finalSize%3==0){
+                                     height = (finalRow ) * pn.getHeight() + 10 * (finalRow );
+                                }
+                                else {
+                                     height = (finalRow +1 ) * pn.getHeight() + 10 * (finalRow +1);
+                                }
+                                pnl.setPreferredSize(new Dimension(scpProduct.getPreferredSize().width, height));
+                            }
+                        });
+                    }
                 }
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1378,6 +1411,7 @@ public class FormMain extends javax.swing.JFrame {
         };
         return a;
     }
+
     
     public void setStaffFound(String name, String state, String phone) {
         lblNameStaffFound.setText(name);
@@ -1385,6 +1419,9 @@ public class FormMain extends javax.swing.JFrame {
         lblStateStaffFound.setText(state);
         lblPhoneStaffFound.setText(phone);
     }
+
+
+
     public void setProductSelected(String urlImage,String name, String price, String quantity) {
         String imagePath = "/com/qlchtl/image/imageSanPham/"+urlImage;
         java.net.URL imageURL = getClass().getResource(imagePath);
@@ -1396,7 +1433,15 @@ public class FormMain extends javax.swing.JFrame {
         lblProductNameFound.setText(name);
         lblCodeProductFound.setText(idProductSelected);
         lblPriceProdFound.setText(price);
-        lblQuantityProductFound.setText(quantity);
+
+        if(!quantity.equals("0")){
+            lblQuantityProductFound.setText("Còn Hàng");
+        }
+        else{
+            lblQuantityProductFound.setText("Hết Hàng");
+
+        }
+
     }
     
     private void renderItemStaffWithThread() {
@@ -1494,7 +1539,12 @@ public class FormMain extends javax.swing.JFrame {
 
     private void DetailProdFoundClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DetailProdFoundClick
         // TODO add your handling code here:
+        if(idProductSelected != null){
+            maSp = idProductSelected;
+        }
+
         DetailProduct dtpd = new DetailProduct(this.idProductSelected);
+        System.out.println(idProductSelected);
         dtpd.setVisible(true);
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -1503,6 +1553,11 @@ public class FormMain extends javax.swing.JFrame {
     private void btnViewProductFoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProductFoundActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewProductFoundActionPerformed
+
+    private void btnDeleteProdFoundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteProdFoundMouseClicked
+        // TODO add your handling code here:
+        delete();
+    }//GEN-LAST:event_btnDeleteProdFoundMouseClicked
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1638,4 +1693,25 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JPanel ucProduct;
     private javax.swing.JPanel ucStaff;
     // End of variables declaration//GEN-END:variables
+
+
+    SanPham getFormSanPham() {
+        SanPham sp = new SanPham();
+        sp.setMaSP(lblCodeProductFound.getText());
+        sp.setTrangThai("0");
+        return sp;
+
+    }
+
+    void delete() {
+        SanPham sp = getFormSanPham();
+        try {
+            sanPhamDao.updateTrangThai(sp);
+            MsgBox.alert(this, "Cập nhật thành công!");
+            renderItemProdWithThread();
+        } catch (Exception e) {
+            MsgBox.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
 }

@@ -38,6 +38,33 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
                 sanPham.getMaNCC(),
                 sanPham.getImg(),
                 sanPham.getMaSP());
+
+    }
+
+
+    public void updateTrangThai(SanPham sanPham) {
+        String sql = "UPDATE sanpham SET TrangThai = ? WHERE MaSP = ?";
+        XJdbc.update(sql,
+                sanPham.getTrangThai(),
+                sanPham.getMaSP());
+
+    }
+
+
+
+
+    public void updatekHinh(SanPham sanPham) {
+        String sql = "UPDATE sanpham SET TenSP = ?, NoiSanXuat = ?, TrangThai = ?, TienGoc = ?, TienThanhToan = ?, " +
+                "NgayNhapHang = ?, MaNCC = ? WHERE MaSP = ?";
+        XJdbc.update(sql,
+                sanPham.getTenSP(),
+                sanPham.getNoiSanXuat(),
+                sanPham.getTrangThai(),
+                sanPham.getTienGoc(),
+                sanPham.getTienThanhToan(),
+                sanPham.getNgayNhapHang(),
+                sanPham.getMaNCC(),
+                sanPham.getMaSP());
     }
 
     @Override
@@ -57,6 +84,13 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
     public List<SanPham> selectAll() {
         String sql = "SELECT * FROM sanpham";
         return selectBySql(sql);
+    }
+
+
+    public  SanPham spLIMIT (){
+        String sql = "SELECT * FROM sanpham LIMIT 1";
+        List<SanPham> list = selectBySql(sql);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     protected List<SanPham> selectBySql(String sql, Object... args) {
