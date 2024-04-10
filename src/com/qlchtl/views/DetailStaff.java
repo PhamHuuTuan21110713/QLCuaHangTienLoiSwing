@@ -4,6 +4,9 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.views.MyControls.MyTable;
+import java.awt.Color;
+
 /**
  *
  * @author Dell
@@ -13,9 +16,13 @@ public class DetailStaff extends javax.swing.JFrame {
     /**
      * Creates new form DetailStaff
      */
-    public DetailStaff() {
+    private String idStaff;
+    public DetailStaff(String idStaff) {
         initComponents();
+        this.idStaff = idStaff;
         this.setLocationRelativeTo(null);
+        MyTable.apply(scpStaffSchedule, MyTable.TableType.DEFAULT);
+        setUpControl(false);
     }
 
     /**
@@ -59,6 +66,11 @@ public class DetailStaff extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(237, 237, 237));
 
@@ -68,14 +80,10 @@ public class DetailStaff extends javax.swing.JFrame {
         myPanel1.setRoundTopLeft(10);
         myPanel1.setRoundTopRight(10);
 
-        txtNameDetailStaff.setEditable(false);
-        txtNameDetailStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtNameDetailStaff.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         txtNameDetailStaff.setText("Phạm Hữu Tuấn");
         txtNameDetailStaff.setBorder(null);
 
-        txtCodeStaff.setEditable(false);
-        txtCodeStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtCodeStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtCodeStaff.setForeground(new java.awt.Color(102, 102, 102));
         txtCodeStaff.setText("21110713");
@@ -86,7 +94,6 @@ public class DetailStaff extends javax.swing.JFrame {
         cboRankStaff.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cboRankStaff.setForeground(new java.awt.Color(10, 144, 201));
         cboRankStaff.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cboRankStaff.setEnabled(false);
 
         javax.swing.GroupLayout myPanel1Layout = new javax.swing.GroupLayout(myPanel1);
         myPanel1.setLayout(myPanel1Layout);
@@ -135,8 +142,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel2.setText("Date of birth");
         myPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 15, 82, -1));
 
-        txtBirthdayStaff.setEditable(false);
-        txtBirthdayStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtBirthdayStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtBirthdayStaff.setText("24/11/2003");
         txtBirthdayStaff.setBorder(null);
@@ -147,8 +152,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel3.setText("Date of work");
         myPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 77, 82, -1));
 
-        txtWorkdayStaff.setEditable(false);
-        txtWorkdayStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtWorkdayStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtWorkdayStaff.setText("24/11/2003");
         txtWorkdayStaff.setBorder(null);
@@ -159,8 +162,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel4.setText("Phone number");
         myPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 136, -1, -1));
 
-        txtPhoneStaff.setEditable(false);
-        txtPhoneStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtPhoneStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtPhoneStaff.setText("0928895717");
         txtPhoneStaff.setBorder(null);
@@ -171,8 +172,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel5.setText("Address");
         myPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 15, 82, -1));
 
-        txtAddressStaff.setEditable(false);
-        txtAddressStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtAddressStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtAddressStaff.setText("Ho Chi Minh");
         txtAddressStaff.setBorder(null);
@@ -183,8 +182,6 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel6.setText("Identification card");
         myPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 77, -1, -1));
 
-        txtIndentifyStaff.setEditable(false);
-        txtIndentifyStaff.setBackground(new java.awt.Color(255, 255, 255));
         txtIndentifyStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtIndentifyStaff.setText("0323123123");
         txtIndentifyStaff.setBorder(null);
@@ -198,13 +195,11 @@ public class DetailStaff extends javax.swing.JFrame {
         buttonGroup1.add(rdoMale);
         rdoMale.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoMale.setText("Male");
-        rdoMale.setEnabled(false);
         myPanel2.add(rdoMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 158, -1, -1));
 
         buttonGroup1.add(rdoFemale);
         rdoFemale.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoFemale.setText("Female");
-        rdoFemale.setEnabled(false);
         myPanel2.add(rdoFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 158, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -216,16 +211,20 @@ public class DetailStaff extends javax.swing.JFrame {
         btnConfirm.setText("Confirm");
         btnConfirm.setColorClick(new java.awt.Color(100, 227, 131));
         btnConfirm.setColorOver(new java.awt.Color(19, 173, 57));
+        btnConfirm.setEnabled(false);
         btnConfirm.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnConfirm.setRadius(15);
+        btnConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ConfrimStaffClick(evt);
+            }
+        });
         myPanel2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 89, 43));
 
         cboStateStaff.setBackground(new java.awt.Color(148, 209, 235));
-        cboStateStaff.setEditable(true);
         cboStateStaff.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cboStateStaff.setForeground(new java.awt.Color(10, 144, 201));
         cboStateStaff.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cboStateStaff.setEnabled(false);
         myPanel2.add(cboStateStaff, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 92, -1));
 
         btnUpdateStaff1.setForeground(new java.awt.Color(30, 136, 56));
@@ -234,6 +233,11 @@ public class DetailStaff extends javax.swing.JFrame {
         btnUpdateStaff1.setColorOver(new java.awt.Color(19, 173, 57));
         btnUpdateStaff1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUpdateStaff1.setRadius(15);
+        btnUpdateStaff1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateStaffClick(evt);
+            }
+        });
         myPanel2.add(btnUpdateStaff1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 87, 89, 43));
 
         myPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -246,17 +250,47 @@ public class DetailStaff extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Employee schedule");
 
+        scpStaffSchedule.setBackground(new java.awt.Color(102, 255, 255));
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Staff Code", "Work Date", "Code Shift", "StartTime", "End Time"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         scpStaffSchedule.setViewportView(jTable1);
 
         javax.swing.GroupLayout myPanel4Layout = new javax.swing.GroupLayout(myPanel4);
@@ -278,8 +312,8 @@ public class DetailStaff extends javax.swing.JFrame {
             .addGroup(myPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(scpStaffSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scpStaffSchedule, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -323,6 +357,61 @@ public class DetailStaff extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setUpControl(Boolean b) {
+        txtNameDetailStaff.setEditable(b);
+        txtCodeStaff.setEditable(b);
+        txtBirthdayStaff.setEditable(b);
+        txtWorkdayStaff.setEditable(b);
+        txtPhoneStaff.setEditable(b);
+        txtAddressStaff.setEditable(b);
+        txtIndentifyStaff.setEditable(b);
+        rdoFemale.setEnabled(b);
+        rdoMale.setEnabled(b);
+        cboRankStaff.setEnabled(b);
+        cboStateStaff.setEnabled(b);
+        if(b==false) {
+            cboRankStaff.setBackground(new Color(148,209,235));
+            cboStateStaff.setBackground(new Color(148,209,235));
+            Color colortxt = new Color(255,255,255);
+            txtNameDetailStaff.setBackground(colortxt);
+            txtCodeStaff.setBackground(colortxt);
+            txtBirthdayStaff.setBackground(colortxt);
+            txtWorkdayStaff.setBackground(colortxt);
+            txtPhoneStaff.setBackground(colortxt);
+            txtAddressStaff.setBackground(colortxt);
+            txtIndentifyStaff.setBackground(colortxt);
+            
+        } else {
+            Color colortxt = new Color(242, 242, 242);
+            txtNameDetailStaff.setBackground(colortxt);
+            txtCodeStaff.setBackground(colortxt);
+            txtBirthdayStaff.setBackground(colortxt);
+            txtWorkdayStaff.setBackground(colortxt);
+            txtPhoneStaff.setBackground(colortxt);
+            txtAddressStaff.setBackground(colortxt);
+            txtIndentifyStaff.setBackground(colortxt);
+            cboRankStaff.setBackground(new Color(148,209,235));
+            cboStateStaff.setBackground(new Color(148,209,235));
+            
+        }
+    }
+    private void UpdateStaffClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateStaffClick
+        // TODO add your handling code here:
+        setUpControl(true);
+        btnConfirm.setEnabled(true);
+    }//GEN-LAST:event_UpdateStaffClick
+
+    private void ConfrimStaffClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfrimStaffClick
+        // TODO add your handling code here:
+        setUpControl(false);
+        btnConfirm.setEnabled(false);
+    }//GEN-LAST:event_ConfrimStaffClick
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -353,7 +442,7 @@ public class DetailStaff extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailStaff().setVisible(true);
+                new DetailStaff("ahihi").setVisible(true);
             }
         });
     }
