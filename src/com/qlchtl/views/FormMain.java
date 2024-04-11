@@ -18,6 +18,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
+import com.qlchtl.views.SubComponent.RankForm;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -68,6 +69,7 @@ public class FormMain extends javax.swing.JFrame {
         
         tpnMain.addTab("", new ClientForm(this));
         tpnMain.addTab("", new InvoiceForm(this));
+        tpnMain.addTab("", new RankForm(this));
     }
     /**
      * This method is called from within the constructor to initialize the form.
