@@ -11,6 +11,7 @@ import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import com.qlchtl.views.SubComponent.ClientForm;
+import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -56,6 +57,7 @@ public class FormMain extends javax.swing.JFrame {
         this.lgin = lgin;
         setLocationRelativeTo(null);
         settingScrollPane();
+        setTupTabbedPane();
         List<SanPham> listsanPham = sanPhamDao.selectAll();
         renderItemProdWithThread(listsanPham);
        
@@ -65,6 +67,7 @@ public class FormMain extends javax.swing.JFrame {
     private void setTupTabbedPane() {
         
         tpnMain.addTab("", new ClientForm(this));
+        tpnMain.addTab("", new InvoiceForm(this));
     }
     /**
      * This method is called from within the constructor to initialize the form.
