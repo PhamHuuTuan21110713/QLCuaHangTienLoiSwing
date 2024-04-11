@@ -1523,7 +1523,7 @@ public class FormMain extends javax.swing.JFrame {
 
     private void AccountClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountClick
         // TODO add your handling code here:
-         tpnMain.setSelectedIndex(6);   
+        tpnMain.setSelectedIndex(6);   
         setPresentTabVisible(evt,"Account");
     }//GEN-LAST:event_AccountClick
 

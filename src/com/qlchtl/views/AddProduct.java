@@ -33,6 +33,7 @@ public class AddProduct extends javax.swing.JFrame {
     /**
      * Creates new form AddProduct
      */
+    private javax.swing.JFileChooser fileChooser;
     public AddProduct() {
         fileChooser = new javax.swing.JFileChooser();
         initComponents();
@@ -56,7 +57,7 @@ public class AddProduct extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        fileChooser = new javax.swing.JFileChooser();
+
         jPanel1 = new javax.swing.JPanel();
         myPanelBoxShadow1 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblImageProd = new javax.swing.JLabel();
@@ -129,6 +130,11 @@ public class AddProduct extends javax.swing.JFrame {
         btnClearImage.setColorOver(new java.awt.Color(89, 179, 177));
         btnClearImage.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnClearImage.setRadius(20);
+        btnClearImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClearImageMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
         myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
@@ -311,6 +317,8 @@ public class AddProduct extends javax.swing.JFrame {
 
         jPanel12.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
+        txtInputDateProd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtInputDateProd.setForeground(new java.awt.Color(102, 102, 102));
         txtInputDateProd.setBorder(null);
         jPanel12.add(txtInputDateProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 190, 30));
 
@@ -323,8 +331,6 @@ public class AddProduct extends javax.swing.JFrame {
         PriceProd1.setText("Supplier code");
         jPanel14.add(PriceProd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, -1));
 
-
-
         Set<String> uniquePromotionNames = new HashSet<>();
         for (NhaCungCap promotion : listNCC) {
             uniquePromotionNames.add(promotion.getMaNCC());
@@ -332,7 +338,6 @@ public class AddProduct extends javax.swing.JFrame {
         String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
-
 
         if (promotionNamesWithNone.length > 0) {
             firstPromotionName[0] = promotionNamesWithNone[0];
@@ -360,6 +365,11 @@ public class AddProduct extends javax.swing.JFrame {
         btnCancel.setColorOver(new java.awt.Color(204, 204, 204));
         btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancel.setRadius(20);
+        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, 130, 50));
 
         btnConfirm1.setForeground(new java.awt.Color(24, 145, 143));
@@ -433,6 +443,17 @@ public class AddProduct extends javax.swing.JFrame {
         insert();
     }//GEN-LAST:event_btnConfirm1MouseClicked
 
+    private void btnClearImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearImageMouseClicked
+        // TODO add your handling code here:
+        lblImageProd.setIcon(null);
+        lblImageProd.setToolTipText(null);
+    }//GEN-LAST:event_btnClearImageMouseClicked
+
+    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
+        // TODO add your handling code here:
+         dispose();
+    }//GEN-LAST:event_btnCancelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -503,12 +524,7 @@ public class AddProduct extends javax.swing.JFrame {
     private javax.swing.JTextField txtManuFacPlaceProd;
     private javax.swing.JTextField txtNameProd;
     private javax.swing.JTextField txtPriceProd;
-
-    private javax.swing.JFileChooser fileChooser;
-
-
     private javax.swing.JTextField txtQuantityProd;
-
     // End of variables declaration//GEN-END:variables
 
     String img;
@@ -567,14 +583,7 @@ public class AddProduct extends javax.swing.JFrame {
 
         String maSP = txtCodeProd.getText().trim();
         String input = txtQuantityProd.getText().trim();
-        int sl;
-
-        try {
-            sl = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-
+        int sl = Integer.parseInt(input);
 
         kho.setMaCH("CH00000001");
         kho.setMaSP(maSP);
@@ -590,7 +599,8 @@ public class AddProduct extends javax.swing.JFrame {
         txtManuFacPlaceProd.setText("");
         txtPriceProd.setText("");
         txtInputDateProd.setText("");
-        lblImageProd.setText("");
+        lblImageProd.setIcon(null);
+        lblImageProd.setToolTipText(null);
         jComboBox1.setSelectedIndex(0);
         txtQuantityProd.setText("");
 
@@ -605,8 +615,8 @@ public class AddProduct extends javax.swing.JFrame {
         SanPham modelsp = getFormSanPham();
         if (modelsp != null && modelKho!=null) {
             try {
-                khoDao.insert(modelKho);
                 sanPhamDao.insert(modelsp);
+                khoDao.insert(modelKho);
                 MsgBox.alert(this, "Thêm sản phẩm thành công!");
                 resetText();
             } catch (Exception e) {
