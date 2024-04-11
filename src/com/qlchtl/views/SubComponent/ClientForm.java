@@ -273,17 +273,27 @@ public class ClientForm extends javax.swing.JPanel {
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlBtnUpdate.setBackground(new java.awt.Color(153, 153, 153));
+        pnlBtnUpdate.setBackground(new java.awt.Color(101, 181, 94));
         pnlBtnUpdate.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnUpdate.setShadowColor(new java.awt.Color(153, 153, 153));
         pnlBtnUpdate.setShadowOpacity(0.8F);
         pnlBtnUpdate.setShadowSize(3);
+        pnlBtnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateClick(evt);
+            }
+        });
 
         lblBtnUpdate.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblBtnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         lblBtnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBtnUpdate.setText("U");
         lblBtnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBtnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UpdateClick(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBtnUpdateLayout = new javax.swing.GroupLayout(pnlBtnUpdate);
         pnlBtnUpdate.setLayout(pnlBtnUpdateLayout);
@@ -301,17 +311,27 @@ public class ClientForm extends javax.swing.JPanel {
 
         jPanel15.add(pnlBtnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
-        pnlBtnDelete.setBackground(new java.awt.Color(153, 153, 153));
+        pnlBtnDelete.setBackground(new java.awt.Color(207, 103, 114));
         pnlBtnDelete.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnDelete.setShadowColor(new java.awt.Color(153, 153, 153));
         pnlBtnDelete.setShadowOpacity(0.8F);
         pnlBtnDelete.setShadowSize(3);
+        pnlBtnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DeleteClick(evt);
+            }
+        });
 
         lblBtnDelete.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblBtnDelete.setForeground(new java.awt.Color(255, 255, 255));
         lblBtnDelete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBtnDelete.setText("-");
         lblBtnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBtnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DeleteClick(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBtnDeleteLayout = new javax.swing.GroupLayout(pnlBtnDelete);
         pnlBtnDelete.setLayout(pnlBtnDeleteLayout);
@@ -331,11 +351,16 @@ public class ClientForm extends javax.swing.JPanel {
 
         jPanel15.add(pnlBtnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
-        pnlBtnAdd.setBackground(new java.awt.Color(153, 153, 153));
+        pnlBtnAdd.setBackground(new java.awt.Color(238, 242, 116));
         pnlBtnAdd.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnAdd.setShadowColor(new java.awt.Color(153, 153, 153));
         pnlBtnAdd.setShadowOpacity(0.8F);
         pnlBtnAdd.setShadowSize(3);
+        pnlBtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CreateClick(evt);
+            }
+        });
         pnlBtnAdd.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblBtnAdd.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -343,11 +368,16 @@ public class ClientForm extends javax.swing.JPanel {
         lblBtnAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBtnAdd.setText("+");
         lblBtnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CreateClick(evt);
+            }
+        });
         pnlBtnAdd.add(lblBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 30));
 
         jPanel15.add(pnlBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
-        pnlBtnShowMoreOption.setBackground(new java.awt.Color(153, 153, 153));
+        pnlBtnShowMoreOption.setBackground(new java.awt.Color(109, 158, 237));
         pnlBtnShowMoreOption.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnShowMoreOption.setShadowColor(new java.awt.Color(153, 153, 153));
         pnlBtnShowMoreOption.setShadowOpacity(0.8F);
@@ -429,23 +459,35 @@ public class ClientForm extends javax.swing.JPanel {
         lblUpdate.setForeground(new java.awt.Color(102, 102, 102));
         lblUpdate.setText("Update");
 
+        btnConfirm.setBackground(new java.awt.Color(101, 181, 94));
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Confirm");
-        btnConfirm.setBorderColor(new java.awt.Color(153, 153, 153));
-        btnConfirm.setColor(new java.awt.Color(153, 153, 153));
-        btnConfirm.setColorClick(new java.awt.Color(153, 153, 153));
-        btnConfirm.setColorOver(new java.awt.Color(204, 204, 204));
+        btnConfirm.setBorderColor(new java.awt.Color(101, 181, 94));
+        btnConfirm.setColor(new java.awt.Color(101, 181, 94));
+        btnConfirm.setColorClick(new java.awt.Color(81, 150, 75));
+        btnConfirm.setColorOver(new java.awt.Color(149, 232, 142));
         btnConfirm.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnConfirm.setRadius(20);
+        btnConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ConfirmClick(evt);
+            }
+        });
 
+        btnCancel.setBackground(new java.awt.Color(101, 181, 94));
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
-        btnCancel.setBorderColor(new java.awt.Color(153, 153, 153));
-        btnCancel.setColor(new java.awt.Color(153, 153, 153));
-        btnCancel.setColorClick(new java.awt.Color(153, 153, 153));
-        btnCancel.setColorOver(new java.awt.Color(204, 204, 204));
+        btnCancel.setBorderColor(new java.awt.Color(101, 181, 94));
+        btnCancel.setColor(new java.awt.Color(101, 181, 94));
+        btnCancel.setColorClick(new java.awt.Color(81, 150, 75));
+        btnCancel.setColorOver(new java.awt.Color(149, 232, 142));
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancel.setRadius(20);
+        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CancelClick(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -604,6 +646,26 @@ public class ClientForm extends javax.swing.JPanel {
             this.isOpenButton = !this.isOpenButton;
         
     }//GEN-LAST:event_ShowMoreOptionClick
+
+    private void CreateClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreateClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreateClick
+
+    private void DeleteClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteClick
+
+    private void UpdateClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateClick
+
+    private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConfirmClick
+
+    private void CancelClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CancelClick
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

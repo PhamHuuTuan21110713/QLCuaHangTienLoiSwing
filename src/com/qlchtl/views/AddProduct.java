@@ -4,6 +4,7 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.NhaCungCapDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.ChiTietKhuyenMai;
@@ -45,6 +46,7 @@ public class AddProduct extends javax.swing.JFrame {
 
 
     SanPhamDao sanPhamDao = new SanPhamDao();
+    KhoDao khoDao = new KhoDao();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -528,16 +530,58 @@ public class AddProduct extends javax.swing.JFrame {
 
     SanPham getFormSanPham() {
         SanPham sp = new SanPham();
-        sp.setMaSP(txtCodeProd.getText());
-        sp.setTenSP(txtNameProd.getText());
-        sp.setNoiSanXuat(txtManuFacPlaceProd.getText());
+        String maSP = txtCodeProd.getText().trim();
+        String tenSP = txtNameProd.getText().trim();
+        String noiSanXuat = txtManuFacPlaceProd.getText().trim();
+        String tienGoc = txtPriceProd.getText().trim();
+        String tienThanhToan = txtPriceProd.getText().trim();
+        String dateString = txtInputDateProd.getText().trim();
+        LocalDate date = null;
+
+
+        if (img==null || maSP.isEmpty() || tenSP.isEmpty() || noiSanXuat.isEmpty() || tienGoc.isEmpty() || tienThanhToan.isEmpty() || dateString.isEmpty()) {
+            return null;
+        }
+
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            date = LocalDate.parse(dateString, inputFormatter);
+        } catch (Exception e) {
+            return null;
+        }
+
+        sp.setMaSP(maSP);
+        sp.setTenSP(tenSP);
+        sp.setNoiSanXuat(noiSanXuat);
         sp.setTrangThai("1");
-        sp.setTienGoc(txtPriceProd.getText());
-        sp.setTienThanhToan(txtPriceProd.getText());
-        sp.setNgayNhapHang(LocalDate.now());
+        sp.setTienGoc(tienGoc);
+        sp.setTienThanhToan(tienThanhToan);
+        sp.setNgayNhapHang(date);
         sp.setMaNCC(firstPromotionName[0]);
         sp.setImg(img);
         return sp;
+    }
+
+    Kho getFormKho() {
+        Kho kho = new Kho();
+
+        String maSP = txtCodeProd.getText().trim();
+        String input = txtQuantityProd.getText().trim();
+        int sl;
+
+        try {
+            sl = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+
+        kho.setMaCH("CH00000001");
+        kho.setMaSP(maSP);
+        kho.setTenKho("Kho chinh");
+        kho.setSoLuong(sl);
+        System.out.println(kho);
+        return kho;
     }
 
     void resetText(){
@@ -548,18 +592,28 @@ public class AddProduct extends javax.swing.JFrame {
         txtInputDateProd.setText("");
         lblImageProd.setText("");
         jComboBox1.setSelectedIndex(0);
+        txtQuantityProd.setText("");
 
     }
 
-    void insert(){
+
+
+
+
+    void insert() {
+        Kho modelKho = getFormKho();
         SanPham modelsp = getFormSanPham();
-        try {
-            sanPhamDao.insert(modelsp);
-            MsgBox.alert(this, "Thêm sản phẩm thành công!");
+        if (modelsp != null && modelKho!=null) {
+            try {
+                khoDao.insert(modelKho);
+                sanPhamDao.insert(modelsp);
+                MsgBox.alert(this, "Thêm sản phẩm thành công!");
+                resetText();
+            } catch (Exception e) {
+                MsgBox.alert(this, "Thêm sản phẩm thất bại!");
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin  sản phẩm.");
         }
-        catch (Exception e) {
-            MsgBox.alert(this, "Thêm sản phẩm thất bại!");
-        }
-        resetText();
     }
 }
