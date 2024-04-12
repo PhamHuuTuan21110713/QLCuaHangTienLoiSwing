@@ -60,14 +60,14 @@ public class KhachHangDao {
     }
     public void updateThemDiem(KhachHang khachhang, int diemCong)
     {
-        String sql = "UPDATE khachhang SET SoDiemDaTich=? SoDiemHienCo=? WHERE MaKH = ?";
+        String sql = "UPDATE khachhang SET SoDiemDaTich=?, SoDiemHienCo=? WHERE MaKH = ?";
         XJdbc.update(sql,
                 khachhang.getSoDiemDaTich()+diemCong,
                 khachhang.getSoDiemHienCo()+diemCong,
                 khachhang.getMaKH());
     }
     public KhachHang selectById(String maKH) {
-        String sql = "SELECT * FROM sanpham WHERE MaKH = ?";
+        String sql = "SELECT * FROM khachhang WHERE MaKH = ?";
         List<KhachHang> list = selectBySql(sql, maKH);
         return list.size() > 0 ? list.get(0) : null;
     }
