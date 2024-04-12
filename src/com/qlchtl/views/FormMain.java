@@ -4,8 +4,10 @@ import java.awt.Component;
 import javax.swing.*;
 
 import com.qlchtl.dao.KhoDao;
+import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.Kho;
+import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
@@ -34,8 +36,9 @@ public class FormMain extends javax.swing.JFrame {
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
 
-    public static String maSp;
+    NhanVienDao nhanVienDao = new NhanVienDao();
 
+    public static String maSp;
 
     
     public String getIdProductSelected(){
@@ -53,6 +56,7 @@ public class FormMain extends javax.swing.JFrame {
     }
 
 
+
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
@@ -61,6 +65,7 @@ public class FormMain extends javax.swing.JFrame {
         setTupTabbedPane();
         List<SanPham> listsanPham = sanPhamDao.selectAll();
         renderItemProdWithThread(listsanPham);
+        
        
 
     }
@@ -1321,7 +1326,7 @@ public class FormMain extends javax.swing.JFrame {
     }    
 
 
-    private Runnable renderStaffItem() {
+    private Runnable renderStaffItem(List<NhanVien> listnv) {
         Component viewport = scpStaff.getViewport().getView();
         if (viewport instanceof JPanel) {
             scpStaff.setViewportView(null);
@@ -1336,8 +1341,12 @@ public class FormMain extends javax.swing.JFrame {
             public void run() {
                 int col = 0;
                 int row = 0;
-                for (int i = 0; i < 30; i++) {
-                    MyPanelBoxShadow pn = itf.createItemStaffComponent(i, col, row, "Code of product", "ahihi", "ahihi", "1", "ahihi");
+                for (NhanVien cd : listnv) {
+                    MyPanelBoxShadow pn = itf.createItemStaffComponent(col, row, cd.getMaNV(), cd.getHoTenNV(), cd.getGioiTinh(), cd.isTrangThai(), cd.getSdt());
+                    if (col == 0 && row == 0) {
+                        idStaffSelected = cd.getMaNV();
+                        setStaffFound(cd.getHoTenNV(), cd.isTrangThai(),cd.getMaNV(),cd.getSdt());
+                    }
                     pnl.add((Component) pn);
                     col++; 
                     if (col >= 1) {
@@ -1425,10 +1434,16 @@ public class FormMain extends javax.swing.JFrame {
     }
 
     
-    public void setStaffFound(String name, String state, String phone) {
+    public void setStaffFound(String name, Boolean state,String code, String phone) {
         lblNameStaffFound.setText(name);
-        lblCodeStaffFound.setText(this.idStaffSelected);
-        lblStateStaffFound.setText(state);
+        lblCodeStaffFound.setText(code);
+        if(state==true){
+            lblStateStaffFound.setText("Đang làm");
+
+        }
+        else{
+            lblStateStaffFound.setText("Nghỉ việc");
+        }
         lblPhoneStaffFound.setText(phone);
     }
 
@@ -1456,8 +1471,8 @@ public class FormMain extends javax.swing.JFrame {
 
     }
     
-    private void renderItemStaffWithThread() {
-        Thread a = new Thread(renderStaffItem());
+    private void renderItemStaffWithThread(List<NhanVien> listsp) {
+        Thread a = new Thread(renderStaffItem(listsp));
         a.start();
     }
     
@@ -1489,7 +1504,8 @@ public class FormMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(1);   
         setPresentTabVisible(evt,"Staff");
-        renderItemStaffWithThread();
+        List<NhanVien> nhanVienList = nhanVienDao.selectAll();
+        renderItemStaffWithThread(nhanVienList);
     }//GEN-LAST:event_staffclick
 
     private void ProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductClick
