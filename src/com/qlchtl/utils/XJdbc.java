@@ -12,9 +12,9 @@ import java.sql.*;
  */
 public class XJdbc {
     private static String driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String dburl="jdbc:mysql://localhost:3306/qlchtl";
+    private static String dburl="jdbc:mysql://localhost:3306/qlcuahangtienloi";
     private static String username="root";
-    private static String password="123456";
+    private static String password="Hoang***1@";
     
    
      public static PreparedStatement getStmt(String sql, Object...args) throws SQLException {
