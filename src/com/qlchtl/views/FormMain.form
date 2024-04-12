@@ -1259,6 +1259,10 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="myPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                              <Component id="lbltest" min="-2" pref="112" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                       <Component id="jLabel20" pref="173" max="32767" attributes="0"/>
@@ -1279,6 +1283,8 @@
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="myPanel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="lbltest" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel20" pref="197" max="32767" attributes="0"/>
@@ -1417,6 +1423,11 @@
                           <Image iconType="3" name="/com/qlchtl/image/action-r.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="jLabel20"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lbltest">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="jLabel5"/>
                       </Properties>
                     </Component>
                   </SubComponents>

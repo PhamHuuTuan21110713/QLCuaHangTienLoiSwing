@@ -36,7 +36,7 @@ public class FormMain extends javax.swing.JFrame {
 
     public static String maSp;
 
-
+    
     
     public String getIdProductSelected(){
         return this.idProductSelected;
@@ -52,7 +52,9 @@ public class FormMain extends javax.swing.JFrame {
         this.idStaffSelected = a;
     }
 
-
+    public void setTest(String s) {
+        this.lbltest.setText(s);
+    }
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
@@ -141,6 +143,7 @@ public class FormMain extends javax.swing.JFrame {
         pnlAddNewPrd = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         lblAddNewProd = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        lbltest = new javax.swing.JLabel();
         ucStaff = new javax.swing.JPanel();
         pnlScrollStaff = new javax.swing.JPanel();
         pnlHeaderStaff = new javax.swing.JPanel();
@@ -1059,6 +1062,8 @@ public class FormMain extends javax.swing.JFrame {
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/action-r.png"))); // NOI18N
         jLabel20.setText("jLabel20");
 
+        lbltest.setText("jLabel5");
+
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
         myPanel2Layout.setHorizontalGroup(
@@ -1070,7 +1075,10 @@ public class FormMain extends javax.swing.JFrame {
                     .addGroup(myPanel2Layout.createSequentialGroup()
                         .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(myPanel2Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(lbltest, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(39, 39, 39)
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 173, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
@@ -1086,6 +1094,8 @@ public class FormMain extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(lbltest)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 197, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1682,6 +1692,7 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblStaff;
     private javax.swing.JLabel lblStateStaffFound;
     private javax.swing.JLabel lblTabName;
+    private javax.swing.JLabel lbltest;
     private com.qlchtl.views.MyControls.MyPanel myPanel1;
     private com.qlchtl.views.MyControls.MyPanel myPanel2;
     private com.qlchtl.views.MyControls.MyPanel myPanel3;
