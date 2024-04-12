@@ -258,7 +258,7 @@ public class LogIn extends javax.swing.JFrame {
 
     private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
         // TODO add your handling code here:
-//         dangNhap();
+         //dangNhap();
          FormMain frm = new FormMain(this);
          frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          frm.setVisible(true);
