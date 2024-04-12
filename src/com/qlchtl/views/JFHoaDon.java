@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -45,7 +46,6 @@ public class JFHoaDon extends javax.swing.JFrame {
         loadCustomers();
         loadProducts();
         createMaHD();
-        
         loadData();
         updateTongTien();
         setLocationRelativeTo(null);
@@ -275,6 +275,11 @@ public class JFHoaDon extends javax.swing.JFrame {
         jbtnSCanSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jbtnSCanSanPham.setLabel("Quét mã");
         jbtnSCanSanPham.setRadius(10);
+        jbtnSCanSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSCanSanPhamActionPerformed(evt);
+            }
+        });
 
         jbtnAddSanPham.setBorder(null);
         jbtnAddSanPham.setForeground(new java.awt.Color(102, 102, 102));
@@ -790,6 +795,15 @@ public class JFHoaDon extends javax.swing.JFrame {
             MsgBox.alert(this, "Điểm tích không đủ để dùng!");
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
+    private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
+                               
+        // TODO add your handling code here:
+        Scan scan = new Scan();
+        scan.setVisible(true);
+        scan.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+   
+    }//GEN-LAST:event_jbtnSCanSanPhamActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -865,7 +879,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyButton jbtnDeleteSanPham;
     private com.qlchtl.views.MyControls.MyButton jbtnSCanSanPham;
     private javax.swing.JComboBox<String> jcbIDKhachHang;
-    private javax.swing.JComboBox<String> jcbIDSanPham;
+    public javax.swing.JComboBox<String> jcbIDSanPham;
     private javax.swing.JLabel jlbPrice;
     private javax.swing.JLabel jlblIDNhanvien;
     private javax.swing.JLabel jlblSDTKhach;
@@ -983,5 +997,9 @@ public class JFHoaDon extends javax.swing.JFrame {
         jTextField2.setText(Double.toString(Sum));
         int diemtich=Double.valueOf(Sum).intValue()/10;
         jLabel25.setText(Integer.toString(diemtich));
+    }
+    public void getMaSPFromScan(String MaSP)
+    {
+        jcbIDSanPham.setSelectedItem(MaSP);
     }
 }
