@@ -238,7 +238,7 @@ public class DetailStaff extends javax.swing.JFrame {
                 UpdateStaffClick(evt);
             }
         });
-        myPanel2.add(btnUpdateStaff1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 87, 89, 43));
+        myPanel2.add(btnUpdateStaff1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 89, 43));
 
         myPanel4.setBackground(new java.awt.Color(255, 255, 255));
         myPanel4.setRoundBottomLeft(20);

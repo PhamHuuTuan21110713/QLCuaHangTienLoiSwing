@@ -117,7 +117,8 @@ public class ItemProduct {
         });
         btnDetail.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-              DetailProductClick(e,code);
+                FormMain.maSp = code;
+                DetailProductClick(e,FormMain.maSp);
             }
         });
         
@@ -176,6 +177,7 @@ public class ItemProduct {
     }
     
     private void DetailProductClick(MouseEvent evt, String code) {
+        System.out.print(code);
         DetailProduct dtpd = new DetailProduct(code);
         dtpd.setVisible(true);
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

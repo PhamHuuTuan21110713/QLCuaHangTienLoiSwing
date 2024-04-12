@@ -17,27 +17,37 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChiTietHoaDonDao {
-    public void insert(ChiTietHoaDon entity) {
-        String sql = "INSERT INTO chitiethoadon(MaSP, MaHD, MaCH, GiaThanhToan, SoLuong, TongTien) VALUES(?, ?, ?, ?, ?, ?)";
-        XJdbc.update(sql,
-                entity.getMaSp(),
-                entity.getMaHD(),
-                entity.getMaCH(),
-                entity.getGiaThanhToan(),
-                entity.getsL(),
-                entity.getTongTien());
-    }
+   public void insert(ChiTietHoaDon entity) {
+            String checkExistenceQuery = "SELECT COUNT(*) FROM chitiethoadon WHERE MaSP = ? AND MaHD=?";
+         int count = countRecords(checkExistenceQuery, entity.getMaSp(), entity.getMaHD());
+
+         if (count > 0) {
+
+             String updateQuery = "UPDATE chitiethoadon SET SoLuong = SoLuong + ? WHERE MaSP = ?";
+             XJdbc.update(updateQuery, entity.getsL(), entity.getMaSp());
+         } else {
+
+             String insertQuery = "INSERT INTO chitiethoadon(MaSP, MaHD, MaCH, GiaThanhToan, SoLuong, TongTien) VALUES(?, ?, ?, ?, ?, ?)";
+             XJdbc.update(insertQuery,
+                     entity.getMaSp(),
+                     entity.getMaHD(),
+                     entity.getMaCH(),
+                     entity.getGiaThanhToan(),
+                     entity.getsL(),
+                     entity.getTongTien());
+         }
+        }
 
     public void delete(String maSP,String maHD)
     {
         String sql = "DELETE FROM chitiethoadon WHERE MaSP = ? AND MaHD = ?";
         XJdbc.update(sql, maSP,maHD);
     }
-    public ChiTietHoaDon selectByMaHD(String maHD)
+    public List<ChiTietHoaDon> selectByMaHD(String maHD)
     {
         String sql="SELECT * FROM ChiTietHoaDon WHERE MaHD=?";
         List<ChiTietHoaDon> list=selectBySql(sql, maHD);
-        return !list.isEmpty() ?list.get(0):null;
+        return list;
     }
     public List<ChiTietHoaDon> selectBySql(String sql, Object... args)
     {
@@ -72,5 +82,16 @@ public class ChiTietHoaDonDao {
         }
         return list;
     }
+    public int countRecords(String sql, Object...params) {
+    try {
+        ResultSet rs = XJdbc.query(sql, params);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); 
+    }
+    return 0;
+}
 }
 

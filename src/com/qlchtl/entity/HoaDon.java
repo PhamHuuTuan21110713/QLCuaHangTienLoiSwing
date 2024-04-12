@@ -8,11 +8,12 @@ package com.qlchtl.entity;
  *
  * @author LENOVO
  */
+import java.time.LocalDate;
 import java.util.Date;
 
 public class HoaDon {
     private String maHD;
-    private Date ngayXuat;
+    private LocalDate ngayXuat;
     private String giaTri;
     private String maKH;
     private String maNV;
@@ -22,7 +23,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public HoaDon(String maHD, Date ngayXuat, String giaTri, String maKH, String maNV, int diemTich, int diemSuDung) {
+    public HoaDon(String maHD, LocalDate ngayXuat, String giaTri, String maKH, String maNV, int diemTich, int diemSuDung) {
         this.maHD = maHD;
         this.ngayXuat = ngayXuat;
         this.giaTri = giaTri;
@@ -32,13 +33,17 @@ public class HoaDon {
         this.diemSuDung = diemSuDung;
     }
 
-    public HoaDon(String maHD, Date ngayXuat, String giaTri, String maNV, int diemTich, int diemSuDung) {
+    public HoaDon(String maHD, LocalDate ngayXuat, String giaTri, String maNV, int diemTich, int diemSuDung) {
         this.maHD = maHD;
         this.ngayXuat = ngayXuat;
         this.giaTri = giaTri;
         this.maNV = maNV;
         this.diemTich = diemTich;
         this.diemSuDung = diemSuDung;
+    }
+
+    public HoaDon(String maHD) {
+        this.maHD = maHD;
     }
 
     public String getMaHD() {
@@ -49,11 +54,11 @@ public class HoaDon {
         this.maHD = maHD;
     }
 
-    public Date getNgayXuat() {
+    public LocalDate getNgayXuat() {
         return ngayXuat;
     }
 
-    public void setNgayXuat(Date ngayXuat) {
+    public void setNgayXuat(LocalDate ngayXuat) {
         this.ngayXuat = ngayXuat;
     }
 
