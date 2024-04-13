@@ -9,6 +9,7 @@ import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -31,6 +32,8 @@ public class ItemStaff {
                 StaffItemClick(evt, code);
             }
         });
+        JLabel avatar = new JLabel();
+        avatar.setIcon(new ImageIcon(getClass().getResource("/com/qlchtl/image/nv2.jpg")));
         
         MyPanelBoxShadow pnlAvatarStaff = new MyPanelBoxShadow();
         pnlAvatarStaff.setPreferredSize(new java.awt.Dimension(74, 74));
@@ -40,7 +43,6 @@ public class ItemStaff {
                 StaffItemClick(evt, code);
             }
         });
-        
         MyPanel pnlStateStaff = new MyPanel();
         if(state == "0"){
             pnlStateStaff.setBackground(new java.awt.Color(230, 30, 80));
@@ -71,6 +73,7 @@ public class ItemStaff {
             pnlAvatarStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAvatarStaffLayout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
+//                .addComponent(avatar)
                 .addComponent(pnlStateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -78,6 +81,7 @@ public class ItemStaff {
             pnlAvatarStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAvatarStaffLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                .addComponent(avatar)
                 .addComponent(pnlStateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

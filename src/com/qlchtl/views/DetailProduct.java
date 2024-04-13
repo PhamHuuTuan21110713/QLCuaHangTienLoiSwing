@@ -47,8 +47,8 @@ public class DetailProduct extends javax.swing.JFrame  {
 
 
 
-    SanPham sp = sanPhamDao.selectById(idProduct);
-    Kho kho = khoDAo.selectById(idProduct);
+    SanPham sp = sanPhamDao.selectById(FormMain.maSp);
+    Kho kho = khoDAo.selectById(FormMain.maSp);
     ChiTietKhuyenMai ctkm = ctkmDao.selectById(kho.getMaSP());
     List<ChuongTrinhKhuyenMai> chuongTrinhKhuyenMai = chuongTrinhKhuyenMaiDao.selectAll();
 
@@ -751,7 +751,7 @@ public class DetailProduct extends javax.swing.JFrame  {
 
     void fillTable(){
 
-        Kho kho = khoDAo.selectById(idProduct);
+        Kho kho = khoDAo.selectById(FormMain.maSp);
         kho.setMaSP(txtCodePrd.getText());
 
         int soLuong = Integer.parseInt(txtQuantityProd.getText());
@@ -762,7 +762,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         ctkm.setMaCT(txtPromotionProd.getText());
 
 
-        SanPham sp = sanPhamDao.selectById(idProduct);
+        SanPham sp = sanPhamDao.selectById(FormMain.maSp);
         txtCodePrd.setText(sp.getMaSP());
         txtNameProduct.setText(sp.getTenSP());
         txtPlacePrd.setText(sp.getNoiSanXuat());
