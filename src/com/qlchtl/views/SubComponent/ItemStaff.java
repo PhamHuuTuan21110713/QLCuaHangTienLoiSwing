@@ -48,7 +48,7 @@ public class ItemStaff extends Component {
         JLabel avatar = new JLabel();
 //        avatar.setIcon(new ImageIcon(getClass().getResource("/com/qlchtl/image/nv2.jpg")));
 
-        String imagePath = "/com/qlchtl/image/imageNhanVien/"+img;
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+img;
         ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
         Image image = imageIcon.getImage(); // Chuyển đổi ImageIcon thành Image
         Image newImage = getScaledCircleImage(image, 77);
@@ -300,7 +300,6 @@ public class ItemStaff extends Component {
     
      private void DetailStaffClick (MouseEvent e, String code) {
         parentForm.setIdStaffSelected(code);
-
         DetailStaff dtst = new DetailStaff(code);
         //System.out.print(code);
         dtst.setVisible(true);
