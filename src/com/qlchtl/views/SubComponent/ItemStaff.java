@@ -23,13 +23,13 @@ public class ItemStaff {
         this.parentForm = parentForm;
     }
     
-    public MyPanelBoxShadow createItemStaffComponent(Integer i,int numcol, int numrow,String code,String name,String gender, String state,String phone){
+    public MyPanelBoxShadow createItemStaffComponent(int numcol, int numrow,String code,String name,String gender, Boolean state,String phone){
         MyPanelBoxShadow  pnlItemStaff = new MyPanelBoxShadow();
         pnlItemStaff.setBackground(new java.awt.Color(255, 255, 255));
         pnlItemStaff.setShadowSize(3);
         pnlItemStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
+                StaffItemClick(evt, name, code,phone,state);
             }
         });
         JLabel avatar = new JLabel();
@@ -40,13 +40,13 @@ public class ItemStaff {
         pnlAvatarStaff.setTypeShape(java.lang.Boolean.TRUE);
         pnlAvatarStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
+                StaffItemClick(evt, name, code,phone,state);
             }
         });
         MyPanel pnlStateStaff = new MyPanel();
-        if(state == "0"){
+        if(state == false){
             pnlStateStaff.setBackground(new java.awt.Color(230, 30, 80));
-        } else if(state == "1"){
+        } else if(state == true){
              pnlStateStaff.setBackground(new java.awt.Color(52, 235, 146));
         }
         
@@ -89,10 +89,10 @@ public class ItemStaff {
         JLabel lblNameStaff = new JLabel();
         lblNameStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNameStaff.setForeground(new java.awt.Color(51, 51, 51));
-        lblNameStaff.setText(name + i.toString());
+        lblNameStaff.setText(name);
         lblNameStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
+                StaffItemClick(evt, name, code,phone,state);
             }
         });
         
@@ -102,7 +102,7 @@ public class ItemStaff {
         lblCodeStaff.setText(code);
         lblCodeStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
+                StaffItemClick(evt, name, code,phone,state);
             }
         });
         
@@ -112,7 +112,7 @@ public class ItemStaff {
         lblPhoneStaff.setText(phone);
         lblPhoneStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
+                StaffItemClick(evt, name, code,phone,state);
             }
         });
         
@@ -122,7 +122,7 @@ public class ItemStaff {
         lblPhoneStaff1.setText(gender);
         lblPhoneStaff1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, code);
+                StaffItemClick(evt, name, code,phone,state);
             }
         });
         
@@ -253,9 +253,9 @@ public class ItemStaff {
         return pnlItemStaff;
     }
     
-    private void StaffItemClick(MouseEvent e, String code) {
+    private void StaffItemClick(MouseEvent e,String name ,String code, String phone, Boolean state) {
         parentForm.setIdStaffSelected(code);
-        parentForm.setStaffFound("Current Name", "Current state", "Current Phone");
+        parentForm.setStaffFound(name, state, code, phone);
     }
     
     private void DeleteStaffClick(MouseEvent e, String code) {

@@ -329,6 +329,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="NewInvoiceClick"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMyInvoiceActionPerformed"/>
       </Events>
     </Component>
     <Component class="com.qlchtl.views.MyControls.SwitchButton" name="swbtnShowAll">
