@@ -56,8 +56,8 @@ public class DetailProduct extends javax.swing.JFrame  {
 
 
     public DetailProduct(String idProduct) {
-        initComponents();
         this.idProduct = idProduct;
+        initComponents();
         this.setLocationRelativeTo(null);
         setButton(false);
         setTextField(false);

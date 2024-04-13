@@ -3,6 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/views/LogIn.java</file>
+            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/views/FormMain.java</file>
+=======
 
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/Scan.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/NhanVienDao.java</file>
@@ -37,6 +41,7 @@
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/InvoiceForm.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietHoaDon.java</file>
 
+>>>>>>> 18e67cb27b5005243b85e4b3c0ae9c87ad02b553
         </group>
     </open-files>
 </project-private>

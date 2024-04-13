@@ -39,7 +39,6 @@ public class FormMain extends javax.swing.JFrame {
     NhanVienDao nhanVienDao = new NhanVienDao();
 
     public static String maSp;
-
     
     public String getIdProductSelected(){
         return this.idProductSelected;
@@ -1220,6 +1219,11 @@ public class FormMain extends javax.swing.JFrame {
         btnDetailStaffFound.setColorOver(new java.awt.Color(47, 173, 171));
         btnDetailStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDetailStaffFound.setRadius(20);
+        btnDetailStaffFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                StaffFoundClick(evt);
+            }
+        });
 
         btnDeleteStaffFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteStaffFound.setText("Delete");
@@ -1279,7 +1283,7 @@ public class FormMain extends javax.swing.JFrame {
                     .addGroup(ucStaffLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ucStaffLayout.setVerticalGroup(
             ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1591,6 +1595,10 @@ public class FormMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         searchName();
     }//GEN-LAST:event_lblGoSearchMouseClicked
+
+    private void StaffFoundClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StaffFoundClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StaffFoundClick
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
