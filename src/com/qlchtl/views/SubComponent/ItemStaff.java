@@ -4,43 +4,67 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.SanPham;
 import com.qlchtl.views.DetailStaff;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
+import com.qlchtl.utils.RoundedBorder;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import javax.swing.*;
 
 /**
  *
  * @author Dell
  */
-public class ItemStaff {
+public class ItemStaff extends Component {
     FormMain parentForm;
     public ItemStaff(FormMain parentForm) {
         this.parentForm = parentForm;
     }
-    
-    public MyPanelBoxShadow createItemStaffComponent(int numcol, int numrow,String code,String name,String gender, Boolean state,String phone){
+    private Image getScaledCircleImage(Image srcImg, int size) {
+        BufferedImage resizedImg = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+        Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, size, size);
+        g2.setClip(circle);
+        g2.drawImage(srcImg, 0, 0, size, size, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+    public MyPanelBoxShadow createItemStaffComponent(int numcol, int numrow,String code,String name,String gender, Boolean state,String phone, String img){
         MyPanelBoxShadow  pnlItemStaff = new MyPanelBoxShadow();
         pnlItemStaff.setBackground(new java.awt.Color(255, 255, 255));
         pnlItemStaff.setShadowSize(3);
         pnlItemStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, name, code,phone,state);
+                StaffItemClick(evt, name, code,phone,state, img);
             }
         });
         JLabel avatar = new JLabel();
-        avatar.setIcon(new ImageIcon(getClass().getResource("/com/qlchtl/image/nv2.jpg")));
-        
+//        avatar.setIcon(new ImageIcon(getClass().getResource("/com/qlchtl/image/nv2.jpg")));
+
+        String imagePath = "/com/qlchtl/image/imageNhanVien/"+img;
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
+        Image image = imageIcon.getImage(); // Chuyển đổi ImageIcon thành Image
+        Image newImage = getScaledCircleImage(image, 77);
+        avatar.setIcon(new ImageIcon(newImage));
+
+
+
+
+
+
         MyPanelBoxShadow pnlAvatarStaff = new MyPanelBoxShadow();
         pnlAvatarStaff.setPreferredSize(new java.awt.Dimension(74, 74));
         pnlAvatarStaff.setTypeShape(java.lang.Boolean.TRUE);
         pnlAvatarStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, name, code,phone,state);
+                StaffItemClick(evt, name, code,phone,state,img);
             }
         });
         MyPanel pnlStateStaff = new MyPanel();
@@ -49,7 +73,7 @@ public class ItemStaff {
         } else if(state == true){
              pnlStateStaff.setBackground(new java.awt.Color(52, 235, 146));
         }
-        
+
         pnlStateStaff.setPreferredSize(new java.awt.Dimension(15, 15));
         pnlStateStaff.setRoundBottomLeft(15);
         pnlStateStaff.setRoundBottomRight(15);
@@ -73,17 +97,17 @@ public class ItemStaff {
             pnlAvatarStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAvatarStaffLayout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
-//                .addComponent(avatar)
                 .addComponent(pnlStateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
+                .addComponent(avatar)
         );
         pnlAvatarStaffLayout.setVerticalGroup(
             pnlAvatarStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAvatarStaffLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                .addComponent(avatar)
                 .addComponent(pnlStateStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+                    .addComponent(avatar)
         );
 
         JLabel lblNameStaff = new JLabel();
@@ -92,7 +116,7 @@ public class ItemStaff {
         lblNameStaff.setText(name);
         lblNameStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, name, code,phone,state);
+                StaffItemClick(evt, name, code,phone,state,img);
             }
         });
         
@@ -102,7 +126,7 @@ public class ItemStaff {
         lblCodeStaff.setText(code);
         lblCodeStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, name, code,phone,state);
+                StaffItemClick(evt, name, code,phone,state,img);
             }
         });
         
@@ -112,7 +136,7 @@ public class ItemStaff {
         lblPhoneStaff.setText(phone);
         lblPhoneStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, name, code,phone,state);
+                StaffItemClick(evt, name, code,phone,state,img);
             }
         });
         
@@ -122,7 +146,7 @@ public class ItemStaff {
         lblPhoneStaff1.setText(gender);
         lblPhoneStaff1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                StaffItemClick(evt, name, code,phone,state);
+                StaffItemClick(evt, name, code,phone,state,img);
             }
         });
         
@@ -253,19 +277,32 @@ public class ItemStaff {
         return pnlItemStaff;
     }
     
-    private void StaffItemClick(MouseEvent e,String name ,String code, String phone, Boolean state) {
+    private void StaffItemClick(MouseEvent e,String name ,String code, String phone, Boolean state, String img) {
         parentForm.setIdStaffSelected(code);
-        parentForm.setStaffFound(name, state, code, phone);
+        parentForm.setStaffFound(name, state, code, phone, img);
     }
+
     
     private void DeleteStaffClick(MouseEvent e, String code) {
        parentForm.setIdStaffSelected(code);
-       
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+
+            parentForm.deleteNhanVien(code);
+        }
     }
     
      private void DetailStaffClick (MouseEvent e, String code) {
         parentForm.setIdStaffSelected(code);
+
         DetailStaff dtst = new DetailStaff(code);
+        //System.out.print(code);
         dtst.setVisible(true);
         dtst.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
