@@ -39,7 +39,6 @@ public class FormMain extends javax.swing.JFrame {
     NhanVienDao nhanVienDao = new NhanVienDao();
 
     public static String maSp;
-
     
     public String getIdProductSelected(){
         return this.idProductSelected;
@@ -1220,6 +1219,11 @@ public class FormMain extends javax.swing.JFrame {
         btnDetailStaffFound.setColorOver(new java.awt.Color(47, 173, 171));
         btnDetailStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDetailStaffFound.setRadius(20);
+        btnDetailStaffFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                StaffFoundClick(evt);
+            }
+        });
 
         btnDeleteStaffFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteStaffFound.setText("Delete");
@@ -1279,7 +1283,7 @@ public class FormMain extends javax.swing.JFrame {
                     .addGroup(ucStaffLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ucStaffLayout.setVerticalGroup(
             ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1342,10 +1346,10 @@ public class FormMain extends javax.swing.JFrame {
                 int col = 0;
                 int row = 0;
                 for (NhanVien cd : listnv) {
-                    MyPanelBoxShadow pn = itf.createItemStaffComponent(col, row, cd.getMaNV(), cd.getHoTenNV(), cd.getGioiTinh(), cd.isTrangThai(), cd.getSdt());
+                    MyPanelBoxShadow pn = itf.createItemStaffComponent(col, row, cd.getMaNV(), cd.getHoTenNV(), cd.getGioiTinh(), cd.isTrangThai(), cd.getSdt(), cd.getImg());
                     if (col == 0 && row == 0) {
                         idStaffSelected = cd.getMaNV();
-                        setStaffFound(cd.getHoTenNV(), cd.isTrangThai(),cd.getMaNV(),cd.getSdt());
+                        setStaffFound(cd.getHoTenNV(), cd.isTrangThai(),cd.getMaNV(),cd.getSdt(), cd.getImg());
                     }
                     pnl.add((Component) pn);
                     col++; 
@@ -1434,9 +1438,18 @@ public class FormMain extends javax.swing.JFrame {
     }
 
     
-    public void setStaffFound(String name, Boolean state,String code, String phone) {
+    public void setStaffFound(String name, Boolean state,String code, String phone, String img) {
         lblNameStaffFound.setText(name);
         lblCodeStaffFound.setText(code);
+        String imagePath = "/com/qlchtl/image/imageNhanVien/"+img;
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+        lblLogout.setIcon(scaledImageIcon);
+
+
         if(state==true){
             lblStateStaffFound.setText("Đang làm");
 
@@ -1591,6 +1604,10 @@ public class FormMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         searchName();
     }//GEN-LAST:event_lblGoSearchMouseClicked
+
+    private void StaffFoundClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StaffFoundClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StaffFoundClick
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
         SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
@@ -1761,4 +1778,24 @@ public class FormMain extends javax.swing.JFrame {
         txtSearch.setText("");
     }
 
+
+    NhanVien getFormNhanVien(String ms) {
+        NhanVien nv = new NhanVien();
+        nv.setMaNV(ms);
+        nv.setTrangThai(false);
+        System.out.println(ms);
+        return nv;
+    }
+    public void deleteNhanVien(String code) {
+        NhanVien sp = getFormNhanVien(code);
+        try {
+            System.out.println(sp.getMaNV());
+            nhanVienDao.updateTrangThai(sp);
+            MsgBox.alert(this, "Xóa nhân viên thành công!");
+            List<NhanVien> listsp = nhanVienDao.selectAll();
+            renderItemStaffWithThread(listsp);
+        } catch (Exception e) {
+            MsgBox.alert(this, "Xóa nhân viên thất bại!");
+        }
+    }
 }
