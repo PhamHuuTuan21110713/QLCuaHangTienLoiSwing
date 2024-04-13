@@ -4,8 +4,27 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.ChucVuDao;
+import com.qlchtl.dao.NhanVienDao;
+import com.qlchtl.entity.ChucVu;
+import com.qlchtl.entity.NhaCungCap;
+import com.qlchtl.entity.NhanVien;
+import com.qlchtl.utils.MsgBox;
+import com.qlchtl.utils.XImage;
 import com.qlchtl.views.MyControls.MyTable;
+
+import javax.swing.*;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.qlchtl.views.DetailProduct.isValidDate;
 
 /**
  *
@@ -17,12 +36,22 @@ public class DetailStaff extends javax.swing.JFrame {
      * Creates new form DetailStaff
      */
     private String idStaff;
+    private javax.swing.JFileChooser fileChooser;
+    NhanVienDao nhanVienDao =  new NhanVienDao();
+
+    ChucVuDao chucVuDao = new ChucVuDao();
+    List<ChucVu> listcv = chucVuDao.selectAll();
+    List<NhanVien> listnv = nhanVienDao.selectAll();
+
+
     public DetailStaff(String idStaff) {
+        fileChooser = new javax.swing.JFileChooser();
         initComponents();
         this.idStaff = idStaff;
         this.setLocationRelativeTo(null);
         MyTable.apply(scpStaffSchedule, MyTable.TableType.DEFAULT);
         setUpControl(false);
+        load();
     }
 
     /**
@@ -133,6 +162,11 @@ public class DetailStaff extends javax.swing.JFrame {
         myPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/staff.jpg"))); // NOI18N
+        lblAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAvatarMouseClicked(evt);
+            }
+        });
         myPanel3.add(lblAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
 
         myPanel2.add(myPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 23, 137, 160));
@@ -374,17 +408,17 @@ public class DetailStaff extends javax.swing.JFrame {
             cboStateStaff.setBackground(new Color(148,209,235));
             Color colortxt = new Color(255,255,255);
             txtNameDetailStaff.setBackground(colortxt);
-            txtCodeStaff.setBackground(colortxt);
+           // txtCodeStaff.setBackground(colortxt);
             txtBirthdayStaff.setBackground(colortxt);
             txtWorkdayStaff.setBackground(colortxt);
             txtPhoneStaff.setBackground(colortxt);
             txtAddressStaff.setBackground(colortxt);
             txtIndentifyStaff.setBackground(colortxt);
-            
+
         } else {
             Color colortxt = new Color(242, 242, 242);
             txtNameDetailStaff.setBackground(colortxt);
-            txtCodeStaff.setBackground(colortxt);
+           //txtCodeStaff.setBackground(colortxt);
             txtBirthdayStaff.setBackground(colortxt);
             txtWorkdayStaff.setBackground(colortxt);
             txtPhoneStaff.setBackground(colortxt);
@@ -392,13 +426,14 @@ public class DetailStaff extends javax.swing.JFrame {
             txtIndentifyStaff.setBackground(colortxt);
             cboRankStaff.setBackground(new Color(148,209,235));
             cboStateStaff.setBackground(new Color(148,209,235));
-            
+
         }
     }
     private void UpdateStaffClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateStaffClick
         // TODO add your handling code here:
         setUpControl(true);
         btnConfirm.setEnabled(true);
+        System.out.println("123"+ idStaff);
     }//GEN-LAST:event_UpdateStaffClick
 
     private void ConfrimStaffClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfrimStaffClick
@@ -409,8 +444,13 @@ public class DetailStaff extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formWindowClosing
+
+    private void lblAvatarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAvatarMouseClicked
+        // TODO add your handling code here:
+         chonAnh();
+    }//GEN-LAST:event_lblAvatarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -419,7 +459,7 @@ public class DetailStaff extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -479,4 +519,86 @@ public class DetailStaff extends javax.swing.JFrame {
     private javax.swing.JTextField txtPhoneStaff;
     private javax.swing.JTextField txtWorkdayStaff;
     // End of variables declaration//GEN-END:variables
+
+    final String[] firstChucVu = {null};
+    final String[] stateStaff = {null};
+    void load() {
+        NhanVien nv = nhanVienDao.selectById(idStaff);
+        txtNameDetailStaff.setText(nv.getHoTenNV());
+        txtCodeStaff.setText(nv.getMaNV());
+
+        ChucVu ChucVuinit = chucVuDao.selectById(nv.getMaCV());
+        String initialRankValue = ChucVuinit.getTenChucVu();
+        Set<String> chucvu = new HashSet<>();
+        for (ChucVu cv : listcv) {
+            ChucVu a = chucVuDao.selectById(cv.getMaCV());
+            chucvu.add(a.getTenChucVu());
+        }
+        String[] promotionNamesWithNone = chucvu.toArray(new String[0]);
+        cboRankStaff.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
+        cboRankStaff.setSelectedItem(initialRankValue);
+        cboRankStaff.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) cboRankStaff.getSelectedItem();
+                firstChucVu[0] = selectedItem;
+            }
+        });
+
+
+
+        String importDate = nv.getNgaySinh().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        txtBirthdayStaff.setText(importDate);
+
+        String WorkdayStaff = nv.getNgayVaoLam().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        txtWorkdayStaff.setText(WorkdayStaff);
+
+        txtPhoneStaff.setText(nv.getSdt());
+        txtAddressStaff.setText(nv.getDiaChi());
+        txtIndentifyStaff.setText(nv.getCccd());
+
+        if (nv.getGioiTinh().equals("Nam")) {
+            rdoMale.setSelected(true);
+        } else if (nv.getGioiTinh().equals("Nu")) {
+            rdoFemale.setSelected(true);
+        }
+
+
+
+        boolean initTrangThai = nv.isTrangThai();
+        String[] states = initTrangThai ? new String[] { "Còn làm", "Nghỉ làm" } : new String[] { "Nghỉ làm", "Còn làm" };
+        cboStateStaff.setModel(new javax.swing.DefaultComboBoxModel<>(states));
+        cboStateStaff.setSelectedItem(initTrangThai ? "Còn làm" : "Nghỉ làm");
+        cboStateStaff.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) cboStateStaff.getSelectedItem();
+                stateStaff[0] = selectedItem;
+            }
+        });
+
+
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+nv.getImg();
+        java.net.URL imageURL = getClass().getResource(imagePath);
+        javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
+        java.awt.Image originalImage = originalImageIcon.getImage();
+        java.awt.Image scaledImage = originalImage.getScaledInstance(150, 180, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+        lblAvatar.setIcon(scaledImageIcon);
+    }
+    String img;
+    void chonAnh() {
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            XImage.save(file); // lưu hình vào thư mục logos
+            ImageIcon icon = XImage.read(file.getName());
+            java.awt.Image originalImage = icon.getImage();
+            java.awt.Image scaledImage = originalImage.getScaledInstance(270, 270, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+            lblAvatar.setIcon(scaledImageIcon);
+            lblAvatar.setToolTipText(file.getName());
+            img = file.getName();
+        }
+    }
+
 }
