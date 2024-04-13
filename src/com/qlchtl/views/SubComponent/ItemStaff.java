@@ -262,6 +262,7 @@ public class ItemStaff {
      private void DetailStaffClick (MouseEvent e, String code) {
         parentForm.setIdStaffSelected(code);
         DetailStaff dtst = new DetailStaff(code);
+        //System.out.print(code);
         dtst.setVisible(true);
         dtst.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
