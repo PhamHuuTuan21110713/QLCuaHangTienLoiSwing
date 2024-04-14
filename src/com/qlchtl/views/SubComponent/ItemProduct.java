@@ -181,5 +181,6 @@ public class ItemProduct {
         DetailProduct dtpd = new DetailProduct(code);
         dtpd.setVisible(true);
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//            parentFrame.setTest(code);
     }
 }

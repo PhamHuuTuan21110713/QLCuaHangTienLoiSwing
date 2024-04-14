@@ -56,8 +56,8 @@ public class DetailProduct extends javax.swing.JFrame  {
 
 
     public DetailProduct(String idProduct) {
-        initComponents();
         this.idProduct = idProduct;
+        initComponents();
         this.setLocationRelativeTo(null);
         setButton(false);
         setTextField(false);
@@ -728,6 +728,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         sp.setTrangThai("1");
         sp.setTienGoc(txtRootPriceProd.getText());
         sp.setTienThanhToan(txtPricePrd.getText());
+
         String inputDate = txtImportDatePrd.getText();
         if (isValidDate(inputDate, "dd/MM/yyyy")) {
             LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));

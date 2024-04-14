@@ -269,9 +269,11 @@ public class LogIn extends javax.swing.JFrame {
         if (passwordVisible) {
             txtPassword.setEchoChar('*'); 
             passwordVisible = false;
+            btnShowPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/view.png")));
         } else {
             txtPassword.setEchoChar((char) 0); 
             passwordVisible = true;
+            btnShowPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/hide.png")));
         }
     }//GEN-LAST:event_btnShowPassMouseClicked
 

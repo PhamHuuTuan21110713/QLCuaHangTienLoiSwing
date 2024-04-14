@@ -949,7 +949,6 @@ public class JFHoaDon extends javax.swing.JFrame {
         model.addColumn("Giá tiền");
         model.addColumn("Số lượng");
         model.addColumn("Thành tiền");
-        model.addColumn("Xóa");
         for(ChiTietHoaDon chitiethoadon: chitiethoadons)
         {
             String[] rowdata={
@@ -957,11 +956,11 @@ public class JFHoaDon extends javax.swing.JFrame {
                     chitiethoadon.getGiaThanhToan(),
                     String.valueOf(chitiethoadon.getsL()),
                     chitiethoadon.getTongTien(), 
-                    "Xóa"
             };
             model.addRow(rowdata);
         }
         jtbInvoice.setModel(model);
+        jLabel7.setText(MaHD);
     }
     private int hoadonmoi=0;
     private void createMaHD()

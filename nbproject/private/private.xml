@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/Scan.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/NhanVienDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/HoaDonDao.java</file>
@@ -35,6 +36,14 @@
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietKhuyenMai.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/InvoiceForm.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietHoaDon.java</file>
+=======
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailProduct.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/LogIn.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/FormMain.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/Scan.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/AddProduct.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ItemStaff.java</file>
+>>>>>>> 44599bbeb2741dddd35b6ceba4c0d12b2f3fb42f
         </group>
     </open-files>
 </project-private>
