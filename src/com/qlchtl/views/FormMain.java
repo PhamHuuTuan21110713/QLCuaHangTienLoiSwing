@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
-public class FormMain extends javax.swing.JFrame {
+public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private LogIn lgin;
     private String idProductSelected;
@@ -62,12 +62,9 @@ public class FormMain extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         settingScrollPane();
         setTupTabbedPane();
-        List<SanPham> listsanPham = sanPhamDao.selectAll();
-        renderItemProdWithThread(listsanPham);
-        
-       
-
+        loadSP();
     }
+
 
     private void setTupTabbedPane() {
         
@@ -1441,7 +1438,7 @@ public class FormMain extends javax.swing.JFrame {
     public void setStaffFound(String name, Boolean state,String code, String phone, String img) {
         lblNameStaffFound.setText(name);
         lblCodeStaffFound.setText(code);
-        String imagePath = "/com/qlchtl/image/imageNhanVien/"+img;
+        String imagePath = "/com/qlchtl/image/imageSanPham/"+img;
         java.net.URL imageURL = getClass().getResource(imagePath);
         javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
         java.awt.Image originalImage = originalImageIcon.getImage();
@@ -1560,7 +1557,7 @@ public class FormMain extends javax.swing.JFrame {
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
         // TODO add your handling code here:
-        AddProduct addPrdForm = new AddProduct();
+        AddProduct addPrdForm = new AddProduct(this);
         addPrdForm.setVisible(true);
         addPrdForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
@@ -1583,8 +1580,7 @@ public class FormMain extends javax.swing.JFrame {
         if(idProductSelected != null){
             maSp = idProductSelected;
         }
-
-        DetailProduct dtpd = new DetailProduct(this.idProductSelected);
+        DetailProduct dtpd = new DetailProduct(this, this.idProductSelected);
         System.out.println(idProductSelected);
         dtpd.setVisible(true);
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1792,10 +1788,29 @@ public class FormMain extends javax.swing.JFrame {
             System.out.println(sp.getMaNV());
             nhanVienDao.updateTrangThai(sp);
             MsgBox.alert(this, "Xóa nhân viên thành công!");
-            List<NhanVien> listsp = nhanVienDao.selectAll();
-            renderItemStaffWithThread(listsp);
+            loadNV();
         } catch (Exception e) {
             MsgBox.alert(this, "Xóa nhân viên thất bại!");
         }
+    }
+
+    public void loadSP(){
+        List<SanPham> listsp = sanPhamDao.selectAll();
+        renderItemProdWithThread(listsp);
+    }
+
+    public void loadNV(){
+        List<NhanVien> listsp = nhanVienDao.selectAll();
+        renderItemStaffWithThread(listsp);
+    }
+
+    @Override
+    public void onUpdateCompleteSanPham() {
+        loadSP();
+    }
+
+    @Override
+    public void onUpdateCompleteNhanVien() {
+        loadNV();
     }
 }

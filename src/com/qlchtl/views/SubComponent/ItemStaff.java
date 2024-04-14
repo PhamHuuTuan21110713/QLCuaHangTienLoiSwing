@@ -11,6 +11,8 @@ import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.utils.RoundedBorder;
+import com.qlchtl.views.UpdateCallback;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -300,9 +302,11 @@ public class ItemStaff extends Component {
     
      private void DetailStaffClick (MouseEvent e, String code) {
         parentForm.setIdStaffSelected(code);
-        DetailStaff dtst = new DetailStaff(code);
+        DetailStaff dtst = new DetailStaff(parentForm,code);
         //System.out.print(code);
         dtst.setVisible(true);
         dtst.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
+
+
 }

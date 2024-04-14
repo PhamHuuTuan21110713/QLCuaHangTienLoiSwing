@@ -6,9 +6,7 @@ package com.qlchtl.views;
 
 import com.qlchtl.dao.ChucVuDao;
 import com.qlchtl.dao.NhanVienDao;
-import com.qlchtl.entity.ChucVu;
-import com.qlchtl.entity.NhaCungCap;
-import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.*;
 import com.qlchtl.utils.MsgBox;
 import com.qlchtl.utils.XImage;
 import com.qlchtl.views.MyControls.MyTable;
@@ -36,15 +34,18 @@ public class DetailStaff extends javax.swing.JFrame {
      * Creates new form DetailStaff
      */
     private String idStaff;
+    private Boolean bool = false;
+    private String img;
     private javax.swing.JFileChooser fileChooser;
     NhanVienDao nhanVienDao =  new NhanVienDao();
 
     ChucVuDao chucVuDao = new ChucVuDao();
     List<ChucVu> listcv = chucVuDao.selectAll();
     List<NhanVien> listnv = nhanVienDao.selectAll();
+    private FormMain formMain;
 
-
-    public DetailStaff(String idStaff) {
+    public DetailStaff(FormMain formMain,String idStaff) {
+        this.formMain = formMain;
         fileChooser = new javax.swing.JFileChooser();
         initComponents();
         this.idStaff = idStaff;
@@ -167,7 +168,7 @@ public class DetailStaff extends javax.swing.JFrame {
                 lblAvatarMouseClicked(evt);
             }
         });
-        myPanel3.add(lblAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
+        myPanel3.add(lblAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         myPanel2.add(myPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 23, 137, 160));
 
@@ -393,7 +394,7 @@ public class DetailStaff extends javax.swing.JFrame {
 
     private void setUpControl(Boolean b) {
         txtNameDetailStaff.setEditable(b);
-        txtCodeStaff.setEditable(b);
+        txtCodeStaff.setEditable(false);
         txtBirthdayStaff.setEditable(b);
         txtWorkdayStaff.setEditable(b);
         txtPhoneStaff.setEditable(b);
@@ -408,7 +409,7 @@ public class DetailStaff extends javax.swing.JFrame {
             cboStateStaff.setBackground(new Color(148,209,235));
             Color colortxt = new Color(255,255,255);
             txtNameDetailStaff.setBackground(colortxt);
-           // txtCodeStaff.setBackground(colortxt);
+            txtCodeStaff.setBackground(colortxt);
             txtBirthdayStaff.setBackground(colortxt);
             txtWorkdayStaff.setBackground(colortxt);
             txtPhoneStaff.setBackground(colortxt);
@@ -431,15 +432,18 @@ public class DetailStaff extends javax.swing.JFrame {
     }
     private void UpdateStaffClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateStaffClick
         // TODO add your handling code here:
+        bool = true;
         setUpControl(true);
         btnConfirm.setEnabled(true);
         System.out.println("123"+ idStaff);
+        
     }//GEN-LAST:event_UpdateStaffClick
 
     private void ConfrimStaffClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfrimStaffClick
         // TODO add your handling code here:
         setUpControl(false);
         btnConfirm.setEnabled(false);
+        update();
     }//GEN-LAST:event_ConfrimStaffClick
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -449,7 +453,10 @@ public class DetailStaff extends javax.swing.JFrame {
 
     private void lblAvatarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAvatarMouseClicked
         // TODO add your handling code here:
-         chonAnh();
+        if(bool){
+            chonAnh();
+        } 
+
     }//GEN-LAST:event_lblAvatarMouseClicked
 
     /**
@@ -482,7 +489,7 @@ public class DetailStaff extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailStaff("ahihi").setVisible(true);
+                new DetailStaff(null,"ahihi").setVisible(true);
             }
         });
     }
@@ -537,6 +544,9 @@ public class DetailStaff extends javax.swing.JFrame {
         String[] promotionNamesWithNone = chucvu.toArray(new String[0]);
         cboRankStaff.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
         cboRankStaff.setSelectedItem(initialRankValue);
+        if (promotionNamesWithNone.length > 0) {
+            firstChucVu[0] = promotionNamesWithNone[0];
+        }
         cboRankStaff.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -569,6 +579,9 @@ public class DetailStaff extends javax.swing.JFrame {
         String[] states = initTrangThai ? new String[] { "Còn làm", "Nghỉ làm" } : new String[] { "Nghỉ làm", "Còn làm" };
         cboStateStaff.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         cboStateStaff.setSelectedItem(initTrangThai ? "Còn làm" : "Nghỉ làm");
+        if (states.length > 0) {
+            stateStaff[0] = states[0];
+        }
         cboStateStaff.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -577,7 +590,7 @@ public class DetailStaff extends javax.swing.JFrame {
             }
         });
 
-
+        img =nv.getImg();
         String imagePath = "/com/qlchtl/image/imageSanPham/"+nv.getImg();
         java.net.URL imageURL = getClass().getResource(imagePath);
         javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
@@ -586,19 +599,80 @@ public class DetailStaff extends javax.swing.JFrame {
         javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
         lblAvatar.setIcon(scaledImageIcon);
     }
-    String img;
+
     void chonAnh() {
         if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();
             XImage.save(file); // lưu hình vào thư mục logos
             ImageIcon icon = XImage.read(file.getName());
             java.awt.Image originalImage = icon.getImage();
-            java.awt.Image scaledImage = originalImage.getScaledInstance(270, 270, java.awt.Image.SCALE_SMOOTH);
+            java.awt.Image scaledImage = originalImage.getScaledInstance(150, 180, java.awt.Image.SCALE_SMOOTH);
             javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
             lblAvatar.setIcon(scaledImageIcon);
             lblAvatar.setToolTipText(file.getName());
             img = file.getName();
         }
     }
+
+    NhanVien getFormNhanVien(){
+        NhanVien nhanVien = new NhanVien();
+        nhanVien.setMaNV(txtCodeStaff.getText());
+        nhanVien.setHoTenNV(txtNameDetailStaff.getText());
+
+        String inputDate = txtBirthdayStaff.getText();
+        if (isValidDate(inputDate, "dd/MM/yyyy")) {
+            LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            nhanVien.setNgaySinh(convertedDate);
+        } else {
+            return null;
+        }
+        String inputWork = txtWorkdayStaff.getText();
+        if (isValidDate(inputWork, "dd/MM/yyyy")) {
+            LocalDate convertedwork = LocalDate.parse(inputWork, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            nhanVien.setNgayVaoLam(convertedwork);
+        } else {
+            return null;
+        }
+        nhanVien.setSdt(txtPhoneStaff.getText());
+        nhanVien.setDiaChi(txtAddressStaff.getText());
+        nhanVien.setCccd(txtIndentifyStaff.getText());
+
+        if(stateStaff[0].equals("Còn làm")) {
+            nhanVien.setTrangThai(true);
+        } else if (stateStaff[0].equals("Nghỉ làm")) {
+            nhanVien.setTrangThai(false);
+        }
+
+        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
+        nhanVien.setMaCV(chucVuinit.getMaCV());
+        nhanVien.setMaCH("CH00000001");
+        nhanVien.setGioiTinh(rdoMale.isSelected() ? "Nam" : rdoFemale.isSelected() ? "Nu" : null);
+        nhanVien.setImg(img);
+
+        if (img==null) {
+            return null;
+        }
+        return  nhanVien;
+    }
+
+    void update(){
+        NhanVien modelnv = getFormNhanVien();
+        System.out.println(modelnv.toString());
+        if (modelnv != null) {
+            try {
+                nhanVienDao.update(modelnv);
+                MsgBox.alert(this, "Cập nhật thành công!");
+                if (formMain != null) {
+                    formMain.onUpdateCompleteNhanVien();
+                }
+            } catch (Exception e) {
+                MsgBox.alert(this, "Cập nhật thất bại!");
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin.");
+        }
+    }
+
+
 
 }

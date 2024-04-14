@@ -40,6 +40,13 @@ public class ChucVuDao extends qlchSysDao<ChucVu, String> {
         return list.size() > 0 ? list.get(0) : null;
     }
 
+
+    public ChucVu selectByName(String name) {
+        String sql = "SELECT * FROM chucvu WHERE TenChucVu = ?";
+        List<ChucVu> list = selectBySql(sql, name);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
     @Override
     public List<ChucVu> selectAll() {
         String sql = "SELECT * FROM chucvu";
