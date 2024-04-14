@@ -39,8 +39,10 @@ public class Scan extends javax.swing.JFrame implements Runnable, ThreadFactory,
      private ArrayList<String> resultsList = new ArrayList<>();
      public String resultToInvoice="";
      private boolean isEmty=false;
-    public Scan() {
+     JFHoaDon parForm;
+    public Scan(JFHoaDon parForm) {
         initComponents();
+        this.parForm = parForm;
         initWebcam();
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -164,7 +166,6 @@ public class Scan extends javax.swing.JFrame implements Runnable, ThreadFactory,
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Scan().setVisible(true);
             }
         });
     }
@@ -224,9 +225,11 @@ public class Scan extends javax.swing.JFrame implements Runnable, ThreadFactory,
                 resultToInvoice=result.getText();
                 System.out.print(resultToInvoice);
                 isEmty = false;
+                printResults();
                 JFHoaDon hoadon=new JFHoaDon();
                 hoadon.getMaSPFromScan(resultToInvoice);
-                // hoadon.setVisible(true);
+               // hoadon.setVisible(true);
+                parForm.setTable(resultToInvoice);
             }
         }while(true);
     }

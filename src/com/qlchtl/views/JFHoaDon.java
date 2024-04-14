@@ -798,7 +798,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
                                
         // TODO add your handling code here:
-        Scan scan = new Scan();
+        Scan scan = new Scan(this);
         scan.setVisible(true);
         scan.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
    
@@ -1000,5 +1000,23 @@ public class JFHoaDon extends javax.swing.JFrame {
     public void getMaSPFromScan(String MaSP)
     {
         jcbIDSanPham.setSelectedItem(MaSP);
+        System.out.print(MaSP);
+    }
+    
+    public void setTable(String code) {
+        jcbIDSanPham.setSelectedItem(code);
+        ChiTietHoaDonDao chitiethoadondao=new ChiTietHoaDonDao();
+        ChiTietHoaDon chitiethoadon=new ChiTietHoaDon();
+        chitiethoadon.setMaSp((String) jcbIDSanPham.getSelectedItem());
+        chitiethoadon.setMaHD(MaHD);
+        chitiethoadon.setMaCH("CH00000001");
+        chitiethoadon.setGiaThanhToan(jlbPrice.getText());
+        chitiethoadon.setsL(Integer.parseInt(jtxtQuantity.getText()));
+        double tongtien = Double.parseDouble(jlbPrice.getText())*Integer.parseInt(jtxtQuantity.getText());
+        DecimalFormat df = new DecimalFormat("0.00");
+        chitiethoadon.setTongTien(df.format(tongtien));
+        chitiethoadondao.insert(chitiethoadon);
+        loadData();
+        updateTongTien();
     }
 }
