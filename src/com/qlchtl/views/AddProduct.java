@@ -34,7 +34,9 @@ public class AddProduct extends javax.swing.JFrame {
      * Creates new form AddProduct
      */
     private javax.swing.JFileChooser fileChooser;
-    public AddProduct() {
+    private FormMain formMain;
+    public AddProduct(FormMain formMain) {
+        this.formMain = formMain;
         fileChooser = new javax.swing.JFileChooser();
         initComponents();
         this.setLocationRelativeTo(null);
@@ -452,6 +454,8 @@ public class AddProduct extends javax.swing.JFrame {
     private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
         // TODO add your handling code here:
          dispose();
+//        FormMain formMainInstance = new FormMain(lgin);
+//        formMainInstance.loadSP();
     }//GEN-LAST:event_btnCancelMouseClicked
 
     /**
@@ -484,7 +488,7 @@ public class AddProduct extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddProduct().setVisible(true);
+                new AddProduct(null).setVisible(true);
             }
         });
     }
@@ -608,7 +612,7 @@ public class AddProduct extends javax.swing.JFrame {
 
 
 
-
+    private LogIn lgin;
 
     void insert() {
         Kho modelKho = getFormKho();
@@ -617,7 +621,13 @@ public class AddProduct extends javax.swing.JFrame {
             try {
                 sanPhamDao.insert(modelsp);
                 khoDao.insert(modelKho);
+
                 MsgBox.alert(this, "Thêm sản phẩm thành công!");
+                List<SanPham> listsp = sanPhamDao.selectAll();
+                if (formMain != null) {
+                    formMain.onUpdateCompleteSanPham();
+                }
+
                 resetText();
             } catch (Exception e) {
                 MsgBox.alert(this, "Thêm sản phẩm thất bại!");

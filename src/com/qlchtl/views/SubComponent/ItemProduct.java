@@ -175,10 +175,10 @@ public class ItemProduct {
         parentFrame.setIdProductSelected(code);
         parentFrame.setProductSelected(url,name,price, quantity);
     }
-    
+
     private void DetailProductClick(MouseEvent evt, String code) {
         System.out.print(code);
-        DetailProduct dtpd = new DetailProduct(code);
+        DetailProduct dtpd = new DetailProduct(parentFrame,code);
         dtpd.setVisible(true);
         dtpd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //            parentFrame.setTest(code);
