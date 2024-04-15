@@ -10,6 +10,7 @@ import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.MsgBox;
+import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import com.qlchtl.views.SubComponent.ClientForm;
@@ -54,8 +55,6 @@ public class FormMain extends javax.swing.JFrame {
         this.idStaffSelected = a;
     }
 
-
-
     public FormMain(LogIn lgin) {
         initComponents();
         this.lgin = lgin;
@@ -64,11 +63,7 @@ public class FormMain extends javax.swing.JFrame {
         setTupTabbedPane();
         List<SanPham> listsanPham = sanPhamDao.selectAll();
         renderItemProdWithThread(listsanPham);
-        
-       
-
     }
-
     private void setTupTabbedPane() {
         
         tpnMain.addTab("", new ClientForm(this));
@@ -663,7 +658,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                         .addComponent(pnlStaff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlInvoice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
@@ -1497,11 +1492,13 @@ public class FormMain extends javax.swing.JFrame {
         } else if(hoveredComponent instanceof JPanel){
             res = (JPanel) hoveredComponent;
         }
+        pnlChange.setVisible(true);
         pnlChange.setLocation(0, (int)res.getLocation().y);
     }//GEN-LAST:event_menuItemHover
  
     private void menuItemLeave(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemLeave
         // TODO add your handling code here:
+//        pnlChange.setVisible(false);
     }//GEN-LAST:event_menuItemLeave
 
     private void staffclick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffclick
@@ -1615,7 +1612,6 @@ public class FormMain extends javax.swing.JFrame {
                         pnlChange.setLocation(0, (int)res.getLocation().y);
                     }
         });
-        this.lblTabName.setText(lbl);
     }
     
     /**

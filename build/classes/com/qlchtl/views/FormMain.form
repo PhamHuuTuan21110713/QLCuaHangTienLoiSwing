@@ -131,7 +131,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="pnlProduct" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jPanel1" alignment="1" pref="211" max="32767" attributes="0"/>
                                   <Component id="pnlStaff" alignment="1" max="32767" attributes="0"/>
                                   <Component id="pnlClient" alignment="1" max="32767" attributes="0"/>
                                   <Component id="pnlInvoice" alignment="1" pref="211" max="32767" attributes="0"/>
