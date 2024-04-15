@@ -3,10 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.qlchtl.dao;
-
-import com.qlchtl.entity.ChiTietHoaDon;
 import com.qlchtl.entity.KhachHang;
-import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.XJdbc;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,8 @@ import java.sql.SQLException;
  *
  * @author LENOVO
  */
-public class KhachHangDao {
+public class KhachHangDao extends qlchSysDao<KhachHang, String> {
+    @Override
     public List<KhachHang> selectBySql(String sql, Object... args)
     {
         List<KhachHang>list=new ArrayList<>();
@@ -41,7 +39,10 @@ public class KhachHangDao {
                 throw new RuntimeException(e);
             }
             finally {
-                rs.getStatement().getConnection().close();
+                 if (rs != null) 
+                 {
+                    rs.getStatement().getConnection().close();
+                 }
             }
         }
         catch (SQLException ex)
@@ -66,15 +67,48 @@ public class KhachHangDao {
                 khachhang.getSoDiemHienCo()+diemCong,
                 khachhang.getMaKH());
     }
+    @Override
     public KhachHang selectById(String maKH) {
         String sql = "SELECT * FROM khachhang WHERE MaKH = ?";
         List<KhachHang> list = selectBySql(sql, maKH);
-        return list.size() > 0 ? list.get(0) : null;
+        return !list.isEmpty() ? list.get(0) : null;
     }
 
     public List<KhachHang> selectAll() {
         String sql = "SELECT * FROM khachhang";
         return selectBySql(sql);
+    }
+
+    @Override
+    public void insert(KhachHang entity) {
+        String sql = "INSERT INTO khachhang(MaKH, SDT, HoTenKH, SoDiemDaTich, SoDiemDaDung, SoDiemHienCo, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        XJdbc.update(sql,
+                entity.getMaKH(),
+                entity.getsDT(),
+                entity.getHoTenKH(),
+                entity.getSoDiemDaTich(),
+                entity.getSoDiemDaDung(),
+                entity.getSoDiemHienCo(),
+                entity.getTrangThai());
+    }
+
+    @Override
+    public void update(KhachHang entity) {
+        String sql = "UPDATE khachhang SET SDT = ?, HoTenKH = ?, SoDiemDaTich = ?, SoDiemDaDung = ?, SoDiemHienCo = ?, TrangThai = ? WHERE MaKH = ?";
+        XJdbc.update(sql,
+                entity.getsDT(),
+                entity.getHoTenKH(),
+                entity.getSoDiemDaTich(),
+                entity.getSoDiemDaDung(),
+                entity.getSoDiemHienCo(),
+                entity.getTrangThai(),
+                entity.getMaKH());
+    }
+
+    @Override
+    public void delete(String maKH) {
+         String sql = "DELETE FROM khachhang WHERE MaKH = ?";
+         XJdbc.update(sql, maKH);
     }
 
 
