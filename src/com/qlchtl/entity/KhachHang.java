@@ -16,10 +16,22 @@ public class KhachHang {
     private int soDiemDaDung;
     private int soDiemHienCo;
 
+    private String trangThai;
+
     public KhachHang() {
         this.soDiemDaDung=0;
         this.soDiemHienCo=0;
         this.soDiemDaTich=0;
+    }
+
+    public KhachHang(String maKH, String sDT, String hoTenKH, int soDiemDaTich, int soDiemDaDung, int soDiemHienCo, String trangThai) {
+        this.maKH = maKH;
+        this.sDT = sDT;
+        this.hoTenKH = hoTenKH;
+        this.soDiemDaTich = soDiemDaTich;
+        this.soDiemDaDung = soDiemDaDung;
+        this.soDiemHienCo = soDiemHienCo;
+        this.trangThai = trangThai;
     }
 
     public KhachHang(String maKH, String sDT, String hoTenKH) {
@@ -81,7 +93,13 @@ public class KhachHang {
     public int getSoDiemHienCo() {
         return soDiemHienCo;
     }
+    public String getTrangThai() {
+        return trangThai;
+    }
 
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
     public void setSoDiemHienCo(int soDiemHienCo) {
         this.soDiemHienCo = soDiemHienCo;
     }

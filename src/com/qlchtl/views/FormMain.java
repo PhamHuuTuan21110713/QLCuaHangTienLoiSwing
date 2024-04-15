@@ -16,6 +16,8 @@ import com.qlchtl.views.SubComponent.ClientForm;
 import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
@@ -32,6 +34,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
+    private int indexForm = 0;
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
@@ -779,6 +782,24 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         txtSearch.setBorder(null);
         myPanel1.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 5, 200, 30));
 
+
+//        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                searchName();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                searchName();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                // Không cần xử lý sự kiện này nếu bạn chỉ quan tâm đến việc người dùng thay đổi văn bản
+//            }
+//        });
+
         lblGoSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/enter.png"))); // NOI18N
         lblGoSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblGoSearch.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1512,7 +1533,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void staffclick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffclick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(1);   
+        tpnMain.setSelectedIndex(1);  
+        indexForm = 1;
         setPresentTabVisible(evt,"Staff");
         List<NhanVien> nhanVienList = nhanVienDao.selectAll();
         renderItemStaffWithThread(nhanVienList);
@@ -1520,38 +1542,39 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void ProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(0);   
+        tpnMain.setSelectedIndex(0);  
+        indexForm = 0;
         setPresentTabVisible(evt,"Product");
     }//GEN-LAST:event_ProductClick
 
     
     private void ClientClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientClick
         // TODO add your handling code here:
-         tpnMain.setSelectedIndex(2);   
+         tpnMain.setSelectedIndex(2);
         setPresentTabVisible(evt,"Client");
     }//GEN-LAST:event_ClientClick
 
     private void InvoiceClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InvoiceClick
         // TODO add your handling code here:
-         tpnMain.setSelectedIndex(3);   
+         tpnMain.setSelectedIndex(3);
         setPresentTabVisible(evt,"Invoice");
     }//GEN-LAST:event_InvoiceClick
 
     private void RankClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RankClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(4);   
+        tpnMain.setSelectedIndex(4);
         setPresentTabVisible(evt,"Rank");
     }//GEN-LAST:event_RankClick
 
     private void ShiftClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShiftClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(5);   
+        tpnMain.setSelectedIndex(5);
         setPresentTabVisible(evt,"Shift");
     }//GEN-LAST:event_ShiftClick
 
     private void AccountClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(6);   
+        tpnMain.setSelectedIndex(6);
         setPresentTabVisible(evt,"Account");
     }//GEN-LAST:event_AccountClick
 
@@ -1560,12 +1583,12 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         AddProduct addPrdForm = new AddProduct(this);
         addPrdForm.setVisible(true);
         addPrdForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
     }//GEN-LAST:event_AddNewProductClick
 
     private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(7); 
+        tpnMain.setSelectedIndex(7);
          setPresentTabVisible(evt,"Home");
     }//GEN-LAST:event_HomeClick
 
@@ -1760,7 +1783,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         }
     }
 
-    void searchName(){
+    void searchNameSP(){
         String nameProduct = txtSearch.getText();
         List<SanPham> searchProduct = sanPhamDao.selectByName(nameProduct);
         if(searchProduct.size() > 0){
@@ -1772,6 +1795,30 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             renderItemProdWithThread(listsp);
         }
         txtSearch.setText("");
+    }
+
+    void searchNameNV(){
+        String nameStaff = txtSearch.getText();
+        List<NhanVien> searchStaff = nhanVienDao.selectByName(nameStaff);
+        if(searchStaff.size() > 0){
+            renderItemStaffWithThread(searchStaff);
+        }
+        else{
+            MsgBox.alert(this, "Không có nhân viên nào được tìm thấy");
+            List<NhanVien> searchStaffAll = nhanVienDao.selectAll();
+            renderItemStaffWithThread(searchStaffAll);
+        }
+        txtSearch.setText("");
+    }
+
+
+
+    void searchName(){
+        if(indexForm==0){
+            searchNameSP();
+        } else if (indexForm==1) {
+            searchNameNV();
+        }
     }
 
 

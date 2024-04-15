@@ -76,4 +76,7 @@ public class KhachHangDao {
         String sql = "SELECT * FROM khachhang";
         return selectBySql(sql);
     }
+
+
+
 }
