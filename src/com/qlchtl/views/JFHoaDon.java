@@ -40,6 +40,7 @@ public class JFHoaDon extends javax.swing.JFrame {
      * Creates new form JFHoaDon
      */
     private String MaHD="";
+    
     public JFHoaDon() {
         initComponents();
         remakeControls();
