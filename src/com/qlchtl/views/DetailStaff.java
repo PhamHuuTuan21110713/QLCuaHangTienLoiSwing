@@ -236,7 +236,7 @@ public class DetailStaff extends javax.swing.JFrame {
         buttonGroup1.add(rdoMale);
         rdoMale.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoMale.setText("Male");
-        myPanel2.add(rdoMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 158, -1, -1));
+        myPanel2.add(rdoMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 158, 70, -1));
 
         buttonGroup1.add(rdoFemale);
         rdoFemale.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
