@@ -865,6 +865,7 @@ public class ClientForm extends javax.swing.JPanel {
         txtStoredScore.setText("");
         txtUsedScore.setText("");
         txtCurrentScore.setText("");
+
     }
     void fillTableClient(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
