@@ -220,6 +220,9 @@ public class LogIn extends javax.swing.JFrame {
         lblForgetPass.setText("Forgot password");
         lblForgetPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblForgetPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblForgetPassMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblForgetPassMouseEntered(evt);
             }
@@ -280,6 +283,12 @@ public class LogIn extends javax.swing.JFrame {
     private void btnLogginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogginActionPerformed
+
+    private void lblForgetPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgetPassMouseClicked
+        // TODO add your handling code here:
+        ResetPassword rsp = new ResetPassword(this, true);
+        rsp.setVisible(true);
+    }//GEN-LAST:event_lblForgetPassMouseClicked
 
     /**
      * @param args the command line arguments
