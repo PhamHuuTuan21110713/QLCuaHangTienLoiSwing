@@ -39,11 +39,12 @@ public class DetailProduct extends javax.swing.JFrame  {
     private String idProduct;
     public  String selectedCt ;
 
-
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
     ChiTietKhuyenMaiDao ctkmDao = new ChiTietKhuyenMaiDao();
     ChuongTrinhKhuyenMaiDao chuongTrinhKhuyenMaiDao = new ChuongTrinhKhuyenMaiDao();
+
+    private FormMain formMain;
 
 
 
@@ -55,7 +56,8 @@ public class DetailProduct extends javax.swing.JFrame  {
 
 
 
-    public DetailProduct(String idProduct) {
+    public DetailProduct( FormMain formMain,String idProduct) {
+        this.formMain = formMain;
         this.idProduct = idProduct;
         initComponents();
         this.setLocationRelativeTo(null);
@@ -616,15 +618,18 @@ public class DetailProduct extends javax.swing.JFrame  {
         // TODO add your handling code here:
         setButton(false);
         setTextField(false);
+        dispose();
     }//GEN-LAST:event_CancelClick
 
     private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
         // TODO add your handling code here:
- update();
+        update();
         setButton(false);
         setTextField(false);
-    }//GEN-LAST:event_ConfirmClick
+        dispose();
 
+    }//GEN-LAST:event_ConfirmClick
+    private LogIn lgin;
     /**
      * @param args the command line arguments
      */
@@ -655,7 +660,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailProduct("hihi").setVisible(true);
+                new DetailProduct(null,"hihi").setVisible(true);
             }
         });
     }
@@ -728,6 +733,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         sp.setTrangThai("1");
         sp.setTienGoc(txtRootPriceProd.getText());
         sp.setTienThanhToan(txtPricePrd.getText());
+
         String inputDate = txtImportDatePrd.getText();
         if (isValidDate(inputDate, "dd/MM/yyyy")) {
             LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -830,8 +836,12 @@ public class DetailProduct extends javax.swing.JFrame  {
                 }
             }
 
+
             this.fillTable();
             MsgBox.alert(this, "Cập nhật thành công!");
+            if (formMain != null) {
+                formMain.onUpdateCompleteSanPham();
+            }
         }
         catch (Exception e) {
             MsgBox.alert(this, "Cập nhật thất bại!");

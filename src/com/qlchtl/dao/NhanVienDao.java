@@ -37,6 +37,12 @@ public class NhanVienDao extends qlchSysDao<NhanVien,String> {
                 nhanVien.getMaCH(), nhanVien.isTrangThai(), nhanVien.getImg(), nhanVien.getMaNV());
     }
 
+
+    public void updateTrangThai(NhanVien nhanVien) {
+        String sql = "UPDATE nhanvien SET TrangThai = ? WHERE MaNV = ?";
+        XJdbc.update(sql, nhanVien.isTrangThai(), nhanVien.getMaNV());
+    }
+
     @Override
     public void delete(String maNV) {
         String sql = "DELETE FROM nhanvien WHERE MaNV = ?";
@@ -51,7 +57,8 @@ public class NhanVienDao extends qlchSysDao<NhanVien,String> {
     @Override
     public List<NhanVien> selectAll() {
         String sql = "SELECT * FROM nhanvien";
-        return selectBySql(sql);    }
+        return selectBySql(sql);    
+    }
 
     @Override
     protected List<NhanVien> selectBySql(String sql, Object... args) {

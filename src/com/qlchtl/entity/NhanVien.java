@@ -136,4 +136,22 @@ public class NhanVien {
     public void setImg(String img) {
         this.img = img;
     }
+
+    @Override
+    public String toString() {
+        return "NhanVien{" +
+                "maNV='" + maNV + '\'' +
+                ", hoTenNV='" + hoTenNV + '\'' +
+                ", ngaySinh=" + ngaySinh +
+                ", ngayVaoLam=" + ngayVaoLam +
+                ", sdt='" + sdt + '\'' +
+                ", diaChi='" + diaChi + '\'' +
+                ", cccd='" + cccd + '\'' +
+                ", gioiTinh='" + gioiTinh + '\'' +
+                ", maCV='" + maCV + '\'' +
+                ", maCH='" + maCH + '\'' +
+                ", trangThai=" + trangThai +
+                ", img='" + img + '\'' +
+                '}';
+    }
 }
