@@ -4,6 +4,7 @@
  */
 package com.qlchtl.dao;
 import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.XJdbc;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,15 @@ public class KhachHangDao extends qlchSysDao<KhachHang, String> {
         String sql = "SELECT * FROM khachhang WHERE MaKH = ?";
         List<KhachHang> list = selectBySql(sql, maKH);
         return !list.isEmpty() ? list.get(0) : null;
+    }
+
+
+    public void updateTrangThai(KhachHang khachhang) {
+        String sql = "UPDATE khachhang SET TrangThai = ? WHERE MaKH = ?";
+        XJdbc.update(sql,
+                khachhang.getTrangThai(),
+                khachhang.getMaKH());
+
     }
 
     public List<KhachHang> selectAll() {
