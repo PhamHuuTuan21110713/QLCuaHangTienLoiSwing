@@ -4,10 +4,18 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.dao.KhachHangDao;
+import com.qlchtl.entity.CaLamViec;
+import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.LichLam;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyTable;
-import java.awt.Dimension;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +27,8 @@ public class ClientForm extends javax.swing.JPanel {
      * Creates new form ClientForm
      */
     private Boolean isOpenButton = true;
+
+    KhachHangDao khachHangDao = new KhachHangDao();
     private FormMain parentForm;
     public ClientForm(FormMain parentForm) {
         initComponents();
@@ -32,6 +42,8 @@ public class ClientForm extends javax.swing.JPanel {
          lblUpdate.setVisible(false);
          btnConfirm.setVisible(false);
          btnCancel.setVisible(false);
+         tableDefault();
+         clickData();
     }
 
     /**
@@ -289,6 +301,15 @@ public class ClientForm extends javax.swing.JPanel {
         lblBtnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBtnUpdate.setText("U");
         lblBtnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBtnUpdate.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblBtnUpdateAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         lblBtnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 UpdateClick(evt);
@@ -368,6 +389,15 @@ public class ClientForm extends javax.swing.JPanel {
         lblBtnAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBtnAdd.setText("+");
         lblBtnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBtnAdd.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblBtnAddAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         lblBtnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CreateClick(evt);
@@ -445,6 +475,16 @@ public class ClientForm extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         scpClient.setViewportView(jTable1);
 
         lblCreate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -569,7 +609,8 @@ public class ClientForm extends javax.swing.JPanel {
                                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(scpClient, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(scpClient, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -649,6 +690,9 @@ public class ClientForm extends javax.swing.JPanel {
 
     private void CreateClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreateClick
         // TODO add your handling code here:
+        clearTest();
+        setUpControl(true);
+
     }//GEN-LAST:event_CreateClick
 
     private void DeleteClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteClick
@@ -657,15 +701,61 @@ public class ClientForm extends javax.swing.JPanel {
 
     private void UpdateClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateClick
         // TODO add your handling code here:
+        setUpControl(true);
+        txtCodeClientFound.setEditable(false);
     }//GEN-LAST:event_UpdateClick
 
     private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
         // TODO add your handling code here:
+        setUpControl(false);
     }//GEN-LAST:event_ConfirmClick
 
     private void CancelClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelClick
         // TODO add your handling code here:
     }//GEN-LAST:event_CancelClick
+
+    private void lblBtnUpdateAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblBtnUpdateAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBtnUpdateAncestorAdded
+
+    private void lblBtnAddAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblBtnAddAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBtnAddAncestorAdded
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // Lấy dòng được chọn
+       
+        
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        clickData();
+
+    }
+
+    void clickData() {
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow == -1) {
+            selectedRow = 0;
+        }
+
+        String maKH = jTable1.getValueAt(selectedRow, 0).toString();
+        String sDT = jTable1.getValueAt(selectedRow, 1).toString();
+        String hoTenKH = jTable1.getValueAt(selectedRow, 2).toString();
+        int soDiemDaTich = Integer.parseInt(jTable1.getValueAt(selectedRow, 3).toString());
+        int soDiemDaDung = Integer.parseInt(jTable1.getValueAt(selectedRow, 4).toString());
+        int soDiemHienCo = Integer.parseInt(jTable1.getValueAt(selectedRow, 5).toString());
+
+        txtCodeClientFound.setText(maKH);
+        txtPhoneClientFound.setText(sDT);
+        txtNameClientFound.setText(hoTenKH);
+        txtStoredScore.setText(String.valueOf(soDiemDaTich));
+        txtUsedScore.setText(String.valueOf(soDiemDaDung));
+        txtCurrentScore.setText(String.valueOf(soDiemHienCo));
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -713,4 +803,86 @@ public class ClientForm extends javax.swing.JPanel {
     private javax.swing.JTextField txtStoredScore;
     private javax.swing.JTextField txtUsedScore;
     // End of variables declaration//GEN-END:variables
+
+    void tableDefault(){
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null},
+                        {null, null, null, null, null, null}
+                },
+                new String [] {
+                        "Customer ID", "Phone Number", "Full Name", "Accumulated Points", "Used Points", "Current Points"
+                }
+        ));
+        fillTableClient();
+        setUpControl(false);
+
+    }
+
+    private void setUpControl(Boolean b) {
+        txtPhoneClientFound.setEditable(b);
+        txtCodeClientFound.setEditable(b);
+        txtNameClientFound.setEditable(b);
+        txtStoredScore.setEditable(b);
+        txtUsedScore.setEditable(b);
+        txtCurrentScore.setEditable(b);
+        if(b==false) {
+            Color colortxt = new Color(255,255,255);
+            txtPhoneClientFound.setBackground(colortxt);
+            txtCodeClientFound.setBackground(colortxt);
+            txtNameClientFound.setBackground(colortxt);
+            txtStoredScore.setBackground(colortxt);
+            txtUsedScore.setBackground(colortxt);
+            txtCurrentScore.setBackground(colortxt);
+
+        } else {
+            Color colortxt = new Color(242, 242, 242);
+            txtPhoneClientFound.setBackground(colortxt);
+            txtNameClientFound.setBackground(colortxt);
+            txtStoredScore.setBackground(colortxt);
+            txtUsedScore.setBackground(colortxt);
+            txtCurrentScore.setBackground(colortxt);
+        }
+    }
+
+    void clearTest(){
+        txtCodeClientFound.setText("");
+        txtPhoneClientFound.setText("");
+        txtNameClientFound.setText("");
+        txtStoredScore.setText("");
+        txtUsedScore.setText("");
+        txtCurrentScore.setText("");
+
+    }
+    void fillTableClient(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        List<KhachHang> list = khachHangDao.selectAll();
+        for(int i=0; i<list.size(); i++){
+            KhachHang kh = list.get(i);
+            model.addRow(new Object[]{
+                    kh.getMaKH(),
+                    kh.getsDT(),
+                    kh.getHoTenKH(),
+                    kh.getSoDiemDaTich(),
+                    kh.getSoDiemDaDung(),
+                    kh.getSoDiemHienCo()
+            });
+        }
+    }
+
+    
 }

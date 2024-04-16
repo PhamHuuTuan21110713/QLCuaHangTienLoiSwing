@@ -5,6 +5,7 @@
 package com.qlchtl.dao;
 
 import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.XJdbc;
 
 import java.sql.ResultSet;
@@ -53,6 +54,15 @@ public class NhanVienDao extends qlchSysDao<NhanVien,String> {
         String sql = "SELECT * FROM nhanvien WHERE MaNV = ?";
         List<com.qlchtl.entity.NhanVien> list = selectBySql(sql, maNV);
         return list.size() > 0 ? list.get(0) : null;    }
+
+
+
+
+    public  List<NhanVien>  selectByName(String tenNV) {
+        String sql = "SELECT * FROM nhanvien WHERE HoTenNV LIKE ?";
+        List<NhanVien> list = selectBySql(sql, "%" + tenNV + "%");
+        return list;
+    }
 
     @Override
     public List<NhanVien> selectAll() {

@@ -29,7 +29,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-
 /**
  *
  * @author Dell
@@ -42,6 +41,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private String MaHD="";
     public JFHoaDon() {
         initComponents();
+        this.lblNowDate.setText(LocalDate.now().toString());
         remakeControls();
         loadCustomers();
         loadProducts();
@@ -114,7 +114,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblNowDate = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -268,12 +268,12 @@ public class JFHoaDon extends javax.swing.JFrame {
 
         jbtnSCanSanPham.setBorder(null);
         jbtnSCanSanPham.setForeground(new java.awt.Color(102, 102, 102));
+        jbtnSCanSanPham.setText("Scan");
         jbtnSCanSanPham.setBorderColor(new java.awt.Color(255, 255, 255));
         jbtnSCanSanPham.setColor(new java.awt.Color(255, 204, 204));
         jbtnSCanSanPham.setColorClick(new java.awt.Color(255, 153, 204));
         jbtnSCanSanPham.setColorOver(new java.awt.Color(255, 153, 153));
         jbtnSCanSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jbtnSCanSanPham.setLabel("Scan");
         jbtnSCanSanPham.setRadius(10);
         jbtnSCanSanPham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,12 +283,12 @@ public class JFHoaDon extends javax.swing.JFrame {
 
         jbtnAddSanPham.setBorder(null);
         jbtnAddSanPham.setForeground(new java.awt.Color(102, 102, 102));
+        jbtnAddSanPham.setText("Add");
         jbtnAddSanPham.setBorderColor(new java.awt.Color(255, 255, 255));
         jbtnAddSanPham.setColor(new java.awt.Color(255, 204, 204));
         jbtnAddSanPham.setColorClick(new java.awt.Color(255, 153, 204));
         jbtnAddSanPham.setColorOver(new java.awt.Color(255, 153, 153));
         jbtnAddSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jbtnAddSanPham.setLabel("Add");
         jbtnAddSanPham.setRadius(10);
         jbtnAddSanPham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -493,7 +493,7 @@ public class JFHoaDon extends javax.swing.JFrame {
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(160, 160, 160))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
-                        .addComponent(jbtnDeleteSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbtnDeleteSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         myPanel3Layout.setVerticalGroup(
@@ -618,7 +618,7 @@ public class JFHoaDon extends javax.swing.JFrame {
 
         jLabel8.setText("DATE:");
 
-        jLabel9.setText("24/11/2003");
+        lblNowDate.setText("24/11/2003");
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setMinimumSize(new java.awt.Dimension(100, 2));
@@ -644,11 +644,8 @@ public class JFHoaDon extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(myPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -662,11 +659,12 @@ public class JFHoaDon extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(lblNowDate, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -686,7 +684,7 @@ public class JFHoaDon extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
+                            .addComponent(lblNowDate)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -796,7 +794,8 @@ public class JFHoaDon extends javax.swing.JFrame {
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
                                
         // TODO add your handling code here:
-        Scan scan = new Scan(this);
+        Scan scan;
+        scan = new Scan(this);
         scan.setVisible(true);
         scan.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
    
@@ -837,60 +836,8 @@ public class JFHoaDon extends javax.swing.JFrame {
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private com.qlchtl.views.MyControls.MyButton jbtnAddSanPham;
-    private com.qlchtl.views.MyControls.MyButton jbtnCreate;
-    private com.qlchtl.views.MyControls.MyButton jbtnDeleteSanPham;
-    private com.qlchtl.views.MyControls.MyButton jbtnSCanSanPham;
-    private javax.swing.JComboBox<String> jcbIDKhachHang;
-    public javax.swing.JComboBox<String> jcbIDSanPham;
-    private javax.swing.JLabel jlbPrice;
-    private javax.swing.JLabel jlblIDNhanvien;
-    private javax.swing.JLabel jlblSDTKhach;
-    private javax.swing.JLabel jlblSDTNhanvien;
-    private javax.swing.JLabel jlblTenKhach;
-    private javax.swing.JLabel jlblTenNhanvien;
-    private javax.swing.JTable jtbInvoice;
-    private javax.swing.JTextField jtxtQuantity;
-    private com.qlchtl.views.MyControls.MyPanel myPanel1;
-    private com.qlchtl.views.MyControls.MyPanel myPanel2;
-    private com.qlchtl.views.MyControls.MyPanel myPanel3;
-    private com.qlchtl.views.MyControls.MyPanel myPanel4;
-    // End of variables declaration//GEN-END:variables
+    
+    // End of variables declaration                   
     private void updateCustomerInfo() {
         KhachHangDao khachhangdao=new KhachHangDao();
         String selectedCustomerId=(String) jcbIDKhachHang.getSelectedItem();
@@ -1017,4 +964,64 @@ public class JFHoaDon extends javax.swing.JFrame {
         loadData();
         updateTongTien();
     }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+  
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private com.qlchtl.views.MyControls.MyButton jbtnAddSanPham;
+    private com.qlchtl.views.MyControls.MyButton jbtnCreate;
+    private com.qlchtl.views.MyControls.MyButton jbtnDeleteSanPham;
+    private com.qlchtl.views.MyControls.MyButton jbtnSCanSanPham;
+    private javax.swing.JComboBox<String> jcbIDKhachHang;
+    public javax.swing.JComboBox<String> jcbIDSanPham;
+    private javax.swing.JLabel jlbPrice;
+    private javax.swing.JLabel jlblIDNhanvien;
+    private javax.swing.JLabel jlblSDTKhach;
+    private javax.swing.JLabel jlblSDTNhanvien;
+    private javax.swing.JLabel jlblTenKhach;
+    private javax.swing.JLabel jlblTenNhanvien;
+    private javax.swing.JTable jtbInvoice;
+    private javax.swing.JTextField jtxtQuantity;
+    private javax.swing.JLabel lblNowDate;
+    private com.qlchtl.views.MyControls.MyPanel myPanel1;
+    private com.qlchtl.views.MyControls.MyPanel myPanel2;
+    private com.qlchtl.views.MyControls.MyPanel myPanel3;
+    private com.qlchtl.views.MyControls.MyPanel myPanel4;
+    // End of variables declaration//GEN-END:variables
 }

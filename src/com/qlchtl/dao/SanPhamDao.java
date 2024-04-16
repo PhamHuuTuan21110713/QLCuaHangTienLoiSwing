@@ -75,7 +75,6 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
 
     public  List<SanPham>  selectByName(String tenSP) {
         String sql = "SELECT * FROM sanpham WHERE TenSP LIKE ?";
-        // Sử dụng LIKE để tìm kiếm tên sản phẩm có chứa chuỗi nhập vào
         List<SanPham> list = selectBySql(sql, "%" + tenSP + "%");
         return list;
     }

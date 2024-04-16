@@ -4,7 +4,9 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.CaLamViecDao;
 import com.qlchtl.dao.ChucVuDao;
+import com.qlchtl.dao.LichLamDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.entity.*;
 import com.qlchtl.utils.MsgBox;
@@ -12,6 +14,7 @@ import com.qlchtl.utils.XImage;
 import com.qlchtl.views.MyControls.MyTable;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,8 +41,10 @@ public class DetailStaff extends javax.swing.JFrame {
     private String img;
     private javax.swing.JFileChooser fileChooser;
     NhanVienDao nhanVienDao =  new NhanVienDao();
+    CaLamViecDao caLamViecDao = new CaLamViecDao();
 
     ChucVuDao chucVuDao = new ChucVuDao();
+    LichLamDao lichLamDao = new LichLamDao();
     List<ChucVu> listcv = chucVuDao.selectAll();
     List<NhanVien> listnv = nhanVienDao.selectAll();
     private FormMain formMain;
@@ -53,6 +58,7 @@ public class DetailStaff extends javax.swing.JFrame {
         MyTable.apply(scpStaffSchedule, MyTable.TableType.DEFAULT);
         setUpControl(false);
         load();
+        fillTableStaff();
     }
 
     /**
@@ -670,6 +676,26 @@ public class DetailStaff extends javax.swing.JFrame {
             }
         } else {
             MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin.");
+        }
+    }
+
+
+    void fillTableStaff(){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        List<LichLam> list = lichLamDao.selectByIdList(txtCodeStaff.getText());
+        for(int i=0; i<list.size(); i++){
+            LichLam lichLam = list.get(i);
+            System.out.println(lichLam.getMaCa());
+            CaLamViec caLamViec = caLamViecDao.selectById(lichLam.getMaCa());
+            System.out.println(caLamViec.getGioKetThuc());
+            model.addRow(new Object[]{
+                    lichLam.getMaNV(),
+                    lichLam.getNgayThangNam(),
+                    lichLam.getMaCa(),
+                    caLamViec.getGioBatDau(),
+                    caLamViec.getGioKetThuc()
+            });
         }
     }
 

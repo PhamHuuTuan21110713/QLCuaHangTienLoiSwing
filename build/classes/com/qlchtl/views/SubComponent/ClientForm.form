@@ -150,7 +150,8 @@
                       </Group>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
-                  <Component id="scpClient" min="-2" pref="358" max="-2" attributes="0"/>
+                  <Component id="scpClient" min="-2" pref="272" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -653,6 +654,7 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="lblBtnUpdateAncestorAdded"/>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="UpdateClick"/>
                   </Events>
                 </Component>
@@ -763,6 +765,7 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="lblBtnAddAncestorAdded"/>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="CreateClick"/>
                   </Events>
                   <Constraints>
@@ -869,6 +872,10 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTable1KeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

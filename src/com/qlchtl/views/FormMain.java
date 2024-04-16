@@ -17,6 +17,8 @@ import com.qlchtl.views.SubComponent.ClientForm;
 import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
@@ -31,7 +33,11 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
+
     private String TYPE_SEARCHING = "PRODUCT";
+
+    private int indexForm = 0;
+
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
 
@@ -1410,24 +1416,40 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void staffclick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffclick
         // TODO add your handling code here:
+
         tpnMain.setSelectedIndex(1);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+
+        tpnMain.setSelectedIndex(1);  
+        indexForm = 1;
         List<NhanVien> nhanVienList = nhanVienDao.selectAll();
         renderItemStaffWithThread(nhanVienList);
         this.TYPE_SEARCHING = "STAFF";
     }//GEN-LAST:event_staffclick
 
+
+    private void ProductClick(java.awt.event.MouseEvent evt) {                              
+                            
+        // TODO add your handling code here:
+        tpnMain.setSelectedIndex(0);  
+        indexForm = 0;
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "PRODUCT";
+    }                             
+
     
     private void ClientClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientClick
         // TODO add your handling code here:
-         tpnMain.setSelectedIndex(2);   
+         tpnMain.setSelectedIndex(2);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+
     }//GEN-LAST:event_ClientClick
 
     private void InvoiceClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InvoiceClick
         // TODO add your handling code here:
          tpnMain.setSelectedIndex(3);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+
     }//GEN-LAST:event_InvoiceClick
 
     private void RankClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RankClick
@@ -1438,6 +1460,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void ShiftClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShiftClick
         // TODO add your handling code here:
+
         tpnMain.setSelectedIndex(5);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
     }//GEN-LAST:event_ShiftClick
@@ -1453,7 +1476,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         AddProduct addPrdForm = new AddProduct(this);
         addPrdForm.setVisible(true);
         addPrdForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
     }//GEN-LAST:event_AddNewProductClick
 
     private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
@@ -1493,7 +1516,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         // TODO add your handling code here:
         switch(this.TYPE_SEARCHING) {
             case "PRODUCT":
-                searchNameProduct();
+                searchNameSP();
                 break;
             case "STAFF":
                 break;
@@ -1511,12 +1534,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         
     }//GEN-LAST:event_StaffFoundClick
 
-    private void ProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductClick
-        // TODO add your handling code here:
-        tpnMain.setSelectedIndex(0);
-        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
-        this.TYPE_SEARCHING = "PRODUCT";
-    }//GEN-LAST:event_ProductClick
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();
         JPanel res = null;
@@ -1681,7 +1698,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         }
     }
 
-    void searchNameProduct(){
+
+    void searchNameSP(){
         String nameProduct = txtSearch.getText();
         List<SanPham> searchProduct = sanPhamDao.selectByName(nameProduct);
         if(searchProduct.size() > 0){
@@ -1693,6 +1711,30 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             renderItemProdWithThread(listsp);
         }
         txtSearch.setText("");
+    }
+
+    void searchNameNV(){
+        String nameStaff = txtSearch.getText();
+        List<NhanVien> searchStaff = nhanVienDao.selectByName(nameStaff);
+        if(searchStaff.size() > 0){
+            renderItemStaffWithThread(searchStaff);
+        }
+        else{
+            MsgBox.alert(this, "Không có nhân viên nào được tìm thấy");
+            List<NhanVien> searchStaffAll = nhanVienDao.selectAll();
+            renderItemStaffWithThread(searchStaffAll);
+        }
+        txtSearch.setText("");
+    }
+
+
+
+    void searchName(){
+        if(indexForm==0){
+            searchNameSP();
+        } else if (indexForm==1) {
+            searchNameNV();
+        }
     }
 
 
