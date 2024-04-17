@@ -14,6 +14,7 @@ import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
+import com.qlchtl.views.MyControls.MyPanel;
 import com.qlchtl.views.SubComponent.ClientForm;
 import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.Color;
@@ -26,8 +27,6 @@ import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
 import com.qlchtl.views.SubComponent.RankForm;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -36,7 +35,9 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
-    private int indexForm = 0;
+
+    private String TYPE_SEARCHING = "PRODUCT";
+
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
@@ -60,10 +61,10 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         this.idStaffSelected = a;
     }
 
-
-
     public FormMain(LogIn lgin) {
         initComponents();
+        this.pnlProduct.setBackground(new Color(24,145,143));
+        this.lblProduct.setForeground(Color.white);
         this.lgin = lgin;
         setLocationRelativeTo(null);
         settingScrollPane();
@@ -71,12 +72,14 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         loadSP();
     }
 
-
+    private ClientForm clientForm = new ClientForm(this);
+    private InvoiceForm invoiceForm = new InvoiceForm(this);
+    private  RankForm rankForm = new RankForm(this);
     private void setTupTabbedPane() {
         
-        tpnMain.addTab("", new ClientForm(this));
-        tpnMain.addTab("", new InvoiceForm(this));
-        tpnMain.addTab("", new RankForm(this));
+        tpnMain.addTab("", clientForm);
+        tpnMain.addTab("", invoiceForm);
+        tpnMain.addTab("", rankForm);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,28 +95,26 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         jLabel2 = new javax.swing.JLabel();
         pnlMenu = new javax.swing.JPanel();
         pnlProduct = new javax.swing.JPanel();
-        iconProduct = new javax.swing.JLabel();
         lblProduct = new javax.swing.JLabel();
         pnlStaff = new javax.swing.JPanel();
-        iconStaff = new javax.swing.JLabel();
         lblStaff = new javax.swing.JLabel();
         pnlClient = new javax.swing.JPanel();
-        iconClient = new javax.swing.JLabel();
         lblClient = new javax.swing.JLabel();
         pnlInvoice = new javax.swing.JPanel();
-        iconInvoice = new javax.swing.JLabel();
         lblInvoice = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        iconRank = new javax.swing.JLabel();
         lblRank = new javax.swing.JLabel();
         pnlShift = new javax.swing.JPanel();
-        iconShift = new javax.swing.JLabel();
         lblShift = new javax.swing.JLabel();
         pnlAccount = new javax.swing.JPanel();
-        iconAccount = new javax.swing.JLabel();
         lblAccount = new javax.swing.JLabel();
-        pnlChange = new com.qlchtl.views.MyControls.MyPanel();
-        pnlSelected = new com.qlchtl.views.MyControls.MyPanel();
+        iconProduct = new javax.swing.JLabel();
+        iconStaff = new javax.swing.JLabel();
+        iconClient = new javax.swing.JLabel();
+        iconInvoice = new javax.swing.JLabel();
+        iconRank = new javax.swing.JLabel();
+        iconShift = new javax.swing.JLabel();
+        iconAccount = new javax.swing.JLabel();
         myPanelBoxShadow3 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -165,6 +166,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         lblPhoneStaffFound = new javax.swing.JLabel();
         btnDetailStaffFound = new com.qlchtl.views.MyControls.MyButton();
         btnDeleteStaffFound = new com.qlchtl.views.MyControls.MyButton();
+        lblAvataStaffFound = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -199,20 +201,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/home.png"))); // NOI18N
-        iconProduct.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ProductClick(evt);
-            }
-        });
-
-        lblProduct.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblProduct.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblProduct.setForeground(new java.awt.Color(102, 102, 102));
         lblProduct.setText("Product");
         lblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -231,20 +221,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         pnlProductLayout.setHorizontalGroup(
             pnlProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(iconProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(lblProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
         pnlProductLayout.setVerticalGroup(
             pnlProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblProduct)
-                    .addComponent(iconProduct))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addComponent(lblProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addGap(16, 16, 16))
         );
 
         pnlStaff.setBackground(new java.awt.Color(255, 255, 255));
@@ -262,20 +248,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/team.png"))); // NOI18N
-        iconStaff.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                staffclick(evt);
-            }
-        });
-
-        lblStaff.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblStaff.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblStaff.setForeground(new java.awt.Color(102, 102, 102));
         lblStaff.setText("Staff");
         lblStaff.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -294,20 +268,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         pnlStaffLayout.setHorizontalGroup(
             pnlStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlStaffLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(iconStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(lblStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(54, 54, 54))
         );
         pnlStaffLayout.setVerticalGroup(
             pnlStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlStaffLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(pnlStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblStaff)
-                    .addComponent(iconStaff))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(lblStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
 
         pnlClient.setBackground(new java.awt.Color(255, 255, 255));
@@ -325,20 +295,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/public-relation.png"))); // NOI18N
-        iconClient.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ClientClick(evt);
-            }
-        });
-
-        lblClient.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblClient.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblClient.setForeground(new java.awt.Color(102, 102, 102));
         lblClient.setText("Client");
         lblClient.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -357,20 +315,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         pnlClientLayout.setHorizontalGroup(
             pnlClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClientLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(iconClient, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblClient, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(lblClient, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlClientLayout.setVerticalGroup(
             pnlClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClientLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(pnlClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconClient)
-                    .addComponent(lblClient))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblClient, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
 
         pnlInvoice.setBackground(new java.awt.Color(255, 255, 255));
@@ -388,20 +342,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconInvoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/bill.png"))); // NOI18N
-        iconInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                InvoiceClick(evt);
-            }
-        });
-
-        lblInvoice.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblInvoice.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblInvoice.setForeground(new java.awt.Color(102, 102, 102));
         lblInvoice.setText("Invoice");
         lblInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -420,20 +362,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         pnlInvoiceLayout.setHorizontalGroup(
             pnlInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInvoiceLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(iconInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(lblInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addGap(43, 43, 43))
         );
         pnlInvoiceLayout.setVerticalGroup(
             pnlInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInvoiceLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(pnlInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconInvoice)
-                    .addComponent(lblInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(lblInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -450,20 +388,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconRank.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/badge.png"))); // NOI18N
-        iconRank.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                RankClick(evt);
-            }
-        });
-
-        lblRank.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblRank.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblRank.setForeground(new java.awt.Color(102, 102, 102));
         lblRank.setText("Rank");
         lblRank.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -482,20 +408,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(iconRank, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblRank, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(lblRank, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblRank, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconRank))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(lblRank, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
 
         pnlShift.setBackground(new java.awt.Color(255, 255, 255));
@@ -513,20 +435,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconShift.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/shift.png"))); // NOI18N
-        iconShift.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ShiftClick(evt);
-            }
-        });
-
-        lblShift.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblShift.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblShift.setForeground(new java.awt.Color(102, 102, 102));
         lblShift.setText("Shift");
         lblShift.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -545,20 +455,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         pnlShiftLayout.setHorizontalGroup(
             pnlShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlShiftLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(iconShift, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblShift)
+                .addGap(25, 25, 25)
+                .addComponent(lblShift, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlShiftLayout.setVerticalGroup(
             pnlShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlShiftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblShift, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconShift))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(lblShift, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
 
         pnlAccount.setBackground(new java.awt.Color(255, 255, 255));
@@ -576,20 +482,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
 
-        iconAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/user.png"))); // NOI18N
-        iconAccount.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuItemHover(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuItemLeave(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                AccountClick(evt);
-            }
-        });
-
-        lblAccount.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lblAccount.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblAccount.setForeground(new java.awt.Color(102, 102, 102));
         lblAccount.setText("Account");
         lblAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -608,75 +502,66 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         pnlAccountLayout.setHorizontalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccountLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(lblAccount)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlAccountLayout.setVerticalGroup(
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccountLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconAccount))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(lblAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
 
-        pnlChange.setBackground(new java.awt.Color(24, 145, 143));
-        pnlChange.setRoundBottomLeft(20);
-        pnlChange.setRoundBottomRight(20);
-        pnlChange.setRoundTopLeft(20);
-        pnlChange.setRoundTopRight(20);
+        iconProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/home.png"))); // NOI18N
 
-        javax.swing.GroupLayout pnlChangeLayout = new javax.swing.GroupLayout(pnlChange);
-        pnlChange.setLayout(pnlChangeLayout);
-        pnlChangeLayout.setHorizontalGroup(
-            pnlChangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
-        );
-        pnlChangeLayout.setVerticalGroup(
-            pnlChangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 54, Short.MAX_VALUE)
-        );
+        iconStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/team.png"))); // NOI18N
 
-        pnlSelected.setBackground(new java.awt.Color(24, 145, 143));
-        pnlSelected.setPreferredSize(new java.awt.Dimension(130, 3));
+        iconClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/public-relation.png"))); // NOI18N
 
-        javax.swing.GroupLayout pnlSelectedLayout = new javax.swing.GroupLayout(pnlSelected);
-        pnlSelected.setLayout(pnlSelectedLayout);
-        pnlSelectedLayout.setHorizontalGroup(
-            pnlSelectedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
-        );
-        pnlSelectedLayout.setVerticalGroup(
-            pnlSelectedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 3, Short.MAX_VALUE)
-        );
+        iconInvoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/bill.png"))); // NOI18N
+
+        iconRank.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/badge.png"))); // NOI18N
+
+        iconShift.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/shift.png"))); // NOI18N
+
+        iconAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/user.png"))); // NOI18N
+        iconAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuItemHover(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlChange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlStaff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlInvoice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                        .addComponent(pnlShift, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                        .addComponent(pnlAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(pnlSelected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iconClient, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iconInvoice, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iconStaff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iconProduct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iconShift, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iconAccount, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(iconRank, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)))
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlShift, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlInvoice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(pnlClient, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(pnlStaff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(pnlAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(pnlProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,26 +569,45 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMenuLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(pnlProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlChange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addComponent(pnlSelected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(pnlStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 105, Short.MAX_VALUE))
+                        .addComponent(pnlProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(iconProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(17, 17, 17)
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(iconInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(iconRank, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(iconShift, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addComponent(pnlAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(105, 105, 105))
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-
-        pnlSelected.getAccessibleContext().setAccessibleName("");
 
         myPanelBoxShadow3.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow3.setShadowColor(new java.awt.Color(10, 200, 186));
@@ -724,43 +628,43 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             myPanelBoxShadow3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
         myPanelBoxShadow3Layout.setVerticalGroup(
             myPanelBoxShadow3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
         myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
         myPanelBoxShadow1Layout.setHorizontalGroup(
             myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow1Layout.createSequentialGroup()
+                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, myPanelBoxShadow1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(myPanelBoxShadow3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(7, Short.MAX_VALUE))
+                        .addComponent(myPanelBoxShadow3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17))
         );
         myPanelBoxShadow1Layout.setVerticalGroup(
             myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                     .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addComponent(myPanelBoxShadow3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(99, 99, 99)
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -784,24 +688,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         txtSearch.setForeground(new java.awt.Color(102, 102, 102));
         txtSearch.setBorder(null);
         myPanel1.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 5, 200, 30));
-
-
-//        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                searchName();
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                searchName();
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//                // Không cần xử lý sự kiện này nếu bạn chỉ quan tâm đến việc người dùng thay đổi văn bản
-//            }
-//        });
 
         lblGoSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/enter.png"))); // NOI18N
         lblGoSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -942,59 +828,64 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(imgProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(imgProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 192, Short.MAX_VALUE)
                 .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProductNameFound, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblProductNameFound, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(22, 22, 22)
-                                .addComponent(lblCodeProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(70, 70, 70)
-                                .addComponent(jLabel14)
-                                .addGap(13, 13, 13)
-                                .addComponent(lblPriceProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addGap(48, 48, 48)
-                                .addComponent(lblQuantityProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(22, 22, 22)
+                                        .addComponent(lblCodeProductFound, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                                    .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(70, 70, 70)
+                                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(13, 13, 13)
+                                        .addComponent(lblPriceProdFound, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                                    .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(lblQuantityProductFound, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                                .addGap(10, 10, 10))))
                     .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                         .addGap(27, 27, 27)
-                        .addComponent(btnViewProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnViewProductFound, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                        .addGap(20, 20, 20)))
+                .addGap(21, 21, 21))
         );
         myPanelBoxShadow4Layout.setVerticalGroup(
             myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(imgProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(imgProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 180, Short.MAX_VALUE)
+                .addGap(31, 31, 31))
             .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(lblProductNameFound)
+                .addComponent(lblProductNameFound, javax.swing.GroupLayout.PREFERRED_SIZE, 18, Short.MAX_VALUE)
                 .addGap(17, 17, 17)
                 .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(lblCodeProductFound))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCodeProductFound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
                 .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14)
-                    .addComponent(lblPriceProdFound))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPriceProdFound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
                 .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(lblQuantityProductFound))
-                .addGap(11, 11, 11)
-                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnViewProductFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblQuantityProductFound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnViewProductFound, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(btnDeleteProdFound, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
 
         ucProduct.add(myPanelBoxShadow4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 481, 231));
@@ -1048,8 +939,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlAddNewPrdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAddNewPrdLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(lblAddNewProd)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(lblAddNewProd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(13, 13, 13))
         );
         pnlAddNewPrdLayout.setVerticalGroup(
             pnlAddNewPrdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1065,10 +956,10 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlAddNewPrd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlAddNewPrd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                .addContainerGap())
         );
         myPanel3Layout.setVerticalGroup(
             myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1091,14 +982,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             .addGroup(myPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
+                    .addGroup(myPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(128, 128, 128))
                     .addGroup(myPanel2Layout.createSequentialGroup()
                         .addGroup(myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 173, Short.MAX_VALUE)))
-                .addGap(12, 12, 12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))))
         );
         myPanel2Layout.setVerticalGroup(
             myPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1110,10 +1003,9 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                     .addGroup(myPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 197, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(myPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         ucProduct.add(myPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 390, 210));
@@ -1208,29 +1100,34 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 .addContainerGap()
                 .addComponent(pnlHeaderStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scpStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(scpStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         myPanelBoxShadow2.setBackground(new java.awt.Color(255, 255, 255));
+        myPanelBoxShadow2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblNameStaffFound.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblNameStaffFound.setForeground(new java.awt.Color(51, 51, 51));
         lblNameStaffFound.setText("Phạm Hữu Tuấn");
+        myPanelBoxShadow2.add(lblNameStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 16, 218, -1));
 
         lblCodeStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCodeStaffFound.setForeground(new java.awt.Color(102, 102, 102));
         lblCodeStaffFound.setText("21110713");
+        myPanelBoxShadow2.add(lblCodeStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 53, 206, -1));
 
         lblStateStaffFound.setBackground(new java.awt.Color(102, 102, 102));
         lblStateStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStateStaffFound.setForeground(new java.awt.Color(102, 102, 102));
         lblStateStaffFound.setText("Đang làm");
+        myPanelBoxShadow2.add(lblStateStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 75, 206, -1));
 
         lblPhoneStaffFound.setBackground(new java.awt.Color(102, 102, 102));
         lblPhoneStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPhoneStaffFound.setForeground(new java.awt.Color(102, 102, 102));
         lblPhoneStaffFound.setText("0928895717");
+        myPanelBoxShadow2.add(lblPhoneStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 97, 206, -1));
 
         btnDetailStaffFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDetailStaffFound.setText("Detail");
@@ -1245,6 +1142,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 StaffFoundClick(evt);
             }
         });
+        myPanelBoxShadow2.add(btnDetailStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 125, 110, 46));
 
         btnDeleteStaffFound.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteStaffFound.setText("Delete");
@@ -1254,43 +1152,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         btnDeleteStaffFound.setColorOver(new java.awt.Color(232, 113, 122));
         btnDeleteStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeleteStaffFound.setRadius(20);
-
-        javax.swing.GroupLayout myPanelBoxShadow2Layout = new javax.swing.GroupLayout(myPanelBoxShadow2);
-        myPanelBoxShadow2.setLayout(myPanelBoxShadow2Layout);
-        myPanelBoxShadow2Layout.setHorizontalGroup(
-            myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow2Layout.createSequentialGroup()
-                .addContainerGap(166, Short.MAX_VALUE)
-                .addGroup(myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNameStaffFound, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(myPanelBoxShadow2Layout.createSequentialGroup()
-                            .addComponent(btnDeleteStaffFound, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnDetailStaffFound, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblStateStaffFound, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblCodeStaffFound, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPhoneStaffFound, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        myPanelBoxShadow2Layout.setVerticalGroup(
-            myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(lblNameStaffFound)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCodeStaffFound)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblStateStaffFound)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPhoneStaffFound)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(myPanelBoxShadow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnDetailStaffFound, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(btnDeleteStaffFound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
+        myPanelBoxShadow2.add(btnDeleteStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 125, 89, 46));
+        myPanelBoxShadow2.add(lblAvataStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 15, 140, 150));
 
         javax.swing.GroupLayout ucStaffLayout = new javax.swing.GroupLayout(ucStaff);
         ucStaff.setLayout(ucStaffLayout);
@@ -1310,9 +1173,10 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ucStaffLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(pnlScrollStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlScrollStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         tpnMain.addTab("tab2", ucStaff);
@@ -1324,14 +1188,14 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 1135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 1135, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 750, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -1366,7 +1230,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             public void run() {
                 int col = 0;
                 int row = 0;
-                for (NhanVien cd : listnv) {
+                for (NhanVien cd :listnv) {
                     MyPanelBoxShadow pn = itf.createItemStaffComponent(col, row, cd.getMaNV(), cd.getHoTenNV(), cd.getGioiTinh(), cd.isTrangThai(), cd.getSdt(), cd.getImg());
                     if (col == 0 && row == 0) {
                         idStaffSelected = cd.getMaNV();
@@ -1466,9 +1330,9 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         java.net.URL imageURL = getClass().getResource(imagePath);
         javax.swing.ImageIcon originalImageIcon = new javax.swing.ImageIcon(imageURL);
         java.awt.Image originalImage = originalImageIcon.getImage();
-        java.awt.Image scaledImage = originalImage.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        java.awt.Image scaledImage = originalImage.getScaledInstance(140, 150, java.awt.Image.SCALE_SMOOTH);
         javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
-        lblLogout.setIcon(scaledImageIcon);
+        lblAvataStaffFound.setIcon(scaledImageIcon);
 
 
         if(state==true){
@@ -1527,61 +1391,91 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         } else if(hoveredComponent instanceof JPanel){
             res = (JPanel) hoveredComponent;
         }
-        pnlChange.setLocation(0, (int)res.getLocation().y);
+        if(res.getBackground().equals(Color.white)) {
+             res.setBackground(new Color(228,236,230));
+        }
     }//GEN-LAST:event_menuItemHover
  
     private void menuItemLeave(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemLeave
         // TODO add your handling code here:
+        Component hoveredComponent = evt.getComponent();
+        JPanel res = null;
+        if(hoveredComponent instanceof  JLabel){
+            res = (JPanel)((JLabel) hoveredComponent).getParent();
+        } else if(hoveredComponent instanceof JPanel){
+            res = (JPanel) hoveredComponent;
+        }
+        if(res.getBackground().equals(new Color(228,236,230))) {
+            res.setBackground(Color.white);
+            for (Component c : res.getComponents()) {
+                if (c instanceof JLabel) {
+                    c.setForeground(new Color(102, 102, 102));
+                }
+            }
+        }else {
+            setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        }
     }//GEN-LAST:event_menuItemLeave
 
     private void staffclick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_staffclick
         // TODO add your handling code here:
+
+        tpnMain.setSelectedIndex(1);   
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+
         tpnMain.setSelectedIndex(1);  
-        indexForm = 1;
-        setPresentTabVisible(evt,"Staff");
         List<NhanVien> nhanVienList = nhanVienDao.selectAll();
         renderItemStaffWithThread(nhanVienList);
+        this.TYPE_SEARCHING = "STAFF";
     }//GEN-LAST:event_staffclick
 
-    private void ProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductClick
+
+    private void ProductClick(java.awt.event.MouseEvent evt) {                              
+                            
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(0);  
-        indexForm = 0;
-        setPresentTabVisible(evt,"Product");
-    }//GEN-LAST:event_ProductClick
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "PRODUCT";
+    }                             
 
     
     private void ClientClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientClick
         // TODO add your handling code here:
-         indexForm = 2;
          tpnMain.setSelectedIndex(2);
-        setPresentTabVisible(evt,"Client");
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "CLIENT";
+
     }//GEN-LAST:event_ClientClick
 
     private void InvoiceClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InvoiceClick
         // TODO add your handling code here:
-         tpnMain.setSelectedIndex(3);
-        indexForm = 3;
-        setPresentTabVisible(evt,"Invoice");
+        tpnMain.setSelectedIndex(3);
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "INVOICE";
+
     }//GEN-LAST:event_InvoiceClick
 
     private void RankClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RankClick
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(4);
-        indexForm = 4;
-        setPresentTabVisible(evt,"Rank");
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "RANK";
+
     }//GEN-LAST:event_RankClick
 
     private void ShiftClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShiftClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(5);
-        setPresentTabVisible(evt,"Shift");
+
+        tpnMain.setSelectedIndex(5);   
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "SHIFT";
+
     }//GEN-LAST:event_ShiftClick
 
     private void AccountClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(6);
-        setPresentTabVisible(evt,"Account");
+        tpnMain.setSelectedIndex(6);   
+        setPresentTabVisible(evt,new Color(24,145,143),Color.white);
     }//GEN-LAST:event_AccountClick
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
@@ -1594,8 +1488,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(7);
-         setPresentTabVisible(evt,"Home");
+        tpnMain.setSelectedIndex(7); 
+         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
     }//GEN-LAST:event_HomeClick
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -1627,29 +1521,57 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void lblGoSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGoSearchMouseClicked
         // TODO add your handling code here:
-        searchName();
+        switch(this.TYPE_SEARCHING) {
+            case "PRODUCT":
+                searchNameSP();
+                break;
+            case "STAFF":
+                searchNameNV();
+                break;
+            case "CLIENT":
+                clientForm.searchNameKH(txtSearch.getText());
+                txtSearch.setText("");
+                break;
+            default:
+                break;
+        }
+        
     }//GEN-LAST:event_lblGoSearchMouseClicked
 
     private void StaffFoundClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StaffFoundClick
         // TODO add your handling code here:
+        DetailStaff frm = new DetailStaff(this, this.idStaffSelected);
+        frm.setVisible(true);
+        frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }//GEN-LAST:event_StaffFoundClick
-    private void setPresentTabVisible(java.awt.event.MouseEvent evt,String lbl){
-        SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        // Cập nhật vị trí của thành phần ở đây
-                        // Ví dụ:
-                      Component hoveredComponent = evt.getComponent();
-                        JPanel res = null;
-                        if(hoveredComponent instanceof  JLabel){
-                            res = (JPanel)((JLabel) hoveredComponent).getParent();
-                        } else if(hoveredComponent instanceof JPanel){
-                            res = (JPanel) hoveredComponent;
-                        }
-                        pnlSelected.setLocation((int)res.getLocation().x + 20, (int)res.getLocation().y+(int)res.getHeight());
-                        pnlChange.setLocation(0, (int)res.getLocation().y);
+
+    private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
+        Component hoveredComponent = evt.getComponent();
+        JPanel res = null;
+        if (hoveredComponent instanceof JLabel) {
+            res = (JPanel) ((JLabel) hoveredComponent).getParent();
+        } else if (hoveredComponent instanceof JPanel) {
+            res = (JPanel) hoveredComponent;
+        }
+        JPanel supperParent = (JPanel) res.getParent();
+        for (Component c : supperParent.getComponents()) {
+            if(c.getBackground().equals(currcolor)) {
+                c.setBackground(originColor);
+                JPanel cc = (JPanel)c;
+                for(Component c2 : cc.getComponents()) {
+                    if(c2 instanceof JLabel) {
+                        ((JLabel)c2).setForeground(new Color(102,102,102));
                     }
-        });
-        this.lblTabName.setText(lbl);
+                }
+            }
+        }
+        res.setBackground(currcolor);
+        for(Component c : res.getComponents()) {
+            if(c instanceof JLabel) {
+                        ((JLabel)c).setForeground(Color.white);
+                    }
+        }
     }
     
     /**
@@ -1722,6 +1644,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblAddNewProd;
+    private javax.swing.JLabel lblAvataStaffFound;
     private javax.swing.JLabel lblClient;
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblCodeStaffFound;
@@ -1749,7 +1672,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private com.qlchtl.views.MyControls.MyPanelBoxShadow myPanelBoxShadow4;
     private javax.swing.JPanel pnlAccount;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
-    private com.qlchtl.views.MyControls.MyPanel pnlChange;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlHeaderStaff;
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlHome;
@@ -1758,7 +1680,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlProduct;
     private javax.swing.JPanel pnlScrollStaff;
-    private com.qlchtl.views.MyControls.MyPanel pnlSelected;
     private javax.swing.JPanel pnlShift;
     private javax.swing.JPanel pnlStaff;
     private javax.swing.JScrollPane scpProduct;
@@ -1778,16 +1699,27 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     }
 
     void delete() {
-        SanPham sp = getFormSanPham();
-        try {
-            sanPhamDao.updateTrangThai(sp);
-            MsgBox.alert(this, "Cập nhật thành công!");
-            List<SanPham> listsp = sanPhamDao.selectAll();
-            renderItemProdWithThread(listsp);
-        } catch (Exception e) {
-            MsgBox.alert(this, "Cập nhật thất bại!");
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+            SanPham sp = getFormSanPham();
+            try {
+                sanPhamDao.updateTrangThai(sp);
+                MsgBox.alert(this, "Xóa thành công!");
+                List<SanPham> listsp = sanPhamDao.selectAll();
+                renderItemProdWithThread(listsp);
+            } catch (Exception e) {
+                MsgBox.alert(this, "Xóa thất bại!");
+            }
         }
     }
+
+
 
     void searchNameSP(){
         String nameProduct = txtSearch.getText();
@@ -1818,38 +1750,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     }
 
 
-    void searchNameKH(){
-        ClientForm client = new ClientForm(this);
-        String nameClient = txtSearch.getText();
-        List<KhachHang> nameClients = khachHangDao.selectByName(nameClient);
-        if(nameClients.size() > 0){
-            client.fillTableClient(nameClients);
-
-        }
-        else{
-            MsgBox.alert(this, "Không có khách hàng nào được tìm thấy");
-            List<KhachHang> name = khachHangDao.selectAll();
-            client.fillTableClient(name);
-        }
-        txtSearch.setText("");
-    }
-
-
-
-
-
-
-    void searchName(){
-        if(indexForm==0){
-            searchNameSP();
-        } else if (indexForm==1) {
-            searchNameNV();
-        }else if (indexForm==2){
-            searchNameKH();
-        }
-    }
-
-
     NhanVien getFormNhanVien(String ms) {
         NhanVien nv = new NhanVien();
         nv.setMaNV(ms);
@@ -1868,6 +1768,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             MsgBox.alert(this, "Xóa nhân viên thất bại!");
         }
     }
+
+
 
     public void loadSP(){
         List<SanPham> listsp = sanPhamDao.selectAll();

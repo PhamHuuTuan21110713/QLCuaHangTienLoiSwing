@@ -159,11 +159,6 @@ public class InvoiceForm extends javax.swing.JPanel {
                 NewInvoiceClick(evt);
             }
         });
-        btnMyInvoice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMyInvoiceActionPerformed(evt);
-            }
-        });
 
         swbtnShowAll.setForeground(new java.awt.Color(255, 255, 255));
         swbtnShowAll.setBorderSize(1);
@@ -244,14 +239,13 @@ public class InvoiceForm extends javax.swing.JPanel {
 
     private void NewInvoiceClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewInvoiceClick
         // TODO add your handling code here:
-        JFHoaDon hoadon = new JFHoaDon();
-        hoadon.setVisible(true);
-        hoadon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        JFHoaDon hoadon = new JFHoaDon();
+//        hoadon.setVisible(true);
+//        hoadon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            JFHoaDon hoadon = new JFHoaDon();
+            hoadon.setVisible(true);
+            hoadon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_NewInvoiceClick
-
-    private void btnMyInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMyInvoiceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMyInvoiceActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

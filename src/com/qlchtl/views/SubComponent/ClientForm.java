@@ -5,16 +5,16 @@
 package com.qlchtl.views.SubComponent;
 
 import com.qlchtl.dao.KhachHangDao;
-import com.qlchtl.entity.CaLamViec;
-import com.qlchtl.entity.KhachHang;
-import com.qlchtl.entity.LichLam;
+import com.qlchtl.entity.*;
+import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyTable;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import java.util.List;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,8 +27,12 @@ public class ClientForm extends javax.swing.JPanel {
      * Creates new form ClientForm
      */
     private Boolean isOpenButton = true;
+    private int check = 0;
 
     KhachHangDao khachHangDao = new KhachHangDao();
+
+
+
     private FormMain parentForm;
     public ClientForm(FormMain parentForm) {
         initComponents();
@@ -42,8 +46,9 @@ public class ClientForm extends javax.swing.JPanel {
          lblUpdate.setVisible(false);
          btnConfirm.setVisible(false);
          btnCancel.setVisible(false);
-        List<KhachHang> list = khachHangDao.selectAll();
-        fillTableClient(list);
+         List<KhachHang> list = khachHangDao.selectAll();
+         fillTableClient(list);
+         System.out.println(22);
          clickData();
     }
 
@@ -693,26 +698,39 @@ public class ClientForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         clearTest();
         setUpControl(true);
+        check = 1;
+        Color colortxt = new Color(242, 242, 242);
+        txtCodeClientFound.setBackground(colortxt);
 
     }//GEN-LAST:event_CreateClick
 
     private void DeleteClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteClick
         // TODO add your handling code here:
+        delete();
+        
     }//GEN-LAST:event_DeleteClick
 
     private void UpdateClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateClick
         // TODO add your handling code here:
         setUpControl(true);
         txtCodeClientFound.setEditable(false);
+        check = 2;
     }//GEN-LAST:event_UpdateClick
 
     private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
         // TODO add your handling code here:
         setUpControl(false);
+        if(check == 1){
+            insert();
+        }else if(check ==2){
+            update();
+        }
     }//GEN-LAST:event_ConfirmClick
 
     private void CancelClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelClick
         // TODO add your handling code here:
+        clickData();
+        setUpControl(false);
     }//GEN-LAST:event_CancelClick
 
     private void lblBtnUpdateAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblBtnUpdateAncestorAdded
@@ -729,7 +747,7 @@ public class ClientForm extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jTable1KeyPressed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
         clickData();
 
@@ -742,12 +760,19 @@ public class ClientForm extends javax.swing.JPanel {
             selectedRow = 0;
         }
 
-        String maKH = jTable1.getValueAt(selectedRow, 0).toString();
-        String sDT = jTable1.getValueAt(selectedRow, 1).toString();
-        String hoTenKH = jTable1.getValueAt(selectedRow, 2).toString();
-        int soDiemDaTich = Integer.parseInt(jTable1.getValueAt(selectedRow, 3).toString());
-        int soDiemDaDung = Integer.parseInt(jTable1.getValueAt(selectedRow, 4).toString());
-        int soDiemHienCo = Integer.parseInt(jTable1.getValueAt(selectedRow, 5).toString());
+        Object maKHObject = jTable1.getValueAt(selectedRow, 0);
+        Object sDTObject = jTable1.getValueAt(selectedRow, 1);
+        Object hoTenKHObject = jTable1.getValueAt(selectedRow, 2);
+        Object soDiemDaTichObject = jTable1.getValueAt(selectedRow, 3);
+        Object soDiemDaDungObject = jTable1.getValueAt(selectedRow, 4);
+        Object soDiemHienCoObject = jTable1.getValueAt(selectedRow, 5);
+
+        String maKH = maKHObject != null ? maKHObject.toString() : "";
+        String sDT = sDTObject != null ? sDTObject.toString() : "";
+        String hoTenKH = hoTenKHObject != null ? hoTenKHObject.toString() : "";
+        int soDiemDaTich = soDiemDaTichObject != null ? Integer.parseInt(soDiemDaTichObject.toString()) : 0;
+        int soDiemDaDung = soDiemDaDungObject != null ? Integer.parseInt(soDiemDaDungObject.toString()) : 0;
+        int soDiemHienCo = soDiemHienCoObject != null ? Integer.parseInt(soDiemHienCoObject.toString()) : 0;
 
         txtCodeClientFound.setText(maKH);
         txtPhoneClientFound.setText(sDT);
@@ -756,6 +781,7 @@ public class ClientForm extends javax.swing.JPanel {
         txtUsedScore.setText(String.valueOf(soDiemDaDung));
         txtCurrentScore.setText(String.valueOf(soDiemHienCo));
     }
+
 
 
 
@@ -805,9 +831,9 @@ public class ClientForm extends javax.swing.JPanel {
     private javax.swing.JTextField txtUsedScore;
     // End of variables declaration//GEN-END:variables
 
-    void tableDefault(){
+    private void tableDefault() {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null},
@@ -824,13 +850,12 @@ public class ClientForm extends javax.swing.JPanel {
                         {null, null, null, null, null, null},
                         {null, null, null, null, null, null}
                 },
-                new String [] {
+                new String[]{
                         "Customer ID", "Phone Number", "Full Name", "Accumulated Points", "Used Points", "Current Points"
                 }
         ));
 
         setUpControl(false);
-
     }
 
 
@@ -871,22 +896,146 @@ public class ClientForm extends javax.swing.JPanel {
         txtCurrentScore.setText("");
 
     }
-    public void fillTableClient(List<KhachHang> list){
-        tableDefault();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        for(int i=0; i<list.size(); i++){
-            KhachHang kh = list.get(i);
-            model.addRow(new Object[]{
-                    kh.getMaKH(),
-                    kh.getsDT(),
-                    kh.getHoTenKH(),
-                    kh.getSoDiemDaTich(),
-                    kh.getSoDiemDaDung(),
-                    kh.getSoDiemHienCo()
-            });
+
+
+    public void searchNameKH(String nameClient) {
+        List<KhachHang> nameClients = khachHangDao.selectByName(nameClient);
+        if (nameClients.size() > 0) {
+            fillTableClient(nameClients);
+        } else {
+            MsgBox.alert(this, "Không có khách hàng nào được tìm thấy");
+            List<KhachHang> list = khachHangDao.selectAll();
+            fillTableClient(list);
         }
     }
 
-    
+    public void fillTableClient(List<KhachHang> list) {
+        tableDefault();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (KhachHang kh : list) {
+            if(!kh.getTrangThai().equals("0")){
+                Object[] row = {
+                        kh.getMaKH(),
+                        kh.getsDT(),
+                        kh.getHoTenKH(),
+                        kh.getSoDiemDaTich(),
+                        kh.getSoDiemDaDung(),
+                        kh.getSoDiemHienCo()
+                };
+                model.addRow(row);
+            }
+        }
+    }
+    KhachHang getFormXoaNhanVien() {
+        KhachHang sp = new KhachHang();
+        sp.setMaKH(txtCodeClientFound.getText());
+        sp.setTrangThai("0");
+        return sp;
+    }
+
+    void delete() {
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+            KhachHang sp = getFormXoaNhanVien();
+            try {
+                khachHangDao.updateTrangThai(sp);
+                MsgBox.alert(this, "Xóa thành công!");
+                List<KhachHang> listsp = khachHangDao.selectAll();
+                fillTableClient(listsp);
+            } catch (Exception e) {
+                MsgBox.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+    KhachHang getFormNhanVien() {
+
+        String maKH = txtCodeClientFound.getText();
+        String sDT = txtPhoneClientFound.getText();
+        String hoTenKH = txtNameClientFound.getText();
+        String soDiemHienCoText = txtCurrentScore.getText();
+        String soDiemDaTichText = txtStoredScore.getText();
+        String soDiemDaDungText = txtUsedScore.getText();
+
+
+
+        if (maKH.isEmpty() || sDT.isEmpty() || hoTenKH.isEmpty() || soDiemHienCoText.isEmpty() || soDiemDaTichText.isEmpty() || soDiemDaDungText.isEmpty()) {
+            return null;
+        }
+        if (sDT.length() != 10 || !sDT.matches("0\\d+")) {
+            return null;
+        }
+
+        int soDiemHienCo, soDiemDaTich, soDiemDaDung;
+        try {
+            soDiemHienCo = Integer.parseInt(soDiemHienCoText);
+            soDiemDaTich = Integer.parseInt(soDiemDaTichText);
+            soDiemDaDung = Integer.parseInt(soDiemDaDungText);
+
+            if (soDiemHienCo < 0 || soDiemDaTich < 0 || soDiemDaDung < 0 || soDiemHienCo>soDiemDaTich|| soDiemDaDung >soDiemDaTich) {
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        KhachHang sp = new KhachHang();
+        sp.setMaKH(maKH);
+        sp.setTrangThai("1");
+        sp.setsDT(sDT);
+        sp.setHoTenKH(hoTenKH);
+        sp.setSoDiemHienCo(soDiemHienCo);
+        sp.setSoDiemDaTich(soDiemDaTich);
+        sp.setSoDiemDaDung(soDiemDaDung);
+
+        return sp;
+    }
+
+
+    void insert() {
+        KhachHang modelsp = getFormNhanVien();
+        if (modelsp != null) {
+            try {
+                khachHangDao.insert(modelsp);
+                MsgBox.alert(this, "Thêm khách hàng thành công!");
+                List<KhachHang> listsp = khachHangDao.selectAll();
+                fillTableClient(listsp);
+
+            } catch (Exception e) {
+                MsgBox.alert(this, "Thêm khách hàng thất bại!");
+                clickData();
+                setUpControl(false);
+            }
+        } else {
+            MsgBox.alert(this, "Thêm thất bại. Vui lòng kiểm tra và điền đầy đủ thông tin.");
+            clickData();
+            setUpControl(false);
+        }
+    }
+
+    void update(){
+        KhachHang modelsp = getFormNhanVien();
+        try {
+            khachHangDao.update(modelsp);
+            MsgBox.alert(this, "Cập nhật thành công!");
+            List<KhachHang> listsp = khachHangDao.selectAll();
+            fillTableClient(listsp);
+
+        }
+        catch (Exception e) {
+            MsgBox.alert(this, "Cập nhật thất bại, Vui lòng kiểm tra và điền đầy đủ thông tin!");
+            clickData();
+            setUpControl(false);
+        }
+    }
+
+
 }

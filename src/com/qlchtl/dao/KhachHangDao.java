@@ -33,6 +33,7 @@ public class KhachHangDao extends qlchSysDao<KhachHang, String> {
                     entity.setSoDiemDaTich(rs.getInt("SoDiemDaTich"));
                     entity.setSoDiemDaDung(rs.getInt("SoDiemDaDung"));
                     entity.setSoDiemHienCo(rs.getInt("SoDiemHienCo"));
+                    entity.setTrangThai(rs.getString("TrangThai"));
                     list.add(entity);
                 }
             }

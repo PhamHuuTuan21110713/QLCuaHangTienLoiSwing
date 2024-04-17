@@ -67,7 +67,8 @@ public class NhanVienDao extends qlchSysDao<NhanVien,String> {
     @Override
     public List<NhanVien> selectAll() {
         String sql = "SELECT * FROM nhanvien";
-        return selectBySql(sql);    }
+        return selectBySql(sql);    
+    }
 
     @Override
     protected List<NhanVien> selectBySql(String sql, Object... args) {
