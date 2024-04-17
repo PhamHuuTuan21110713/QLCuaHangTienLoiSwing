@@ -587,12 +587,22 @@ public class AddProduct extends javax.swing.JFrame {
 
         String maSP = txtCodeProd.getText().trim();
         String input = txtQuantityProd.getText().trim();
-        int sl = Integer.parseInt(input);
+        int sl;
+        try {
+            sl = Integer.parseInt(input);
+
+            if (sl < 0 ) {
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
 
         kho.setMaCH("CH00000001");
         kho.setMaSP(maSP);
         kho.setTenKho("Kho chinh");
         kho.setSoLuong(sl);
+
         System.out.println(kho);
         return kho;
     }

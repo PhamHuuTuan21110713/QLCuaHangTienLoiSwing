@@ -16,7 +16,7 @@ public class XJdbc {
     //    private static String dburl="jdbc:mysql://localhost:3306/qlcuahangtienloi";
     private static String username="root";
 
-    private static String password="PhamHuuTuan258654@";
+    private static String password="Hoang***1@";
 
    
      public static PreparedStatement getStmt(String sql, Object...args) throws SQLException {
