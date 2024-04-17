@@ -19,6 +19,8 @@ import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -50,6 +52,13 @@ public class Scan extends javax.swing.JFrame implements Runnable, ThreadFactory,
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     jButton1.doClick(); // Simulate button click
                 }
+            }
+        });
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Đóng webcam trước khi đóng cửa sổ
+                closeWebcam();
             }
         });
         this.setFocusable(true); // Ensure the frame is focusable
@@ -170,7 +179,11 @@ public class Scan extends javax.swing.JFrame implements Runnable, ThreadFactory,
             }
         });
     }
-
+    private void closeWebcam() {
+        if (webcam != null && webcam.isOpen()) {
+            webcam.close();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
