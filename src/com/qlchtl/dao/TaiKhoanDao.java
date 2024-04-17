@@ -22,6 +22,14 @@ public class TaiKhoanDao extends qlchSysDao<TaiKhoan,String> {
 
     }
 
+
+    public void updateMK(TaiKhoan entity) {
+        String sql="UPDATE taikhoan SET MatKhau=? WHERE MaTK=?";
+        XJdbc.update(sql,
+                entity.getMatKhau(),
+                entity.getMaTaiKhoan());
+    }
+
     @Override
     public void update(TaiKhoan entity) {
         String sql="UPDATE taikhoan SET TaiKhoan=?, MatKhau=?, role = ? WHERE MaTK=?";
@@ -41,6 +49,12 @@ public class TaiKhoanDao extends qlchSysDao<TaiKhoan,String> {
     @Override
     public TaiKhoan selectById(String TaiKhoan) {
         String sql="SELECT * FROM taikhoan WHERE TaiKhoan=?";
+        List<com.qlchtl.entity.TaiKhoan> list = selectBySql(sql, TaiKhoan);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    public TaiKhoan selectByTK(String TaiKhoan) {
+        String sql="SELECT * FROM taikhoan WHERE matk=?";
         List<com.qlchtl.entity.TaiKhoan> list = selectBySql(sql, TaiKhoan);
         return list.size() > 0 ? list.get(0) : null;
     }
