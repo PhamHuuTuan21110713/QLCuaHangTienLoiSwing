@@ -3,9 +3,11 @@ package com.qlchtl.views;
 import java.awt.Component;
 import javax.swing.*;
 
+import com.qlchtl.dao.KhachHangDao;
 import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.KhachHang;
 import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
@@ -40,6 +42,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     KhoDao khoDAo = new KhoDao();
 
     NhanVienDao nhanVienDao = new NhanVienDao();
+    KhachHangDao khachHangDao = new KhachHangDao();
 
     public static String maSp;
     
@@ -1550,6 +1553,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     
     private void ClientClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientClick
         // TODO add your handling code here:
+         indexForm = 2;
          tpnMain.setSelectedIndex(2);
         setPresentTabVisible(evt,"Client");
     }//GEN-LAST:event_ClientClick
@@ -1557,12 +1561,14 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private void InvoiceClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InvoiceClick
         // TODO add your handling code here:
          tpnMain.setSelectedIndex(3);
+        indexForm = 3;
         setPresentTabVisible(evt,"Invoice");
     }//GEN-LAST:event_InvoiceClick
 
     private void RankClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RankClick
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(4);
+        indexForm = 4;
         setPresentTabVisible(evt,"Rank");
     }//GEN-LAST:event_RankClick
 
@@ -1812,12 +1818,34 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     }
 
 
+    void searchNameKH(){
+        ClientForm client = new ClientForm(this);
+        String nameClient = txtSearch.getText();
+        List<KhachHang> nameClients = khachHangDao.selectByName(nameClient);
+        if(nameClients.size() > 0){
+            client.fillTableClient(nameClients);
+
+        }
+        else{
+            MsgBox.alert(this, "Không có khách hàng nào được tìm thấy");
+            List<KhachHang> name = khachHangDao.selectAll();
+            client.fillTableClient(name);
+        }
+        txtSearch.setText("");
+    }
+
+
+
+
+
 
     void searchName(){
         if(indexForm==0){
             searchNameSP();
         } else if (indexForm==1) {
             searchNameNV();
+        }else if (indexForm==2){
+            searchNameKH();
         }
     }
 

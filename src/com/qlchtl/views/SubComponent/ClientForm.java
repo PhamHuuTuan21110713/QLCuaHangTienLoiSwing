@@ -42,7 +42,8 @@ public class ClientForm extends javax.swing.JPanel {
          lblUpdate.setVisible(false);
          btnConfirm.setVisible(false);
          btnCancel.setVisible(false);
-         tableDefault();
+        List<KhachHang> list = khachHangDao.selectAll();
+        fillTableClient(list);
          clickData();
     }
 
@@ -827,10 +828,13 @@ public class ClientForm extends javax.swing.JPanel {
                         "Customer ID", "Phone Number", "Full Name", "Accumulated Points", "Used Points", "Current Points"
                 }
         ));
-        fillTableClient();
+
         setUpControl(false);
 
     }
+
+
+
 
     private void setUpControl(Boolean b) {
         txtPhoneClientFound.setEditable(b);
@@ -867,10 +871,10 @@ public class ClientForm extends javax.swing.JPanel {
         txtCurrentScore.setText("");
 
     }
-    void fillTableClient(){
+    public void fillTableClient(List<KhachHang> list){
+        tableDefault();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        List<KhachHang> list = khachHangDao.selectAll();
         for(int i=0; i<list.size(); i++){
             KhachHang kh = list.get(i);
             model.addRow(new Object[]{
