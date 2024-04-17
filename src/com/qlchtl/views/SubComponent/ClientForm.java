@@ -712,6 +712,7 @@ public class ClientForm extends javax.swing.JPanel {
 
     private void CancelClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelClick
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_CancelClick
 
     private void lblBtnUpdateAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblBtnUpdateAncestorAdded
@@ -728,7 +729,7 @@ public class ClientForm extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jTable1KeyPressed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
         clickData();
 
