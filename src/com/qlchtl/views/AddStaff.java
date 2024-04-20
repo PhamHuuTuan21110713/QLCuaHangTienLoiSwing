@@ -788,7 +788,6 @@ public class AddStaff extends javax.swing.JDialog {
         TaiKhoan modelKho = getFormTaiKhoan();
         if (modelsp != null && modelKho!=null) {
             try {
-
                 nhanVienDao.insert(modelsp);
                 taiKhoanDao.insert(modelKho);
                 MsgBox.alert(this, "Thêm nhân viên thành công!");
