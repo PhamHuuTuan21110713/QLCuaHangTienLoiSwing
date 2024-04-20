@@ -38,6 +38,7 @@ public class DetailProduct extends javax.swing.JFrame  {
      */
     private String idProduct;
     public  String selectedCt ;
+//    public double sum;
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
@@ -626,7 +627,6 @@ public class DetailProduct extends javax.swing.JFrame  {
         update();
         setButton(false);
         setTextField(false);
-        dispose();
 
     }//GEN-LAST:event_ConfirmClick
     private LogIn lgin;
