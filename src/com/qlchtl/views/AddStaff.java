@@ -4,6 +4,25 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.ChucVuDao;
+import com.qlchtl.dao.NhanVienDao;
+import com.qlchtl.dao.TaiKhoanDao;
+import com.qlchtl.entity.*;
+import com.qlchtl.utils.MsgBox;
+import com.qlchtl.utils.XImage;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.qlchtl.views.DetailProduct.isValidDate;
+
 /**
  *
  * @author Dell
@@ -13,10 +32,26 @@ public class AddStaff extends javax.swing.JDialog {
     /**
      * Creates new form AddStaff
      */
-    public AddStaff(java.awt.Frame parent, boolean modal) {
+    private javax.swing.JFileChooser fileChooser;
+    private FormMain formMain;
+
+    NhanVienDao nhanVienDao = new NhanVienDao();
+    TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
+    ChucVuDao chucVuDao = new ChucVuDao();
+
+    public String[] firstChucVu = {null};
+    public String[] firstrole = {null};
+    List<ChucVu> listNCC = chucVuDao.selectAll();
+
+    String img;
+
+    public AddStaff(java.awt.Frame parent, boolean modal,FormMain formMain) {
         super(parent, modal);
+        this.formMain = formMain;
         initComponents();
+        fileChooser = new javax.swing.JFileChooser();
         this.setLocationRelativeTo(null);
+        init();
     }
 
     /**
@@ -72,6 +107,9 @@ public class AddStaff extends javax.swing.JDialog {
         txtPassword = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        txtAccountCoude = new javax.swing.JTextField();
         btnAddImage1 = new com.qlchtl.views.MyControls.MyButton();
         btnCancle1 = new com.qlchtl.views.MyControls.MyButton();
 
@@ -111,6 +149,11 @@ public class AddStaff extends javax.swing.JDialog {
         btnCreate.setColorOver(new java.awt.Color(153, 153, 153));
         btnCreate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCreate.setRadius(10);
+        btnCreate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCreateMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 480, 120, 40));
 
         myPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -360,12 +403,12 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(txtUserName)
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -383,7 +426,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(txtPassword)
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -398,42 +441,75 @@ public class AddStaff extends javax.swing.JDialog {
         jComboBox1.setBackground(new java.awt.Color(61, 65, 179));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel16.setText("Account code");
+
+        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+
+        txtAccountCoude.setBorder(null);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtAccountCoude, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txtAccountCoude, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                            .addGap(32, 32, 32)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(237, Short.MAX_VALUE))
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox1, 0, 157, Short.MAX_VALUE)))))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel12)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel13))
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel13)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -444,10 +520,10 @@ public class AddStaff extends javax.swing.JDialog {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
-        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 530, 230));
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 530, 260));
 
         btnAddImage1.setForeground(new java.awt.Color(61, 65, 179));
         btnAddImage1.setText("Add Image");
@@ -456,6 +532,11 @@ public class AddStaff extends javax.swing.JDialog {
         btnAddImage1.setColorOver(new java.awt.Color(153, 153, 153));
         btnAddImage1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAddImage1.setRadius(10);
+        btnAddImage1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddImage1MouseClicked(evt);
+            }
+        });
         jPanel1.add(btnAddImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 120, 40));
 
         btnCancle1.setForeground(new java.awt.Color(61, 65, 179));
@@ -465,6 +546,11 @@ public class AddStaff extends javax.swing.JDialog {
         btnCancle1.setColorOver(new java.awt.Color(153, 153, 153));
         btnCancle1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancle1.setRadius(10);
+        btnCancle1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancle1MouseClicked(evt);
+            }
+        });
         jPanel1.add(btnCancle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 410, 120, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -475,7 +561,9 @@ public class AddStaff extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -484,6 +572,21 @@ public class AddStaff extends javax.swing.JDialog {
     private void rdoFemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoFemaleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rdoFemaleActionPerformed
+
+    private void btnAddImage1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddImage1MouseClicked
+        // TODO add your handling code here:
+        chonAnh();
+    }//GEN-LAST:event_btnAddImage1MouseClicked
+
+    private void btnCancle1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancle1MouseClicked
+        // TODO add your handling code here:
+         dispose();
+    }//GEN-LAST:event_btnCancle1MouseClicked
+
+    private void btnCreateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateMouseClicked
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btnCreateMouseClicked
 
     /**
      * @param args the command line arguments
@@ -515,7 +618,7 @@ public class AddStaff extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddStaff dialog = new AddStaff(new javax.swing.JFrame(), true);
+                AddStaff dialog = new AddStaff(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -526,6 +629,208 @@ public class AddStaff extends javax.swing.JDialog {
             }
         });
     }
+
+
+
+
+    void chonAnh() {
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            XImage.save(file); // lưu hình vào thư mục logos
+            ImageIcon icon = XImage.read(file.getName());
+            java.awt.Image originalImage = icon.getImage();
+            java.awt.Image scaledImage = originalImage.getScaledInstance(170, 220, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon scaledImageIcon = new javax.swing.ImageIcon(scaledImage);
+            lblAvatar.setIcon(scaledImageIcon);
+            lblAvatar.setToolTipText(file.getName());
+            img = file.getName();
+        }
+    }
+
+    void init(){
+        rdoMale.setSelected(true);
+
+
+        Set<String> uniquePromotionNames = new HashSet<>();
+        for (ChucVu promotion : listNCC) {
+            ChucVu a = chucVuDao.selectById(promotion.getMaCV());
+            uniquePromotionNames.add(a.getTenChucVu());
+        }
+        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+
+        cboRank.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
+
+        if (promotionNamesWithNone.length > 0) {
+            firstChucVu[0] = promotionNamesWithNone[0];
+        }
+        cboRank.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) cboRank.getSelectedItem();
+                firstChucVu[0] = selectedItem;
+            }
+        });
+
+
+
+        String initTrangThai = "0";
+        String[] states = initTrangThai.equals("0") ? new String[] { "User", "Admin" } : new String[] { "User", "Admin" };
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
+        jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
+
+        if (states.length > 0) {
+            firstrole[0] = states[0];
+            System.out.println(firstrole[0]);
+        }
+
+        jComboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) jComboBox1.getSelectedItem();
+                firstrole[0] = selectedItem;
+                System.out.println(firstrole[0]);
+            }
+        });
+
+
+
+    }
+
+    TaiKhoan getFormTaiKhoan(){
+        TaiKhoan tk = new TaiKhoan();
+
+        if (txtAccountCoude.getText().trim().isEmpty() || txtUserName.getText().trim().isEmpty() || txtPassword.getText().trim().isEmpty()) {
+            return null;
+        }
+        tk.setMaTaiKhoan(txtAccountCoude.getText());
+        tk.setTaiKhoan(txtUserName.getText());
+        tk.setMaNhanVien(txtStaffCode.getText());
+        tk.setMatKhau(txtPassword.getText());
+        System.out.println(firstrole[0]);
+        if(firstrole[0].equals("Admin")) {
+            tk.setIsRole(1);
+        } else if (firstrole[0].equals("User")) {
+            tk.setIsRole(0);
+        }
+        return tk;
+    }
+
+    NhanVien getFormNhanVien() {
+        NhanVien nhanVien = new NhanVien();
+
+        String staffCode = txtStaffCode.getText().trim();
+        if (staffCode.isEmpty()) {
+            return null;
+        }
+        nhanVien.setMaNV(staffCode);
+
+        String fullName = txtFullName.getText().trim();
+        if (fullName.isEmpty()) {
+            return null;
+        }
+        nhanVien.setHoTenNV(fullName);
+
+        String inputDate = txtBirthday.getText().trim();
+        if (!isValidDate(inputDate, "dd/MM/yyyy")) {
+            return null;
+        }
+        LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        nhanVien.setNgaySinh(convertedDate);
+
+        String inputWork = txtStartDate.getText().trim();
+        if (!isValidDate(inputWork, "dd/MM/yyyy")) {
+            return null;
+        }
+        LocalDate convertedWork = LocalDate.parse(inputWork, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        nhanVien.setNgayVaoLam(convertedWork);
+
+        nhanVien.setSdt(txtPhone.getText().trim());
+        nhanVien.setDiaChi(txtAddress.getText().trim());
+        nhanVien.setCccd(txtAddress1.getText().trim());
+        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
+        nhanVien.setMaCV(chucVuinit.getMaCV());
+        nhanVien.setTrangThai(true);
+        nhanVien.setMaCH("CH00000001");
+        nhanVien.setGioiTinh(rdoMale.isSelected() ? "Nam" : rdoFemale.isSelected() ? "Nu" : "Nam");
+        nhanVien.setImg(img);
+
+        if (img == null) {
+            return null;
+        }
+
+        return nhanVien;
+    }
+    void resetText(){
+        txtStaffCode.setText("");
+        txtFullName.setText("");
+        txtBirthday.setText("");
+        txtStartDate.setText("");
+        txtPhone.setText("");
+
+        txtAddress.setText("");
+        txtAddress1.setText("");
+
+        cboRank.setSelectedIndex(0);
+        rdoMale.setSelected(true);
+
+        lblAvatar.setIcon(null);
+        lblAvatar.setToolTipText(null);
+
+
+        jComboBox1.setSelectedIndex(0);
+        txtAccountCoude.setText("");
+        txtPassword.setText("");
+        txtUserName.setText("");
+
+    }
+    void insert() {
+        NhanVien modelsp = getFormNhanVien();
+        TaiKhoan modelKho = getFormTaiKhoan();
+        System.out.println(modelKho.toString());
+        System.out.println(modelsp.toString());
+        if (modelsp != null && modelKho!=null) {
+            try {
+
+                nhanVienDao.insert(modelsp);
+                taiKhoanDao.insert(modelKho);
+                MsgBox.alert(this, "Thêm nhân viên thành công!");
+                List<NhanVien> listsp = nhanVienDao.selectAll();
+                if (formMain != null) {
+                    formMain.onUpdateCompleteNhanVien();
+                }
+
+                resetText();
+            } catch (Exception e) {
+                MsgBox.alert(this, "Thêm nhân viên thất bại!");
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin  nhân viên.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnAddImage1;
@@ -541,6 +846,7 @@ public class AddStaff extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -552,6 +858,7 @@ public class AddStaff extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -565,6 +872,7 @@ public class AddStaff extends javax.swing.JDialog {
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAvatar;
     private javax.swing.JRadioButton rdoFemale;
     private javax.swing.JRadioButton rdoMale;
+    private javax.swing.JTextField txtAccountCoude;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAddress1;
     private javax.swing.JTextField txtBirthday;

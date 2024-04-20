@@ -1,5 +1,8 @@
 package com.qlchtl.utils;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Random;
 import java.util.Properties;
 import javax.mail.*;

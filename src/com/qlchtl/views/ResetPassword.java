@@ -501,7 +501,7 @@ public class ResetPassword extends javax.swing.JDialog {
                     } else {
                         code = generateRandomCode();
                         RandomCodeEmailSender.sendRandomCode(email, code);
-                        MsgBox.alert(this, "Banj vui lòng kiểm tra email để nhập code");
+                        MsgBox.alert(this, "Bạn vui lòng kiểm tra email để nhập code");
                     }
             }
 

@@ -4,8 +4,20 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.dao.NhanVienDao;
+import com.qlchtl.dao.TaiKhoanDao;
+import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.TaiKhoan;
+import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyTable;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  *
@@ -17,11 +29,233 @@ public class AccountForm extends javax.swing.JPanel {
      * Creates new form AccountForm
      */
     private FormMain parentForm;
+
+    private String img;
+    TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
+    NhanVienDao nhanVienDao = new NhanVienDao();
     public AccountForm(FormMain parentForm) {
         initComponents();
         this.parentForm = parentForm;
         MyTable.apply(scpMain, MyTable.TableType.DEFAULT);
+        List<TaiKhoan> listtk = taiKhoanDao.selectAll();
+        fillTableTk(listtk);
+        setUpControl(false);
+        clickDataTaiKhoan();
     }
+
+
+    TaiKhoan getFormTaiKhoan() {
+        String maTK = txtCodeAccount.getText();
+        String taiKhoan = txtUserName.getText();
+        String matKhau = txtPassWord.getText();
+        String maNV = txtCodeStaff.getText();
+        String role = txtRole.getText();
+
+        if (maTK.isEmpty() || taiKhoan.isEmpty() || matKhau.isEmpty() || maNV.isEmpty() || role.isEmpty()) {
+            return null;
+        }
+
+        int roleValue;
+        try {
+            roleValue = Integer.parseInt(role);
+            if (roleValue != 0 && roleValue != 1) {
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        TaiKhoan tk = new TaiKhoan();
+        tk.setMaTaiKhoan(maTK);
+        tk.setTaiKhoan(taiKhoan);
+        tk.setMatKhau(matKhau);
+        tk.setMaNhanVien(maNV);
+        tk.setIsRole(roleValue);
+
+        return tk;
+    }
+
+    void clearTest(){
+        txtCodeAccount.setText("");
+        txtUserName.setText("");
+        txtPassWord.setText("");
+        txtCodeStaff.setText("");
+        txtRole.setText("");
+    }
+
+    private void setUpControl(Boolean b) {
+        txtCodeAccount.setEditable(b);
+        txtUserName.setEditable(b);
+        txtPassWord.setEditable(b);
+        txtCodeStaff.setEditable(b);
+        txtRole.setEditable(b);
+        if(b==false) {
+            Color colortxt = new Color(255,255,255);
+            txtCodeAccount.setBackground(colortxt);
+            txtUserName.setBackground(colortxt);
+            txtPassWord.setBackground(colortxt);
+            txtCodeStaff.setBackground(colortxt);
+            txtRole.setBackground(colortxt);
+        } else {
+            Color colortxt = new Color(242, 242, 242);
+            txtPassWord.setBackground(colortxt);
+            txtRole.setBackground(colortxt);
+        }
+    }
+
+    void fillTableTk(List<TaiKhoan> list) {
+        DefaultTableModel model = (DefaultTableModel) tblAccount.getModel();
+        model.setRowCount(0);
+        for (int i = 0; i < list.size(); i++) {
+            TaiKhoan tk = list.get(i);
+            if(tk.getIsRole()==0 || tk.getIsRole()==1){
+                model.addRow(new Object[]{
+                        tk.getMaTaiKhoan(),
+                        tk.getTaiKhoan(),
+                        tk.getMatKhau(),
+                        tk.getMaNhanVien(),
+                        tk.getIsRole()
+                });
+            }
+        }
+    }
+    void clickDataTaiKhoan() {
+        int selectedRow = tblAccount.getSelectedRow();
+
+        if (selectedRow == -1) {
+            selectedRow = 0;
+        }
+
+        Object maTKObject = tblAccount.getValueAt(selectedRow, 0);
+        Object taiKhoanObject = tblAccount.getValueAt(selectedRow, 1);
+        Object matKhauObject = tblAccount.getValueAt(selectedRow, 2);
+        Object maNVObject = tblAccount.getValueAt(selectedRow, 3);
+        Object roleObject = tblAccount.getValueAt(selectedRow, 4);
+
+        String maTK = maTKObject != null ? maTKObject.toString() : "";
+        String taiKhoan = taiKhoanObject != null ? taiKhoanObject.toString() : "";
+        String matKhau = matKhauObject != null ? matKhauObject.toString() : "";
+        String maNV = maNVObject != null ? maNVObject.toString() : "";
+        int role = roleObject != null ? Integer.parseInt(roleObject.toString()) : 0;
+
+        txtCodeAccount.setText(maTK);
+        txtUserName.setText(taiKhoan);
+        txtPassWord.setText(matKhau);
+        txtCodeStaff.setText(maNV);
+        txtRole.setText(String.valueOf(role));
+        clickLoadNV(maNV);
+    }
+
+    void clickLoadNV(String manv){
+        NhanVien nv = nhanVienDao.selectById(manv);
+        if(nv!=null){
+            lblCodeStaff.setText(nv.getMaNV());
+            lblNameStaff.setText(nv.getHoTenNV());
+
+            if(nv.getMaCV().equals("CV00000001")){
+                lblRankStaff.setText("Quản lý");
+            }else {
+                lblRankStaff.setText("Nhân viên");
+            }
+
+            if(nv.isTrangThai()){
+                lblStateStaff.setText("Còn làm");
+            }else {
+                lblStateStaff.setText("Nghỉ làm");
+            }
+            String imagePath = "/com/qlchtl/image/imageSanPham/"+nv.getImg();
+            System.out.println(nv.getImg());
+            ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
+            Image image = imageIcon.getImage(); // Chuyển đổi ImageIcon thành Image
+            Image newImage = getScaledCircleImage(image, 79);
+            lblAvatar.setIcon(new ImageIcon(newImage));
+        }
+
+
+    }
+
+    public void searchTK(String nameClient) {
+        List<TaiKhoan> nameClients = taiKhoanDao.selectByName(nameClient);
+        if (nameClients.size() > 0) {
+            fillTableTk(nameClients);
+        } else {
+            MsgBox.alert(this, "Không có tài khoản nào được tìm thấy");
+            List<TaiKhoan> list = taiKhoanDao.selectAll();
+            fillTableTk(list);
+        }
+    }
+
+
+    void update(){
+        TaiKhoan modelsp = getFormTaiKhoan();
+        try {
+            taiKhoanDao.update(modelsp);
+            MsgBox.alert(this, "Cập nhật thành công!");
+            List<TaiKhoan> listsp = taiKhoanDao.selectAll();
+            fillTableTk(listsp);
+
+        }
+        catch (Exception e) {
+            MsgBox.alert(this, "Cập nhật thất bại, Vui lòng kiểm tra và điền đầy đủ thông tin!");
+            clickDataTaiKhoan();
+            setUpControl(false);
+        }
+    }
+
+    TaiKhoan getFormXoa() {
+        TaiKhoan sp = new TaiKhoan();
+        sp.setMaTaiKhoan(txtCodeAccount.getText());
+        sp.setIsRole(3);
+        return sp;
+    }
+    void delete() {
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa tài khoản này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+            TaiKhoan sp = getFormXoa();
+            NhanVien nv = getFormNhanVien();
+
+            try {
+                taiKhoanDao.updateRole(sp);
+                nhanVienDao.updateTrangThai(nv);
+                MsgBox.alert(this, "Xóa thành công!");
+                List<TaiKhoan> listsp = taiKhoanDao.selectAll();
+                fillTableTk(listsp);
+            } catch (Exception e) {
+                MsgBox.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+
+
+    NhanVien getFormNhanVien() {
+        NhanVien nv = new NhanVien();
+        nv.setMaNV(txtCodeStaff.getText());
+        nv.setTrangThai(false);
+        return nv;
+    }
+
+
+    private Image getScaledCircleImage(Image srcImg, int size) {
+        BufferedImage resizedImg = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+        Ellipse2D.Double circle = new Ellipse2D.Double(0, 0, size, size);
+        g2.setClip(circle);
+        g2.drawImage(srcImg, 0, 0, size, size, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,6 +303,7 @@ public class AccountForm extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -91,11 +326,17 @@ public class AccountForm extends javax.swing.JPanel {
                 "CodeAccount", "UserName", "Password", "CodeStaff", "Role"
             }
         ));
+        tblAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAccountMouseClicked(evt);
+            }
+        });
         scpMain.setViewportView(tblAccount);
 
         myPanelBoxShadow1.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow1.setShadowColor(new java.awt.Color(102, 102, 102));
         myPanelBoxShadow1.setShadowSize(3);
+
 
         pnlAvatar.setRoundBottomLeft(100);
         pnlAvatar.setRoundBottomRight(100);
@@ -369,11 +610,21 @@ public class AccountForm extends javax.swing.JPanel {
         btnCancle.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancle.setForeground(new java.awt.Color(255, 255, 255));
         btnCancle.setText("Cancle");
+        btnCancle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancleMouseClicked(evt);
+            }
+        });
 
         btnConfirm.setBackground(new java.awt.Color(102, 102, 102));
         btnConfirm.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Confirm");
+        btnConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirmMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout myPanel1Layout = new javax.swing.GroupLayout(myPanel1);
         myPanel1.setLayout(myPanel1Layout);
@@ -400,11 +651,21 @@ public class AccountForm extends javax.swing.JPanel {
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("Update");
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
 
         btnDelete.setBackground(new java.awt.Color(102, 102, 102));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Delete");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -525,6 +786,35 @@ public class AccountForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+        // TODO add your handling code here:
+        setUpControl(true);
+        txtCodeAccount.setEditable(false);
+        txtUserName.setEditable(false);
+        txtCodeStaff.setEditable(false);
+    }//GEN-LAST:event_btnUpdateMouseClicked
+
+    private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
+        // TODO add your handling code here:
+            delete();
+    }//GEN-LAST:event_btnDeleteMouseClicked
+
+    private void btnCancleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancleMouseClicked
+        // TODO add your handling code here:
+        setUpControl(false);
+        setUpControl(false);
+    }//GEN-LAST:event_btnCancleMouseClicked
+
+    private void btnConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmMouseClicked
+        // TODO add your handling code here:
+         update();
+    }//GEN-LAST:event_btnConfirmMouseClicked
+
+    private void tblAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccountMouseClicked
+        // TODO add your handling code here:
+        clickDataTaiKhoan();
+    }//GEN-LAST:event_tblAccountMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancle;
@@ -564,4 +854,9 @@ public class AccountForm extends javax.swing.JPanel {
     private javax.swing.JTextField txtRole;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
+
+
+
+
+
 }

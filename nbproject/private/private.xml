@@ -4,12 +4,23 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/LogIn.java</file>
+=======
+<<<<<<< HEAD
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/entity/KhachHang.java</file>
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/dao/KhachHangDao.java</file>
 =======
 <<<<<<< HEAD
+>>>>>>> 588bd11b32db6d53b772a6744f5c04a839b0fc98
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/RandomCodeEmailSender.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ClientForm.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/XJdbc.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/MsgBox.java</file>
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/ResetPassword.java</file>
+<<<<<<< HEAD
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailStaff.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/AddProduct.java</file>
+=======
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/DateConverter.java</file>
 =======
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/Scan.java</file>
@@ -47,6 +58,7 @@
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietHoaDon.java</file>
 >>>>>>> 576f0fee7120d2388846913edd2d535ca046c6dc
 >>>>>>> a127c024a7d4f706a7bb5418b8aa0ea107012166
+>>>>>>> 588bd11b32db6d53b772a6744f5c04a839b0fc98
         </group>
     </open-files>
 </project-private>
