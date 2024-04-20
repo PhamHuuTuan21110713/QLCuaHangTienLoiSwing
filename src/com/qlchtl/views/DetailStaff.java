@@ -674,7 +674,6 @@ public class DetailStaff extends javax.swing.JFrame {
 
     void update(){
         NhanVien modelnv = getFormNhanVien();
-        System.out.println(modelnv.toString());
         if (modelnv != null) {
             try {
                 nhanVienDao.update(modelnv);
@@ -684,9 +683,11 @@ public class DetailStaff extends javax.swing.JFrame {
                 }
             } catch (Exception e) {
                 MsgBox.alert(this, "Cập nhật thất bại!");
+                load();
             }
         } else {
             MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin.");
+            load();
         }
     }
 

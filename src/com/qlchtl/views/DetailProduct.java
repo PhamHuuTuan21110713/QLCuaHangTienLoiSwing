@@ -879,6 +879,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         }
         catch (Exception e) {
             MsgBox.alert(this, "Cập nhật thất bại!");
+            this.fillTable();
         }
     }
 
