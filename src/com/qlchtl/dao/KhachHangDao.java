@@ -4,6 +4,7 @@
  */
 package com.qlchtl.dao;
 import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.XJdbc;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class KhachHangDao extends qlchSysDao<KhachHang, String> {
                     entity.setSoDiemDaTich(rs.getInt("SoDiemDaTich"));
                     entity.setSoDiemDaDung(rs.getInt("SoDiemDaDung"));
                     entity.setSoDiemHienCo(rs.getInt("SoDiemHienCo"));
+                    entity.setTrangThai(rs.getString("TrangThai"));
                     list.add(entity);
                 }
             }
@@ -76,12 +78,18 @@ public class KhachHangDao extends qlchSysDao<KhachHang, String> {
     }
 
 
+    public  List<KhachHang>  selectByName(String tenNV) {
+        String sql = "SELECT * FROM khachhang WHERE HoTenKH LIKE ?";
+        List<KhachHang> list = selectBySql(sql, "%" + tenNV + "%");
+        return list;
+    }
+
+
     public void updateTrangThai(KhachHang khachhang) {
         String sql = "UPDATE khachhang SET TrangThai = ? WHERE MaKH = ?";
         XJdbc.update(sql,
                 khachhang.getTrangThai(),
                 khachhang.getMaKH());
-
     }
 
     public List<KhachHang> selectAll() {

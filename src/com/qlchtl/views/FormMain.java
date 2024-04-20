@@ -3,9 +3,11 @@ package com.qlchtl.views;
 import java.awt.Component;
 import javax.swing.*;
 
+import com.qlchtl.dao.KhachHangDao;
 import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
+import com.qlchtl.entity.KhachHang;
 import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
@@ -13,6 +15,7 @@ import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import com.qlchtl.views.MyControls.MyPanel;
+import com.qlchtl.views.SubComponent.AccountForm;
 import com.qlchtl.views.SubComponent.ClientForm;
 import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.Color;
@@ -24,6 +27,7 @@ import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
 import com.qlchtl.views.SubComponent.RankForm;
+import com.qlchtl.views.SubComponent.ShiftForm;
 
 import java.util.List;
 
@@ -36,12 +40,12 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private String TYPE_SEARCHING = "PRODUCT";
 
-    private int indexForm = 0;
 
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
 
     NhanVienDao nhanVienDao = new NhanVienDao();
+    KhachHangDao khachHangDao = new KhachHangDao();
 
     public static String maSp;
     
@@ -70,13 +74,18 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         loadSP();
     }
 
-
-
+    private ClientForm clientForm = new ClientForm(this);
+    private InvoiceForm invoiceForm = new InvoiceForm(this);
+    private  RankForm rankForm = new RankForm(this);
+    private ShiftForm shiftForm = new ShiftForm(this);
+    private AccountForm accountForm = new AccountForm(this);
     private void setTupTabbedPane() {
         
-        tpnMain.addTab("", new ClientForm(this));
-        tpnMain.addTab("", new InvoiceForm(this));
-        tpnMain.addTab("", new RankForm(this));
+        tpnMain.addTab("", clientForm);
+        tpnMain.addTab("", invoiceForm);
+        tpnMain.addTab("", rankForm);
+        tpnMain.addTab("", shiftForm);
+        tpnMain.addTab("", accountForm);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1044,6 +1053,11 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         btnAddStaff.setColorOver(new java.awt.Color(204, 204, 204));
         btnAddStaff.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddStaff.setRadius(50);
+        btnAddStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddStaffMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlHeaderStaffLayout = new javax.swing.GroupLayout(pnlHeaderStaff);
         pnlHeaderStaff.setLayout(pnlHeaderStaffLayout);
@@ -1421,7 +1435,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
 
         tpnMain.setSelectedIndex(1);  
-        indexForm = 1;
         List<NhanVien> nhanVienList = nhanVienDao.selectAll();
         renderItemStaffWithThread(nhanVienList);
         this.TYPE_SEARCHING = "STAFF";
@@ -1432,7 +1445,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                             
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(0);  
-        indexForm = 0;
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "PRODUCT";
     }                             
@@ -1442,20 +1454,24 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         // TODO add your handling code here:
          tpnMain.setSelectedIndex(2);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "CLIENT";
 
     }//GEN-LAST:event_ClientClick
 
     private void InvoiceClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InvoiceClick
         // TODO add your handling code here:
-         tpnMain.setSelectedIndex(3);   
+        tpnMain.setSelectedIndex(3);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "INVOICE";
 
     }//GEN-LAST:event_InvoiceClick
 
     private void RankClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RankClick
         // TODO add your handling code here:
-        tpnMain.setSelectedIndex(4);   
+        tpnMain.setSelectedIndex(4);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "RANK";
+
     }//GEN-LAST:event_RankClick
 
     private void ShiftClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ShiftClick
@@ -1463,6 +1479,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         tpnMain.setSelectedIndex(5);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "SHIFT";
+
     }//GEN-LAST:event_ShiftClick
 
     private void AccountClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountClick
@@ -1519,6 +1537,11 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 searchNameSP();
                 break;
             case "STAFF":
+                searchNameNV();
+                break;
+            case "CLIENT":
+                clientForm.searchNameKH(txtSearch.getText());
+                txtSearch.setText("");
                 break;
             default:
                 break;
@@ -1533,6 +1556,13 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }//GEN-LAST:event_StaffFoundClick
+
+    private void btnAddStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddStaffMouseClicked
+        // TODO add your handling code here:
+        AddStaff addStaff = new AddStaff(this, true);
+        addStaff.setVisible(true);
+        addStaff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnAddStaffMouseClicked
 
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();
@@ -1687,16 +1717,26 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     }
 
     void delete() {
-        SanPham sp = getFormSanPham();
-        try {
-            sanPhamDao.updateTrangThai(sp);
-            MsgBox.alert(this, "Cập nhật thành công!");
-            List<SanPham> listsp = sanPhamDao.selectAll();
-            renderItemProdWithThread(listsp);
-        } catch (Exception e) {
-            MsgBox.alert(this, "Cập nhật thất bại!");
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+            SanPham sp = getFormSanPham();
+            try {
+                sanPhamDao.updateTrangThai(sp);
+                MsgBox.alert(this, "Xóa thành công!");
+                List<SanPham> listsp = sanPhamDao.selectAll();
+                renderItemProdWithThread(listsp);
+            } catch (Exception e) {
+                MsgBox.alert(this, "Xóa thất bại!");
+            }
         }
     }
+
 
 
     void searchNameSP(){
@@ -1728,16 +1768,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     }
 
 
-
-    void searchName(){
-        if(indexForm==0){
-            searchNameSP();
-        } else if (indexForm==1) {
-            searchNameNV();
-        }
-    }
-
-
     NhanVien getFormNhanVien(String ms) {
         NhanVien nv = new NhanVien();
         nv.setMaNV(ms);
@@ -1756,6 +1786,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             MsgBox.alert(this, "Xóa nhân viên thất bại!");
         }
     }
+
+
 
     public void loadSP(){
         List<SanPham> listsp = sanPhamDao.selectAll();
