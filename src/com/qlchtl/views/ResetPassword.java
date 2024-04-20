@@ -4,8 +4,15 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.NhanVienDao;
+import com.qlchtl.dao.TaiKhoanDao;
+import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.TaiKhoan;
 import com.qlchtl.utils.MsgBox;
-import java.awt.Component;
+import com.qlchtl.utils.RandomCodeEmailSender;
+
+import java.awt.*;
+import java.util.Random;
 
 /**
  *
@@ -16,7 +23,7 @@ public class ResetPassword extends javax.swing.JDialog {
     /**
      * Creates new form ResetPassword
      */
-    private Boolean isVerify ;
+    private Boolean isVerify = false ;
     public ResetPassword(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -215,6 +222,11 @@ public class ResetPassword extends javax.swing.JDialog {
         btnSendOTP.setColorOver(new java.awt.Color(153, 153, 153));
         btnSendOTP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSendOTP.setRadius(15);
+        btnSendOTP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSendOTPMouseClicked(evt);
+            }
+        });
 
         pnlNewPassword.setBackground(new java.awt.Color(255, 255, 255));
         pnlNewPassword.setShadowSize(3);
@@ -272,6 +284,11 @@ public class ResetPassword extends javax.swing.JDialog {
         btnConfirm.setColorOver(new java.awt.Color(153, 153, 153));
         btnConfirm.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnConfirm.setRadius(15);
+        btnConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirmMouseClicked(evt);
+            }
+        });
 
         btnVerify.setForeground(new java.awt.Color(255, 255, 255));
         btnVerify.setText("Verify");
@@ -352,7 +369,12 @@ public class ResetPassword extends javax.swing.JDialog {
         // TODO add your handling code here:
             
         // Xử lý việc xác nhận otp
-         this.isVerify = true;   
+
+        
+        if(txtOTP.getText().equals(code)){
+            this.isVerify = true;
+        }
+        
         if(this.isVerify) {
             for (Component c : this.pnlMain.getComponents()) {
                 c.setVisible(false);
@@ -365,6 +387,16 @@ public class ResetPassword extends javax.swing.JDialog {
             MsgBox.alert(this, "OTP is not valid");
         }
     }//GEN-LAST:event_btnVerifyClick
+
+    private void btnSendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSendOTPMouseClicked
+        // TODO add your handling code here:
+        verify();
+    }//GEN-LAST:event_btnSendOTPMouseClicked
+
+    private void btnConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmMouseClicked
+        // TODO add your handling code here:
+        doiMK();
+    }//GEN-LAST:event_btnConfirmMouseClicked
 
     /**
      * @param args the command line arguments
@@ -407,7 +439,7 @@ public class ResetPassword extends javax.swing.JDialog {
             }
         });
     }
-
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnConfirm;
     private com.qlchtl.views.MyControls.MyButton btnSendOTP;
@@ -431,4 +463,69 @@ public class ResetPassword extends javax.swing.JDialog {
     private javax.swing.JTextField txtNewPassWord;
     private javax.swing.JTextField txtOTP;
     // End of variables declaration//GEN-END:variables
+
+    private String code;
+    TaiKhoanDao taiKhoanDao =new  TaiKhoanDao();
+    NhanVienDao nhanVienDao = new NhanVienDao();
+    private String generateRandomCode() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    }
+    void verify(){
+        String matk = txtAccount.getText();
+        String email = txtEmail.getText();
+        if (matk.isEmpty() || email.isEmpty()) {
+            MsgBox.alert(this, "Vui lòng điền đầy đủ thông tin");
+        }else{
+            TaiKhoan acc = taiKhoanDao.selectByTK(matk);
+            if(acc == null) {
+                MsgBox.alert(this, "Sai tên đăng nhập!");
+            }else if(!acc.getMaTaiKhoan().equals(matk) || !acc.getTaiKhoan().equals(email)){
+                MsgBox.alert(this, "Tên đăng nhập hoặc email chưa chính xác!");
+            }else{
+                String manv = acc.getMaNhanVien();
+                if(manv == null || manv.isEmpty()) {
+                    MsgBox.alert(this, "Mã nhân viên này không tồn tại");
+                }
+                else {
+                    NhanVien nhanVien = nhanVienDao.selectById(manv);
+
+                    if(nhanVien == null) {
+                        MsgBox.alert(this, "Tài khoản nhân viên không tồn tại!");
+                    } else if(!nhanVien.isTrangThai()) {
+                        MsgBox.alert(this, "Tài khoản nhân viên đã bị khóa, vui lòng liên hệ admin biết thêm thông tin!");
+                    } else {
+                        code = generateRandomCode();
+                        RandomCodeEmailSender.sendRandomCode(email, code);
+                        MsgBox.alert(this, "Banj vui lòng kiểm tra email để nhập code");
+                    }
+            }
+
+        }
+    }
+
+    }
+
+    TaiKhoan getFromTaiKhoan() {
+        TaiKhoan sp = new TaiKhoan();
+        sp.setMaTaiKhoan(txtAccount.getText());
+        sp.setMatKhau(txtNewPassWord.getText());
+        return sp;
+    }
+    void doiMK(){
+        TaiKhoan model = getFromTaiKhoan();
+        try {
+            taiKhoanDao.updateMK(model);
+            MsgBox.alert(this, "Đổi mật khẩu thành công!");
+            dispose();
+        } catch (Exception e) {
+            MsgBox.alert(this, "Đổi mật khẩu thất bại!");
+        }
+
+    }
+
 }
