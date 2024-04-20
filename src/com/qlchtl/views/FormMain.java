@@ -15,6 +15,7 @@ import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
 import com.qlchtl.views.MyControls.MyPanel;
+import com.qlchtl.views.SubComponent.AccountForm;
 import com.qlchtl.views.SubComponent.ClientForm;
 import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.Color;
@@ -26,6 +27,7 @@ import javax.swing.JFrame;
 import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
 import com.qlchtl.views.SubComponent.RankForm;
+import com.qlchtl.views.SubComponent.ShiftForm;
 
 import java.util.List;
 
@@ -75,11 +77,15 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private ClientForm clientForm = new ClientForm(this);
     private InvoiceForm invoiceForm = new InvoiceForm(this);
     private  RankForm rankForm = new RankForm(this);
+    private ShiftForm shiftForm = new ShiftForm(this);
+    private AccountForm accountForm = new AccountForm(this);
     private void setTupTabbedPane() {
         
         tpnMain.addTab("", clientForm);
         tpnMain.addTab("", invoiceForm);
         tpnMain.addTab("", rankForm);
+        tpnMain.addTab("", shiftForm);
+        tpnMain.addTab("", accountForm);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1047,6 +1053,11 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         btnAddStaff.setColorOver(new java.awt.Color(204, 204, 204));
         btnAddStaff.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddStaff.setRadius(50);
+        btnAddStaff.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddStaffMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlHeaderStaffLayout = new javax.swing.GroupLayout(pnlHeaderStaff);
         pnlHeaderStaff.setLayout(pnlHeaderStaffLayout);
@@ -1476,6 +1487,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(6);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "ACCOUNT";
     }//GEN-LAST:event_AccountClick
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
@@ -1532,6 +1544,10 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 clientForm.searchNameKH(txtSearch.getText());
                 txtSearch.setText("");
                 break;
+            case "ACCOUNT":
+                accountForm.searchTK(txtSearch.getText());
+                txtSearch.setText("");
+                break;
             default:
                 break;
         }
@@ -1545,6 +1561,13 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
     }//GEN-LAST:event_StaffFoundClick
+
+    private void btnAddStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddStaffMouseClicked
+        // TODO add your handling code here:
+        AddStaff addStaff = new AddStaff(this, true, this);
+        addStaff.setVisible(true);
+        addStaff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnAddStaffMouseClicked
 
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();

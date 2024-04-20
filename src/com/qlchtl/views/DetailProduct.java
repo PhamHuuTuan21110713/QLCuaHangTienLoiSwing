@@ -15,17 +15,15 @@ import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.DateConverter;
 import com.qlchtl.utils.MsgBox;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.*;
-import javax.swing.JFrame;
 
 /**
  *
@@ -36,10 +34,11 @@ public class DetailProduct extends javax.swing.JFrame  {
     /**
      * Creates new form DetailProduct
      */
+
     private String idProduct;
     public  String selectedCt ;
 //    public double sum;
-
+    public String Item;
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
     ChiTietKhuyenMaiDao ctkmDao = new ChiTietKhuyenMaiDao();
@@ -65,6 +64,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         setButton(false);
         setTextField(false);
         selectedCt = txtPromotionProd.getText();
+        fillTable();
     }
     
     private void setButton(Boolean state) {
@@ -344,18 +344,15 @@ public class DetailProduct extends javax.swing.JFrame  {
         List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiDao.selectAll();
 
         Map<String, ChiTietKhuyenMai> promotionMap = new HashMap<>();
+        promotionMap.put("None", null); // Thêm mục "None" vào Map
+
         for (ChiTietKhuyenMai promotion : chiTietKhuyenMai) {
             promotionMap.put(promotion.getMaCT(), promotion);
         }
 
-        Set<String> uniquePromotionNames = new HashSet<>();
-        uniquePromotionNames.add("None");
-        for (ChiTietKhuyenMai promotion : chiTietKhuyenMai) {
-            uniquePromotionNames.add(promotion.getMaCT());
-        }
-        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+        String[] promotionNames = promotionMap.keySet().toArray(new String[0]);
 
-        cboCodePromotionProd.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
+        cboCodePromotionProd.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNames));
 
 
 
@@ -399,26 +396,55 @@ public class DetailProduct extends javax.swing.JFrame  {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String selectedPromotionCode = (String) e.getItem();
+                    Item = selectedPromotionCode;
+                    System.out.println(12+Item);
                     if (selectedPromotionCode != null) {
                         if (selectedPromotionCode.equals("None")) {
                             txtStartDayProd.setText("0");
                             txtEndDayProd.setText("0");
                             txtPromotionProd.setText("None");
                         } else {
+                            System.out.println(12+Item);
                             ChiTietKhuyenMai selectedPromotion = promotionMap.get(selectedPromotionCode);
+//                            if (selectedPromotion != null) {
+//
+//                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//                                String formattedDateStart = String.valueOf(selectedPromotion.getNgayApDung().format(formatter));
+//                                txtStartDayProd.setText(formattedDateStart);
+//
+//                                String formattedDateEnd = String.valueOf(selectedPromotion.getNgayKetThuc().format(formatter));
+//                                txtEndDayProd.setText(formattedDateEnd);
+//                                txtPromotionProd.setText(selectedPromotion.getMaCT());
+//                            }
                             if (selectedPromotion != null) {
-
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                                String formattedDateStart = String.valueOf(selectedPromotion.getNgayApDung().format(formatter));
+
+                                ChiTietKhuyenMai ctkm1 = chiTietKhuyenMaiDao.selectById(txtCodePrd.getText());
+
+                                String formattedDateStart = String.valueOf(ctkm1.getNgayApDung().format(formatter));
                                 txtStartDayProd.setText(formattedDateStart);
 
-                                String formattedDateEnd = String.valueOf(selectedPromotion.getNgayKetThuc().format(formatter));
+                                String formattedDateEnd = String.valueOf(ctkm1.getNgayKetThuc().format(formatter));
                                 txtEndDayProd.setText(formattedDateEnd);
-                                txtPromotionProd.setText(selectedPromotion.getMaCT());
+
+                                // Chuyển đổi formattedDateEnd thành LocalDate
+                                LocalDate endDate = LocalDate.parse(formattedDateEnd, formatter);
+
+                                // Lấy ngày hiện tại
+                                LocalDate currentDate = LocalDate.now();
+
+                                // Kiểm tra nếu endDate lớn hơn currentDate
+                                if (endDate.isAfter(currentDate)) {
+                                    txtPromotionProd.setText(selectedPromotion.getMaCT());
+                                } else {
+                                    JOptionPane.showMessageDialog((Component) e.getSource(), "Phiếu Giảm Giá Hết Hạn!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                                    txtPromotionProd.setText(selectedPromotion.getMaCT()+"(Hết Hạn)");
+                                }
                             }
                         }
                     }
                 }
+                System.out.println(12+Item);
             }
         };
         cboCodePromotionProd.addItemListener(itemListener);
@@ -717,12 +743,6 @@ public class DetailProduct extends javax.swing.JFrame  {
         return kho;
     }
 
-    ChiTietKhuyenMai getChiTietKhuyenMai(){
-        ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
-        ctkm.setMaSP(txtCodePrd.getText());
-        ctkm.setMaCT(txtPromotionProd.getText());
-        return ctkm;
-    }
 
 
     SanPham getFormSanPham() {
@@ -779,7 +799,16 @@ public class DetailProduct extends javax.swing.JFrame  {
             txtStatePrd.setText("Hết Hàng");
         }
         txtRootPriceProd.setText(sp.getTienGoc());
-        txtPricePrd.setText(sp.getTienThanhToan());
+        double sum = Double.valueOf(sp.getTienThanhToan());
+        if(txtPromotionProd.getText().equals("CT01")){
+            sum -= sum*0.1;
+        } else if (txtPromotionProd.getText().equals("CT02")) {
+            sum -= sum*0.2;
+        }
+        else if (txtPromotionProd.getText().equals("CT03")) {
+            sum -= sum*0.3;
+        }
+        txtPricePrd.setText(String.valueOf(sum));
 
         String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         txtImportDatePrd.setText(importDate);
@@ -791,7 +820,7 @@ public class DetailProduct extends javax.swing.JFrame  {
     ChiTietKhuyenMai getChiTietKhuyenMaiFull(){
         ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
         ctkm.setMaSP(txtCodePrd.getText());
-        ctkm.setMaCT(txtPromotionProd.getText());
+        ctkm.setMaCT(Item);
 
         String inputFormat = "dd/MM/yyyy";
         String outputFormat = "yyyy/MM/dd";
@@ -807,6 +836,10 @@ public class DetailProduct extends javax.swing.JFrame  {
         LocalDate endDate = LocalDate.parse(convertedDateEnd, outputFormatter);
         ctkm.setNgayKetThuc(endDate);
 
+        System.out.println(ctkm.getMaCT());
+        System.out.println(ctkm.getMaSP());
+        System.out.println(ctkm.getNgayApDung());
+        System.out.println(ctkm.getNgayKetThuc());
 
         return ctkm;
     }
@@ -814,7 +847,6 @@ public class DetailProduct extends javax.swing.JFrame  {
     void update(){
         SanPham modelsp = getFormSanPham();
         Kho modelKho = getKhoFromKho();
-        ChiTietKhuyenMai modelCtkm = getChiTietKhuyenMai();
         ChiTietKhuyenMai modelCtkmfull = getChiTietKhuyenMaiFull();
         try {
 
@@ -822,7 +854,6 @@ public class DetailProduct extends javax.swing.JFrame  {
             khoDAo.updateSL(modelKho);
             if(selectedCt.equals("None")){
                 ctkmDao.insert(modelCtkmfull);
-                System.out.println("a"+modelCtkmfull.getMaCT() + modelCtkmfull.getMaSP() + modelCtkmfull.getNgayApDung());
             }
             else{
 
@@ -831,13 +862,16 @@ public class DetailProduct extends javax.swing.JFrame  {
                     System.out.println(txtCodePrd.getText()+ txtPromotionProd.getText());
                 }
                 else{
-                    System.out.println(1);
-                    ctkmDao.updateMACT(modelCtkm);
+                    System.out.println(txtCodePrd.getText()+ Item +  txtEndDayProd.getText()+txtStartDayProd.getText());
+                    ctkmDao.delete(txtCodePrd.getText(),ctkm.getMaCT());
+                    ctkmDao.insert(modelCtkmfull);
+                    System.out.println("OK");
+
                 }
             }
-
-
             this.fillTable();
+            ChiTietKhuyenMai ctkm = new ChiTietKhuyenMai();
+            ctkm.setMaCT(Item);
             MsgBox.alert(this, "Cập nhật thành công!");
             if (formMain != null) {
                 formMain.onUpdateCompleteSanPham();
