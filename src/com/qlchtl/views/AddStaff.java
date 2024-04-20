@@ -786,8 +786,6 @@ public class AddStaff extends javax.swing.JDialog {
     void insert() {
         NhanVien modelsp = getFormNhanVien();
         TaiKhoan modelKho = getFormTaiKhoan();
-        System.out.println(modelKho.toString());
-        System.out.println(modelsp.toString());
         if (modelsp != null && modelKho!=null) {
             try {
 

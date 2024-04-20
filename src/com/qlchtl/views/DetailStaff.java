@@ -622,8 +622,19 @@ public class DetailStaff extends javax.swing.JFrame {
 
     NhanVien getFormNhanVien(){
         NhanVien nhanVien = new NhanVien();
-        nhanVien.setMaNV(txtCodeStaff.getText());
-        nhanVien.setHoTenNV(txtNameDetailStaff.getText());
+
+        String staffCode = txtCodeStaff.getText().trim();
+        if (staffCode.isEmpty()) {
+            return null;
+        }
+        nhanVien.setMaNV(staffCode);
+
+
+        String fullName = txtNameDetailStaff.getText().trim();
+        if (fullName.isEmpty()) {
+            return null;
+        }
+        nhanVien.setHoTenNV(fullName);
 
         String inputDate = txtBirthdayStaff.getText();
         if (isValidDate(inputDate, "dd/MM/yyyy")) {
