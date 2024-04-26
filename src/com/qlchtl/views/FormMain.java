@@ -1487,6 +1487,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         // TODO add your handling code here:
         tpnMain.setSelectedIndex(6);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
+        this.TYPE_SEARCHING = "ACCOUNT";
     }//GEN-LAST:event_AccountClick
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
@@ -1543,6 +1544,10 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 clientForm.searchNameKH(txtSearch.getText());
                 txtSearch.setText("");
                 break;
+            case "ACCOUNT":
+                accountForm.searchTK(txtSearch.getText());
+                txtSearch.setText("");
+                break;
             default:
                 break;
         }
@@ -1559,7 +1564,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void btnAddStaffMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddStaffMouseClicked
         // TODO add your handling code here:
-        AddStaff addStaff = new AddStaff(this, true);
+        AddStaff addStaff = new AddStaff(this, true, this);
         addStaff.setVisible(true);
         addStaff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnAddStaffMouseClicked

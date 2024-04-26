@@ -76,4 +76,15 @@ public class TaiKhoan {
     public void setMaNhanVien(String maNhanVien) {
         this.maNhanVien = maNhanVien;
     }
+
+    @Override
+    public String toString() {
+        return "TaiKhoan{" +
+                "maTaiKhoan='" + maTaiKhoan + '\'' +
+                ", taiKhoan='" + taiKhoan + '\'' +
+                ", matKhau='" + matKhau + '\'' +
+                ", maNhanVien='" + maNhanVien + '\'' +
+                ", isRole=" + isRole +
+                '}';
+    }
 }

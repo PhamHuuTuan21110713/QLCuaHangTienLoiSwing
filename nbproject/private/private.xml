@@ -3,10 +3,62 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/utils/XJdbc.java</file>
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/views/AddStaff.java</file>
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/views/FormMain.java</file>
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/utils/RandomCodeEmailSender.java</file>
+
+
+
+            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/entity/KhachHang.java</file>
+            <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/dao/KhachHangDao.java</file>
+
+
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/RandomCodeEmailSender.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ClientForm.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/XJdbc.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/MsgBox.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/ResetPassword.java</file>
+
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailStaff.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/AddProduct.java</file>
+
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/DateConverter.java</file>
+
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/Scan.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/NhanVienDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/HoaDonDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/KhachHangDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/JFHoaDon.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/ChiTietHoaDonDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailStaff.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ItemProduct.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/HoaDon.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/FormMain.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/ChiTietKhuyenMaiDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/KhoDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailProduct.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/LogIn.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/Kho.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/AddProduct.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/MyControls/MyPanel.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ItemStaff.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/TaiKhoanDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/SanPham.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/ChuongTrinhKhuyenMaiDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/NhanVien.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/ResetPassword.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/MyControls/SwitchButton.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ClientForm.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/MyControls/BooleanCellRenderer.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/KhachHang.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChuongTrinhKhuyenMai.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/SanPhamDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/XJdbc.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietKhuyenMai.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/InvoiceForm.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietHoaDon.java</file>
         </group>
     </open-files>
 </project-private>
