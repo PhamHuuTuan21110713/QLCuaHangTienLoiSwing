@@ -261,11 +261,7 @@ public class LogIn extends javax.swing.JFrame {
 
     private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
         // TODO add your handling code here:
-         //dangNhap();
-         FormMain frm = new FormMain(this);
-         frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-         frm.setVisible(true);
-         this.setVisible(false);
+         dangNhap();
     }//GEN-LAST:event_btnLogginMouseClicked
 
     private void btnShowPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassMouseClicked
@@ -358,9 +354,9 @@ public class LogIn extends javax.swing.JFrame {
                         FormMain formMenuAdmin = new FormMain(this);
                         formMenuAdmin.setVisible(true);
                     } else {
-                        JFHoaDon formNhanVien = new JFHoaDon();
-                        formNhanVien.setVisible(true);
                         this.dispose();
+                        FormMain formMenuAdmin = new FormMain(this);
+                        formMenuAdmin.setVisible(true);
                     }
                 }
             }
