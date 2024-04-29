@@ -7,7 +7,10 @@ public class CaLamViec {
     private LocalTime gioBatDau;
     private LocalTime gioKetThuc;
     private int phanTramThuongThem;
-
+    public CaLamViec()
+    {
+        
+    }
     // Constructor
     public CaLamViec(String maCa, LocalTime gioBatDau, LocalTime gioKetThuc, int phanTramThuongThem) {
         this.maCa = maCa;

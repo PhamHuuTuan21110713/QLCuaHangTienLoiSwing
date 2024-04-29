@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CaLamViecDao extends qlchSysDao<CaLamViec, String> {
     public void insert(CaLamViec entity) {
-        String sql = "INSERT INTO calamviec(MaCa, GioBatDau, GioKetThuc, PhanTramThuongThem) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO calamviec(MaCa, GioBatDau, GiaKetThuc, PhanTramThuongThem) VALUES (?, ?, ?, ?)";
         XJdbc.update(sql,
                 entity.getMaCa(),
                 entity.getGioBatDau(),
@@ -21,7 +21,7 @@ public class CaLamViecDao extends qlchSysDao<CaLamViec, String> {
 
     @Override
     public void update(CaLamViec entity) {
-        String sql = "UPDATE calamviec SET GioBatDau=?, GioKetThuc=?, PhanTramThuongThem=? WHERE MaCa=?";
+        String sql = "UPDATE calamviec SET GioBatDau=?, GiaKetThuc=?, PhanTramThuongThem=? WHERE MaCa=?";
         XJdbc.update(sql,
                 entity.getGioBatDau(),
                 entity.getGioKetThuc(),
@@ -76,5 +76,19 @@ public class CaLamViecDao extends qlchSysDao<CaLamViec, String> {
         }
         return list;
     }
-
+    public int tongCa()
+    {
+        String sql="SELECT COUNT(*) AS total FROM CaLamViec";
+        int tongca = 0;
+        try(ResultSet rs=XJdbc.query(sql))
+        {
+            while(rs.next())
+            {
+                tongca=rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tongca;
+    }
 }

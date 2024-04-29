@@ -20,6 +20,7 @@ public class LogIn extends javax.swing.JFrame {
     /**
      * Creates new form LogIn
      */
+    private static String MaNV;
     public LogIn() {
     initComponents();
     setLocationRelativeTo(null);
@@ -263,7 +264,6 @@ public class LogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
 
          dangNhap();
- //        dangNhap();
 
     }//GEN-LAST:event_btnLogginMouseClicked
 
@@ -353,10 +353,12 @@ public class LogIn extends javax.swing.JFrame {
                     } else if(!nhanVien.isTrangThai()) {
                         MsgBox.alert(this, "Tài khoản nhân viên đã bị khóa, vui lòng liên hệ admin biết thêm thông tin!");
                     } else if(acc.getIsRole() == 1) {
+                        MaNV=nhanVien.getMaNV();
                         this.dispose();
                         FormMain formMenuAdmin = new FormMain(this);
                         formMenuAdmin.setVisible(true);
                     } else {
+                        MaNV=nhanVien.getMaNV();
                         this.dispose();
                         FormMain formMenuAdmin = new FormMain(this);
                         formMenuAdmin.setVisible(true);
@@ -391,4 +393,8 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTextField txtAccount;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
+    public static String getMaNV()
+    {
+        return MaNV;
+    }
 }

@@ -3,6 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+=======
 
 
             <file>file:/C:/Users/Dell/Documents/NetBeansProjects/QLCuaHangTienLoi/src/com/qlchtl/utils/XJdbc.java</file>
@@ -62,13 +64,20 @@
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChuongTrinhKhuyenMai.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/SanPhamDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/XJdbc.java</file>
+>>>>>>> afa4cc3b62f4767948de9fa09eea7bd2ee07a385
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/CaLamViec.java</file>
-            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietKhuyenMai.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ShiftForm.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/InvoiceForm.java</file>
+<<<<<<< HEAD
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/CaLamViecDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChucVu.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/RankForm.java</file>
+=======
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/ChiTietHoaDon.java</file>
 
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/AccountForm.java</file>
 
+>>>>>>> afa4cc3b62f4767948de9fa09eea7bd2ee07a385
         </group>
     </open-files>
 </project-private>

@@ -344,6 +344,7 @@
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="null"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -386,30 +387,30 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtStartTime" pref="228" max="32767" attributes="0"/>
+                              <Component id="jSStart" pref="216" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtStartTime" pref="28" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jSStart" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="txtStartTime">
-                      <Properties>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                      </Properties>
+                    <Component class="javax.swing.JSpinner" name="jSStart">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(sm)"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Date date = new Date();&#xa;Calendar calendar = Calendar.getInstance();&#xa;calendar.setTime(date);&#xa;calendar.set(Calendar.HOUR_OF_DAY, 0);&#xa;calendar.set(Calendar.MINUTE, 0);&#xa;calendar.set(Calendar.SECOND, 0);&#xa;SpinnerDateModel sm= new SpinnerDateModel(calendar.getTime(), null, null, Calendar.HOUR_OF_DAY);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor de= new JSpinner.DateEditor(jSStart, &quot;HH:mm:ss&quot;);&#xa;jSStart.setEditor(de);&#xa;// Code adding the component to the parent container - not shown here"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -451,30 +452,30 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtEndTime" pref="228" max="32767" attributes="0"/>
+                              <Component id="jSEnd" pref="216" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtEndTime" pref="28" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jSEnd" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="txtEndTime">
-                      <Properties>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                      </Properties>
+                    <Component class="javax.swing.JSpinner" name="jSEnd">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(model2)"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerDateModel model2 = new SpinnerDateModel(calendar.getTime(), null, null, Calendar.HOUR_OF_DAY);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor de1= new JSpinner.DateEditor(jSEnd, &quot;HH:mm:ss&quot;);&#xa;jSEnd.setEditor(de1);"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -603,8 +604,10 @@
                           <Font name="Tahoma" size="12" style="1"/>
                         </Property>
                         <Property name="radius" type="int" value="5"/>
-                        <Property name="rolloverEnabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="com.qlchtl.views.MyControls.MyButton" name="btnUpdate">
                       <Properties>
@@ -626,8 +629,10 @@
                           <Font name="Tahoma" size="12" style="1"/>
                         </Property>
                         <Property name="radius" type="int" value="5"/>
-                        <Property name="rolloverEnabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="com.qlchtl.views.MyControls.MyButton" name="btnDelete">
                       <Properties>
@@ -649,8 +654,10 @@
                           <Font name="Tahoma" size="12" style="1"/>
                         </Property>
                         <Property name="radius" type="int" value="5"/>
-                        <Property name="rolloverEnabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -677,18 +684,21 @@
                     </Property>
                     <Property name="radius" type="int" value="5"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmActionPerformed"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="240" y="490" width="90" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="com.qlchtl.views.MyControls.MyButton" name="btnCancle">
+                <Component class="com.qlchtl.views.MyControls.MyButton" name="btnCancel">
                   <Properties>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Cancle"/>
+                    <Property name="text" type="java.lang.String" value="Cancel"/>
                     <Property name="borderColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="56" red="52" type="rgb"/>
                     </Property>
@@ -706,6 +716,9 @@
                     </Property>
                     <Property name="radius" type="int" value="5"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
+                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                       <AbsoluteConstraints x="130" y="490" width="90" height="40"/>

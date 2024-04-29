@@ -7,10 +7,12 @@ package com.qlchtl.views;
 import com.qlchtl.dao.ChiTietHoaDonDao;
 import com.qlchtl.dao.HoaDonDao;
 import com.qlchtl.dao.KhachHangDao;
+import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.ChiTietHoaDon;
 import com.qlchtl.entity.HoaDon;
 import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.MsgBox;
 import java.awt.BorderLayout;
@@ -39,6 +41,9 @@ public class JFHoaDon extends javax.swing.JFrame {
      * Creates new form JFHoaDon
      */
     private String MaHD="";
+    private String MaNV;
+    private String TenNV;
+    private String SDTNV;
     public JFHoaDon() {
         initComponents();
         this.lblNowDate.setText(LocalDate.now().toString());
@@ -49,6 +54,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         loadData();
         updateTongTien();
         setLocationRelativeTo(null);
+        getInfoNV();
     }
     private void remakeControls() {
         //table
@@ -1024,4 +1030,16 @@ public class JFHoaDon extends javax.swing.JFrame {
     private com.qlchtl.views.MyControls.MyPanel myPanel3;
     private com.qlchtl.views.MyControls.MyPanel myPanel4;
     // End of variables declaration//GEN-END:variables
+    void getInfoNV()
+    {
+        MaNV=LogIn.getMaNV();
+        System.out.print(MaNV);
+        NhanVienDao nhanVienDao =new NhanVienDao();
+        NhanVien nhanVien=nhanVienDao.selectById(MaNV);
+        TenNV=nhanVien.getHoTenNV();
+        SDTNV=nhanVien.getSdt();
+        jlblIDNhanvien.setText(MaNV);
+        jlblTenNhanvien.setText(TenNV);
+        jlblSDTNhanvien.setText(SDTNV);
+    }
 }
