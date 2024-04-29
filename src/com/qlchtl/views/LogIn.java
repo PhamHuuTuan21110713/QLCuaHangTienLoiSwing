@@ -261,7 +261,10 @@ public class LogIn extends javax.swing.JFrame {
 
     private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
         // TODO add your handling code here:
+
          dangNhap();
+ //        dangNhap();
+
     }//GEN-LAST:event_btnLogginMouseClicked
 
     private void btnShowPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassMouseClicked

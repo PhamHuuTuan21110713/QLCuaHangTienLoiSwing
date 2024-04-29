@@ -622,8 +622,19 @@ public class DetailStaff extends javax.swing.JFrame {
 
     NhanVien getFormNhanVien(){
         NhanVien nhanVien = new NhanVien();
-        nhanVien.setMaNV(txtCodeStaff.getText());
-        nhanVien.setHoTenNV(txtNameDetailStaff.getText());
+
+        String staffCode = txtCodeStaff.getText().trim();
+        if (staffCode.isEmpty()) {
+            return null;
+        }
+        nhanVien.setMaNV(staffCode);
+
+
+        String fullName = txtNameDetailStaff.getText().trim();
+        if (fullName.isEmpty()) {
+            return null;
+        }
+        nhanVien.setHoTenNV(fullName);
 
         String inputDate = txtBirthdayStaff.getText();
         if (isValidDate(inputDate, "dd/MM/yyyy")) {
@@ -663,7 +674,6 @@ public class DetailStaff extends javax.swing.JFrame {
 
     void update(){
         NhanVien modelnv = getFormNhanVien();
-        System.out.println(modelnv.toString());
         if (modelnv != null) {
             try {
                 nhanVienDao.update(modelnv);
@@ -673,28 +683,37 @@ public class DetailStaff extends javax.swing.JFrame {
                 }
             } catch (Exception e) {
                 MsgBox.alert(this, "Cập nhật thất bại!");
+                load();
             }
         } else {
             MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin.");
+            load();
         }
     }
 
-
-    void fillTableStaff(){
+    void fillTableStaff() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
+
         List<LichLam> list = lichLamDao.selectByIdList(txtCodeStaff.getText());
-        for(int i=0; i<list.size(); i++){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        for (int i = 0; i < list.size(); i++) {
             LichLam lichLam = list.get(i);
             System.out.println(lichLam.getMaCa());
+
             CaLamViec caLamViec = caLamViecDao.selectById(lichLam.getMaCa());
             System.out.println(caLamViec.getGioKetThuc());
+
+            String formattedDate = lichLam.getNgayThangNam().format(formatter);
+
             model.addRow(new Object[]{
-                    lichLam.getMaNV(),
-                    lichLam.getNgayThangNam(),
-                    lichLam.getMaCa(),
-                    caLamViec.getGioBatDau(),
-                    caLamViec.getGioKetThuc()
+                lichLam.getMaNV(),
+                formattedDate,
+                lichLam.getMaCa(),
+                caLamViec.getGioBatDau(),
+                caLamViec.getGioKetThuc()
             });
         }
     }
