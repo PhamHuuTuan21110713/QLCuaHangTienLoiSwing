@@ -4,7 +4,10 @@ public class ChucVu {
     private String maCV;
     private String tenChucVu;
     private double giaTienMotTieng;
-
+    public ChucVu()
+    {
+        
+    }
     public ChucVu(String maCV, String tenChucVu, double giaTienMotTieng) {
         this.maCV = maCV;
         this.tenChucVu = tenChucVu;

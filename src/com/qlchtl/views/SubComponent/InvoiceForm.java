@@ -4,10 +4,20 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.dao.ChiTietHoaDonDao;
+import com.qlchtl.dao.HoaDonDao;
+import com.qlchtl.entity.ChiTietHoaDon;
+import com.qlchtl.entity.HoaDon;
+import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.JFHoaDon;
 import com.qlchtl.views.MyControls.MyTable;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +34,12 @@ public class InvoiceForm extends javax.swing.JPanel {
         this.parentForm = parentForm;
         MyTable.apply(jScrollPane1, MyTable.TableType.DEFAULT);
         MyTable.apply(jScrollPane2, MyTable.TableType.DEFAULT);
+        loadDataInvoice();
+        String firstInvoiceID = getFirstInvoiceID();
+        if (firstInvoiceID != null) {
+            loadDataInvoicDetail(firstInvoiceID);
+        }
+        addTable1SelectionListener();
     }
 
     /**
@@ -41,14 +57,14 @@ public class InvoiceForm extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        txtFromDate = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtToDate = new javax.swing.JTextField();
         btnFindInvoice = new com.qlchtl.views.MyControls.MyButton();
         btnMyInvoice = new com.qlchtl.views.MyControls.MyButton();
         swbtnShowAll = new com.qlchtl.views.MyControls.SwitchButton();
         jLabel5 = new javax.swing.JLabel();
+        jDateFrom = new com.toedter.calendar.JDateChooser();
+        jDateTo = new com.toedter.calendar.JDateChooser();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -124,10 +140,6 @@ public class InvoiceForm extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(jTable2);
 
-        txtFromDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtFromDate.setForeground(new java.awt.Color(153, 153, 153));
-        txtFromDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("From");
@@ -136,16 +148,17 @@ public class InvoiceForm extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("To");
 
-        txtToDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtToDate.setForeground(new java.awt.Color(153, 153, 153));
-        txtToDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
         btnFindInvoice.setForeground(new java.awt.Color(30, 136, 56));
         btnFindInvoice.setText("Go");
         btnFindInvoice.setColorClick(new java.awt.Color(204, 204, 204));
         btnFindInvoice.setColorOver(new java.awt.Color(250, 250, 250));
         btnFindInvoice.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnFindInvoice.setRadius(10);
+        btnFindInvoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindInvoiceActionPerformed(evt);
+            }
+        });
 
         btnMyInvoice.setForeground(new java.awt.Color(53, 148, 219));
         btnMyInvoice.setText("New Invoice");
@@ -171,6 +184,10 @@ public class InvoiceForm extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Show All Invoices");
 
+        jDateFrom.setDateFormatString("yyyy-MM-dd");
+
+        jDateTo.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,20 +206,19 @@ public class InvoiceForm extends javax.swing.JPanel {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnFindInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(swbtnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -213,14 +229,15 @@ public class InvoiceForm extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFromDate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(txtToDate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFindInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMyInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(btnFindInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMyInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateTo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(swbtnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,10 +264,26 @@ public class InvoiceForm extends javax.swing.JPanel {
             hoadon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_NewInvoiceClick
 
+    private void btnFindInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindInvoiceActionPerformed
+        // TODO add your handling code here:
+        try
+        { 
+            loadDataFromTo();
+        }     
+        catch (Exception e)
+        {
+            MsgBox.alert(this, "Vui lòng chọn ngày phù hợp!");
+            loadDataInvoice();
+        }
+         
+    }//GEN-LAST:event_btnFindInvoiceActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnFindInvoice;
     private com.qlchtl.views.MyControls.MyButton btnMyInvoice;
+    private com.toedter.calendar.JDateChooser jDateFrom;
+    private com.toedter.calendar.JDateChooser jDateTo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -261,7 +294,106 @@ public class InvoiceForm extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private com.qlchtl.views.MyControls.SwitchButton swbtnShowAll;
-    private javax.swing.JTextField txtFromDate;
-    private javax.swing.JTextField txtToDate;
     // End of variables declaration//GEN-END:variables
+private void loadDataInvoice()
+    {
+        HoaDonDao hoaDonDao=new HoaDonDao();
+         
+        List<HoaDon> hoaDons=hoaDonDao.selectAll();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Invoice ID");
+        model.addColumn("Issued Date");
+        model.addColumn("Price");
+        model.addColumn("Invoice To");
+        model.addColumn("Create By");
+        model.addColumn("Added Score");
+        model.addColumn("Used Score");
+        for(HoaDon hoaDon: hoaDons)
+        {
+            String[] rowdata={
+                    hoaDon.getMaHD(),
+                    String.valueOf(hoaDon.getNgayXuat()),
+                    String.valueOf(hoaDon.getGiaTri()),
+                    hoaDon.getMaKH(),
+                    hoaDon.getMaNV(),
+                    String.valueOf(hoaDon.getDiemTich()),
+                    String.valueOf(hoaDon.getDiemSuDung()),   
+            };
+            model.addRow(rowdata);
+        }
+        jTable1.setModel(model);
+    }
+
+    private void loadDataFromTo() {
+        Date fromDate=jDateFrom.getDate();
+        Date toDate=jDateTo.getDate();
+        HoaDonDao hoaDonDao=new HoaDonDao();
+        List<HoaDon> hoaDons=hoaDonDao.selectByDateRange(fromDate, toDate);
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Invoice ID");
+        model.addColumn("Issued Date");
+        model.addColumn("Price");
+        model.addColumn("Invoice To");
+        model.addColumn("Create By");
+        model.addColumn("Added Score");
+        model.addColumn("Used Score");
+        for(HoaDon hoaDon: hoaDons)
+        {
+            String[] rowdata={
+                    hoaDon.getMaHD(),
+                    String.valueOf(hoaDon.getNgayXuat()),
+                    String.valueOf(hoaDon.getGiaTri()),
+                    hoaDon.getMaKH(),
+                    hoaDon.getMaNV(),
+                    String.valueOf(hoaDon.getDiemTich()),
+                    String.valueOf(hoaDon.getDiemSuDung()),   
+            };
+            model.addRow(rowdata);
+        }
+        jTable1.setModel(model);
+    }
+    void loadDataInvoicDetail( String MaHD)
+    {
+        ChiTietHoaDonDao chitiethoadondao=new ChiTietHoaDonDao();
+         
+        List<ChiTietHoaDon> chitiethoadons=chitiethoadondao.selectByMaHD(MaHD);
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Product ID");
+        model.addColumn("Price");
+        model.addColumn("Quantity");
+        for(ChiTietHoaDon chitiethoadon: chitiethoadons)
+        {
+            String[] rowdata={
+                    chitiethoadon.getMaSp(),
+                    chitiethoadon.getGiaThanhToan(),
+                    String.valueOf(chitiethoadon.getsL()),
+            };
+            model.addRow(rowdata);
+        }
+        jTable2.setModel(model);
+    }
+    private String getFirstInvoiceID(){
+        int rowCount=jTable1.getRowCount();
+        if(rowCount>0)
+        {
+            return (String) jTable1.getValueAt(0,0);
+        }
+        return null;
+    }
+    private void addTable1SelectionListener() {
+    jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = jTable1.getSelectedRow();
+                if (selectedRow != -1) {
+                    String selectedInvoiceID = (String) jTable1.getValueAt(selectedRow, 0);
+                    if (selectedInvoiceID != null) {
+                        loadDataInvoicDetail(selectedInvoiceID);
+                    }
+                }
+            }
+        }
+    });
+}
 }
