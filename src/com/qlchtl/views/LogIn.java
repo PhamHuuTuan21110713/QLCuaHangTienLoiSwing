@@ -264,7 +264,6 @@ public class LogIn extends javax.swing.JFrame {
         // TODO add your handling code here:
 
          dangNhap();
- //        dangNhap();
 
     }//GEN-LAST:event_btnLogginMouseClicked
 
