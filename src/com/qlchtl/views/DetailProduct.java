@@ -798,23 +798,19 @@ public class DetailProduct extends javax.swing.JFrame  {
         else{
             txtStatePrd.setText("Hết Hàng");
         }
-        txtRootPriceProd.setText(sp.getTienGoc());
+        txtRootPriceProd.setText(sp.getTienGoc());   
         double sum = Double.valueOf(sp.getTienThanhToan());
-        if(txtPromotionProd.getText().equals("CT01")){
-            sum -= sum*0.1;
+        if (txtPromotionProd.getText().equals("CT01")) {
+            sum -= sum * 0.1;
         } else if (txtPromotionProd.getText().equals("CT02")) {
-            sum -= sum*0.2;
-        }
-        else if (txtPromotionProd.getText().equals("CT03")) {
-            sum -= sum*0.3;
+            sum -= sum * 0.2;
+        } else if (txtPromotionProd.getText().equals("CT03")) {
+            sum -= sum * 0.3;
         }
         txtPricePrd.setText(String.valueOf(sum));
-
         String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         txtImportDatePrd.setText(importDate);
         txtSupplier.setText(sp.getMaNCC());
-
-
     }
 
     ChiTietKhuyenMai getChiTietKhuyenMaiFull(){

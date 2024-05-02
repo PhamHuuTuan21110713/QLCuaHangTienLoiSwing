@@ -1447,6 +1447,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(0);  
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "PRODUCT";
+        lblTabName.setText("Product");
     }                             
 
     
@@ -1455,6 +1456,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
          tpnMain.setSelectedIndex(2);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "CLIENT";
+        lblTabName.setText("Client");
 
     }//GEN-LAST:event_ClientClick
 
@@ -1463,6 +1465,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(3);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "INVOICE";
+        lblTabName.setText("Invoice");
 
     }//GEN-LAST:event_InvoiceClick
 
@@ -1471,6 +1474,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(4);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "RANK";
+        lblTabName.setText("Rank");
 
     }//GEN-LAST:event_RankClick
 
@@ -1480,6 +1484,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(5);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "SHIFT";
+        lblTabName.setText("Shift");
 
     }//GEN-LAST:event_ShiftClick
 
@@ -1488,6 +1493,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(6);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "ACCOUNT";
+        lblTabName.setText("Account");
     }//GEN-LAST:event_AccountClick
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
