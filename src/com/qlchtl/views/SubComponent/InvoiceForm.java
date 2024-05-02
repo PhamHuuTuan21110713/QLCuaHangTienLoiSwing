@@ -61,10 +61,9 @@ public class InvoiceForm extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnFindInvoice = new com.qlchtl.views.MyControls.MyButton();
         btnMyInvoice = new com.qlchtl.views.MyControls.MyButton();
-        swbtnShowAll = new com.qlchtl.views.MyControls.SwitchButton();
-        jLabel5 = new javax.swing.JLabel();
         jDateFrom = new com.toedter.calendar.JDateChooser();
         jDateTo = new com.toedter.calendar.JDateChooser();
+        btnShowAll = new com.qlchtl.views.MyControls.MyButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -173,20 +172,21 @@ public class InvoiceForm extends javax.swing.JPanel {
             }
         });
 
-        swbtnShowAll.setForeground(new java.awt.Color(255, 255, 255));
-        swbtnShowAll.setBorderSize(1);
-        swbtnShowAll.setDoubleBuffered(false);
-        swbtnShowAll.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        swbtnShowAll.setRound(999);
-        swbtnShowAll.setSwitchColor(new java.awt.Color(84, 222, 153));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel5.setText("Show All Invoices");
-
         jDateFrom.setDateFormatString("yyyy-MM-dd");
 
         jDateTo.setDateFormatString("yyyy-MM-dd");
+
+        btnShowAll.setForeground(new java.awt.Color(30, 136, 56));
+        btnShowAll.setText("Show All");
+        btnShowAll.setColorClick(new java.awt.Color(204, 204, 204));
+        btnShowAll.setColorOver(new java.awt.Color(250, 250, 250));
+        btnShowAll.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnShowAll.setRadius(10);
+        btnShowAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowAllActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -207,24 +207,22 @@ public class InvoiceForm extends javax.swing.JPanel {
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFindInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(swbtnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnFindInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMyInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(366, 366, 366)
+                .addComponent(btnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,11 +236,9 @@ public class InvoiceForm extends javax.swing.JPanel {
                         .addComponent(btnMyInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jDateFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateTo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(swbtnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(17, 17, 17)
+                .addGap(14, 14, 14)
+                .addComponent(btnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -259,7 +255,7 @@ public class InvoiceForm extends javax.swing.JPanel {
 //        JFHoaDon hoadon = new JFHoaDon();
 //        hoadon.setVisible(true);
 //        hoadon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            JFHoaDon hoadon = new JFHoaDon();
+            JFHoaDon hoadon = new JFHoaDon(this);
             hoadon.setVisible(true);
             hoadon.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_NewInvoiceClick
@@ -278,22 +274,27 @@ public class InvoiceForm extends javax.swing.JPanel {
          
     }//GEN-LAST:event_btnFindInvoiceActionPerformed
 
+    private void btnShowAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowAllActionPerformed
+        // TODO add your handling code here:
+        loadDataInvoice();
+        
+    }//GEN-LAST:event_btnShowAllActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnFindInvoice;
     private com.qlchtl.views.MyControls.MyButton btnMyInvoice;
+    private com.qlchtl.views.MyControls.MyButton btnShowAll;
     private com.toedter.calendar.JDateChooser jDateFrom;
     private com.toedter.calendar.JDateChooser jDateTo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private com.qlchtl.views.MyControls.SwitchButton swbtnShowAll;
     // End of variables declaration//GEN-END:variables
 private void loadDataInvoice()
     {
@@ -395,5 +396,10 @@ private void loadDataInvoice()
             }
         }
     });
+    
 }
+    public void reloadForm() {
+        loadDataInvoice();
+    }
+    
 }

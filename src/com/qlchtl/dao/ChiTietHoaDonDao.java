@@ -23,8 +23,8 @@ public class ChiTietHoaDonDao {
 
          if (count > 0) {
 
-             String updateQuery = "UPDATE chitiethoadon SET SoLuong = SoLuong + ? WHERE MaSP = ?";
-             XJdbc.update(updateQuery, entity.getsL(), entity.getMaSp());
+             String updateQuery = "UPDATE chitiethoadon SET SoLuong = SoLuong + ?, TongTien = TongTien + (GiaThanhToan * ?) WHERE MaSP = ? AND MaHD = ?";
+            XJdbc.update(updateQuery, entity.getsL(), entity.getsL(), entity.getMaSp(), entity.getMaHD());
          } else {
 
              String insertQuery = "INSERT INTO chitiethoadon(MaSP, MaHD, MaCH, GiaThanhToan, SoLuong, TongTien) VALUES(?, ?, ?, ?, ?, ?)";
@@ -93,5 +93,10 @@ public class ChiTietHoaDonDao {
     }
     return 0;
 }
+    public void deleteAll(String maHD)
+    {
+        String sql = "DELETE FROM chitiethoadon WHERE MaHD = ?";
+        XJdbc.update(sql, maHD);
+    }
 }
 
