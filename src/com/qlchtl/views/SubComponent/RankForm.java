@@ -4,15 +4,23 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.dao.ChucVuDao;
+import com.qlchtl.dao.HoaDonDao;
+import com.qlchtl.entity.ChucVu;
+import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyTable;
+import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Dell
  */
 public class RankForm extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form RankForm
      */
@@ -20,9 +28,31 @@ public class RankForm extends javax.swing.JPanel {
     public RankForm(FormMain form) {
         initComponents();
         this.parentForm = form;
+        decentralizate();
          MyTable.apply(jScrollPane1, MyTable.TableType.DEFAULT);
+        loadData();
+        disabledButtonAccept();
+        disabledTextInput();
+        enabledButtonCUD();
+        String firstRankID = getFirstRankID();
+        if (firstRankID != null) {
+            loadFirstData(firstRankID);
+        }
+        addTable1SelectionListener();
     }
-
+    private void decentralizate() {
+        if(parentForm.getRoleUser()==1) {
+            return;
+        } else if(parentForm.getRoleUser()==0) {
+             btnUpdate.setVisible(false);
+            btnCancel.setVisible(false);
+            btnConfirm.setVisible(false);
+            btnCreate.setVisible(false);
+            btnDelete.setVisible(false);
+        }
+      
+    }
+    private boolean addRank=true;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +128,7 @@ public class RankForm extends javax.swing.JPanel {
         txtRankID.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtRankID.setForeground(new java.awt.Color(102, 102, 102));
         txtRankID.setBorder(null);
+        txtRankID.setEnabled(false);
         txtRankID.setPreferredSize(new java.awt.Dimension(210, 16));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -125,6 +156,7 @@ public class RankForm extends javax.swing.JPanel {
         txtRankName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtRankName.setForeground(new java.awt.Color(102, 102, 102));
         txtRankName.setBorder(null);
+        txtRankName.setEnabled(false);
         txtRankName.setPreferredSize(new java.awt.Dimension(210, 16));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -152,6 +184,7 @@ public class RankForm extends javax.swing.JPanel {
         txtRankEarning.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtRankEarning.setForeground(new java.awt.Color(102, 102, 102));
         txtRankEarning.setBorder(null);
+        txtRankEarning.setEnabled(false);
         txtRankEarning.setPreferredSize(new java.awt.Dimension(210, 16));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -181,12 +214,24 @@ public class RankForm extends javax.swing.JPanel {
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        btnCancel.setEnabled(false);
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnConfirm.setBackground(new java.awt.Color(102, 102, 102));
         btnConfirm.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Confirm");
         btnConfirm.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        btnConfirm.setEnabled(false);
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -215,18 +260,33 @@ public class RankForm extends javax.swing.JPanel {
         btnCreate.setText("Create New");
         btnCreate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btnCreate.setRequestFocusEnabled(false);
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setBackground(new java.awt.Color(102, 102, 102));
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdate.setText("Update");
         btnUpdate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setBackground(new java.awt.Color(102, 102, 102));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Delete");
         btnDelete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -278,6 +338,88 @@ public class RankForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        txtRankID.setText("");
+        txtRankName.setText("");
+        txtRankEarning.setText("");
+        disabledButtonAccept();
+        disabledTextInput();
+        enabledButtonCUD();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        txtRankName.setText("");
+        txtRankEarning.setText("");
+        addRank=true;
+        enabledButtonAccept();
+        enabledTextInput();
+        disabledButtonCUD();
+        txtRankID.setText(createMaCV());
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        addRank=false;
+        enabledButtonAccept();
+        enabledTextInput();
+        disabledButtonCUD();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int selectedRow=jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+       
+            String MaCV =(String) jTable1.getValueAt(selectedRow, 0);
+
+            ChucVuDao chucVuDao=new ChucVuDao();
+            chucVuDao.delete(MaCV);
+            loadData();
+        } else {
+            MsgBox.alert(this, "Vui lòng chọn chức vụ để xóa!");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(txtRankName.getText()!=null && txtRankEarning.getText()!=null)
+                {if(addRank)
+                {
+                    ChucVuDao chucVuDao=new ChucVuDao();
+                    ChucVu chucVu=new ChucVu();
+                    chucVu.setMaCV(txtRankID.getText());
+                    chucVu.setTenChucVu(txtRankName.getText());
+                    chucVu.setGiaTienMotTieng(Double.parseDouble(txtRankEarning.getText()));
+                    chucVuDao.insert(chucVu);
+                    loadData();
+                }
+                else
+                {
+                    ChucVuDao chucVuDao=new ChucVuDao();
+                    ChucVu chucVu=new ChucVu();
+                    chucVu.setMaCV(txtRankID.getText());
+                    chucVu.setTenChucVu(txtRankName.getText());
+                    chucVu.setGiaTienMotTieng(Double.parseDouble(txtRankEarning.getText()));
+                    chucVuDao.update(chucVu);
+                    loadData();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            MsgBox.alert(this, "Vui lòng nhập thông tin đúng định dạng!!!");
+        }
+        
+        loadData();
+        disabledButtonAccept();
+        disabledTextInput();
+        enabledButtonCUD();
+        
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
@@ -301,4 +443,97 @@ public class RankForm extends javax.swing.JPanel {
     private javax.swing.JTextField txtRankID;
     private javax.swing.JTextField txtRankName;
     // End of variables declaration//GEN-END:variables
+    void enabledTextInput()
+    {
+        txtRankName.setEnabled(true);
+        txtRankEarning.setEnabled(true);
+    }
+    void enabledButtonAccept()
+    {
+        btnCancel.setEnabled(true);
+        btnConfirm.setEnabled(true);
+    }
+    void enabledButtonCUD()
+    {
+        btnCreate.setEnabled(true);
+        btnUpdate.setEnabled(true);
+        btnDelete.setEnabled(true);
+    }
+    void disabledTextInput()
+    {
+        txtRankName.setEnabled(false);
+        txtRankEarning.setEnabled(false);
+    }
+    void disabledButtonAccept()
+    {
+        btnCancel.setEnabled(false);
+        btnConfirm.setEnabled(false);
+    }
+    void disabledButtonCUD()
+    {
+        btnCreate.setEnabled(false);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+    void loadData()
+    {
+        ChucVuDao chucVuDao=new ChucVuDao();
+         
+        List<ChucVu> chucVus=chucVuDao.selectAll();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Rank ID");
+        model.addColumn("Rank Name");
+        model.addColumn("Earnings");
+        for(ChucVu chucVu: chucVus)
+        {
+            String[] rowdata={
+                    chucVu.getMaCV(),
+                    chucVu.getTenChucVu(),
+                    String.valueOf(chucVu.getGiaTienMotTieng()),
+            };
+            model.addRow(rowdata);
+        }
+        jTable1.setModel(model);
+    }
+    private String createMaCV()
+    {
+        ChucVuDao chucVuDao=new ChucVuDao();
+        int SoLuongChucVu=chucVuDao.tongChucVu();
+        return String.format("HD%08d",SoLuongChucVu+1);
+    }
+    private void addTable1SelectionListener() {
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = jTable1.getSelectedRow();
+                    if (selectedRow != -1) {
+                        String selectedRankID = (String) jTable1.getValueAt(selectedRow, 0);
+                        String selectedRankName = (String) jTable1.getValueAt(selectedRow, 1);
+                        String selectedRankEarnings = (String) jTable1.getValueAt(selectedRow, 2);
+                        txtRankID.setText(selectedRankID);
+                        txtRankName.setText(selectedRankName);
+                        txtRankEarning.setText(selectedRankEarnings);
+                    }
+                }
+            }
+        });
+    }
+
+    private String getFirstRankID() {
+        int rowCount=jTable1.getRowCount();
+        if(rowCount>0)
+        {
+            return (String) jTable1.getValueAt(0,0);
+        }
+        return null;
+    }
+
+    private void loadFirstData(String firstRankID) {
+                        String selectedRankName = (String) jTable1.getValueAt(0, 1);
+                        String selectedRankEarnings = (String) jTable1.getValueAt(0, 2);
+                        txtRankID.setText(firstRankID);
+                        txtRankName.setText(selectedRankName);
+                        txtRankEarning.setText(selectedRankEarnings);
+    }
 }

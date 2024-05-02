@@ -4,8 +4,26 @@
  */
 package com.qlchtl.views.SubComponent;
 
+import com.qlchtl.dao.CaLamViecDao;
+
+import com.qlchtl.entity.CaLamViec;
+import com.qlchtl.utils.MsgBox;
+
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.MyControls.MyTable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,13 +34,35 @@ public class ShiftForm extends javax.swing.JPanel {
     /**
      * Creates new form ShiftForm
      */
+    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     private FormMain parentForm;
     public ShiftForm(FormMain parentForm) {
         initComponents();
         this.parentForm = parentForm;
+        decentralizate();
         MyTable.apply(scpMain, MyTable.TableType.DEFAULT);
+        loadData();
+        disabledButtonAccept();
+        disabledTextInput();
+        enabledButtonCUD();
+        String firstCodeShift = getFirstCodeShift();
+        if (firstCodeShift != null) {
+            loadFirstData(firstCodeShift);
+        }
+        addTable1SelectionListener();
     }
-
+    private void decentralizate() {
+        if(parentForm.getRoleUser()==1) {
+            return;
+        } else if(parentForm.getRoleUser()==0) {
+            btnUpdate.setVisible(false);
+            btnCancel.setVisible(false);
+            btnConfirm.setVisible(false);
+            btnNew.setVisible(false);
+            btnDelete.setVisible(false);
+        }
+    }
+    private boolean addShift=true;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,10 +86,18 @@ public class ShiftForm extends javax.swing.JPanel {
         txtCodeShift = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         myPanelBoxShadow4 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        txtStartTime = new javax.swing.JTextField();
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        SpinnerDateModel sm= new SpinnerDateModel(calendar.getTime(), null, null, Calendar.HOUR_OF_DAY);
+        jSStart = new javax.swing.JSpinner(sm);
         jLabel4 = new javax.swing.JLabel();
         myPanelBoxShadow5 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        txtEndTime = new javax.swing.JTextField();
+        SpinnerDateModel model2 = new SpinnerDateModel(calendar.getTime(), null, null, Calendar.HOUR_OF_DAY);
+        jSEnd = new javax.swing.JSpinner(model2);
         jLabel5 = new javax.swing.JLabel();
         myPanelBoxShadow6 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
         txtAllowance = new javax.swing.JTextField();
@@ -58,7 +106,7 @@ public class ShiftForm extends javax.swing.JPanel {
         btnUpdate = new com.qlchtl.views.MyControls.MyButton();
         btnDelete = new com.qlchtl.views.MyControls.MyButton();
         btnConfirm = new com.qlchtl.views.MyControls.MyButton();
-        btnCancle = new com.qlchtl.views.MyControls.MyButton();
+        btnCancel = new com.qlchtl.views.MyControls.MyButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -173,6 +221,7 @@ public class ShiftForm extends javax.swing.JPanel {
         myPanelBoxShadow3.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
 
         txtCodeShift.setBorder(null);
+        txtCodeShift.setEnabled(false);
 
         javax.swing.GroupLayout myPanelBoxShadow3Layout = new javax.swing.GroupLayout(myPanelBoxShadow3);
         myPanelBoxShadow3.setLayout(myPanelBoxShadow3Layout);
@@ -203,22 +252,24 @@ public class ShiftForm extends javax.swing.JPanel {
         myPanelBoxShadow4.setShadowSize(2);
         myPanelBoxShadow4.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
 
-        txtStartTime.setBorder(null);
+        JSpinner.DateEditor de= new JSpinner.DateEditor(jSStart, "HH:mm:ss");
+        jSStart.setEditor(de);
+        // Code adding the component to the parent container - not shown here
 
         javax.swing.GroupLayout myPanelBoxShadow4Layout = new javax.swing.GroupLayout(myPanelBoxShadow4);
         myPanelBoxShadow4.setLayout(myPanelBoxShadow4Layout);
         myPanelBoxShadow4Layout.setHorizontalGroup(
             myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addComponent(jSStart, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                 .addContainerGap())
         );
         myPanelBoxShadow4Layout.setVerticalGroup(
             myPanelBoxShadow4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -234,22 +285,23 @@ public class ShiftForm extends javax.swing.JPanel {
         myPanelBoxShadow5.setShadowSize(2);
         myPanelBoxShadow5.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
 
-        txtEndTime.setBorder(null);
+        JSpinner.DateEditor de1= new JSpinner.DateEditor(jSEnd, "HH:mm:ss");
+        jSEnd.setEditor(de1);
 
         javax.swing.GroupLayout myPanelBoxShadow5Layout = new javax.swing.GroupLayout(myPanelBoxShadow5);
         myPanelBoxShadow5.setLayout(myPanelBoxShadow5Layout);
         myPanelBoxShadow5Layout.setHorizontalGroup(
             myPanelBoxShadow5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow5Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtEndTime, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addComponent(jSEnd, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                 .addContainerGap())
         );
         myPanelBoxShadow5Layout.setVerticalGroup(
             myPanelBoxShadow5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtEndTime, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -295,7 +347,11 @@ public class ShiftForm extends javax.swing.JPanel {
         btnNew.setColorOver(new java.awt.Color(204, 204, 204));
         btnNew.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnNew.setRadius(5);
-        btnNew.setRolloverEnabled(false);
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setForeground(new java.awt.Color(82, 86, 204));
         btnUpdate.setText("Update");
@@ -305,7 +361,11 @@ public class ShiftForm extends javax.swing.JPanel {
         btnUpdate.setColorOver(new java.awt.Color(204, 204, 204));
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnUpdate.setRadius(5);
-        btnUpdate.setRolloverEnabled(false);
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setForeground(new java.awt.Color(82, 86, 204));
         btnDelete.setText("Delete");
@@ -315,7 +375,11 @@ public class ShiftForm extends javax.swing.JPanel {
         btnDelete.setColorOver(new java.awt.Color(204, 204, 204));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnDelete.setRadius(5);
-        btnDelete.setRolloverEnabled(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout myPanel4Layout = new javax.swing.GroupLayout(myPanel4);
         myPanel4.setLayout(myPanel4Layout);
@@ -351,17 +415,28 @@ public class ShiftForm extends javax.swing.JPanel {
         btnConfirm.setColorOver(new java.awt.Color(115, 119, 222));
         btnConfirm.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnConfirm.setRadius(5);
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
         myPanelBoxShadow2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 90, 40));
 
-        btnCancle.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancle.setText("Cancle");
-        btnCancle.setBorderColor(new java.awt.Color(82, 86, 204));
-        btnCancle.setColor(new java.awt.Color(82, 86, 204));
-        btnCancle.setColorClick(new java.awt.Color(61, 65, 179));
-        btnCancle.setColorOver(new java.awt.Color(115, 119, 222));
-        btnCancle.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCancle.setRadius(5);
-        myPanelBoxShadow2.add(btnCancle, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 90, 40));
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancel.setText("Cancel");
+        btnCancel.setActionCommand("Cancel");
+        btnCancel.setBorderColor(new java.awt.Color(82, 86, 204));
+        btnCancel.setColor(new java.awt.Color(82, 86, 204));
+        btnCancel.setColorClick(new java.awt.Color(61, 65, 179));
+        btnCancel.setColorOver(new java.awt.Color(115, 119, 222));
+        btnCancel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCancel.setRadius(5);
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        myPanelBoxShadow2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 90, 40));
 
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
@@ -413,9 +488,119 @@ public class ShiftForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        // TODO add your handling code here:
+        txtAllowance.setText("");
+        try {
+                Date defaultTime = dateFormat.parse("00:00:00");
+                jSStart.setValue(defaultTime);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        try {
+                Date defaultTime = dateFormat.parse("00:00:00");
+                jSEnd.setValue(defaultTime);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        addShift=true;
+        enabledButtonAccept();
+        enabledTextInput();
+        disabledButtonCUD();
+        txtCodeShift.setText(createMaCa());
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        addShift=false;
+        enabledButtonAccept();
+        enabledTextInput();
+        disabledButtonCUD();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int selectedRow=tblShift.getSelectedRow();
+        if (selectedRow != -1) {
+            String MaCa =(String) tblShift.getValueAt(selectedRow, 0);
+            CaLamViecDao caLamViecDao=new CaLamViecDao();
+            caLamViecDao.delete(MaCa);
+            loadData();
+        } else {
+            MsgBox.alert(this, "Vui lòng chọn ca để xóa!");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        txtAllowance.setText("");
+        txtCodeShift.setText("");
+        try {
+                Date defaultTime = dateFormat.parse("00:00:00");
+                jSStart.setValue(defaultTime);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        try {
+                Date defaultTime = dateFormat.parse("00:00:00");
+                jSEnd.setValue(defaultTime);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+        disabledButtonAccept();
+        disabledTextInput();
+        enabledButtonCUD();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+         try {
+                String allowanceText = txtAllowance.getText();
+                if (!allowanceText.isEmpty()) {
+                    int allowance = Integer.parseInt(allowanceText);
+
+                    // Parse start time
+                    String startTimeText = ((JSpinner.DateEditor) jSStart.getEditor()).getTextField().getText();
+                    LocalTime startTime = LocalTime.parse(startTimeText, DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+                    // Parse end time
+                    String endTimeText = ((JSpinner.DateEditor) jSEnd.getEditor()).getTextField().getText();
+                    LocalTime endTime = LocalTime.parse(endTimeText, DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+                    // Create CaLamViec object
+                    CaLamViec caLamViec = new CaLamViec();
+                    caLamViec.setMaCa(txtCodeShift.getText());
+                    caLamViec.setGioBatDau(startTime);
+                    caLamViec.setGioKetThuc(endTime);
+                    caLamViec.setPhanTramThuongThem(allowance);
+
+                    // Insert or update data
+                    CaLamViecDao caLamViecDao = new CaLamViecDao();
+                    if (addShift) {
+                        caLamViecDao.insert(caLamViec);
+                    } else {
+                        caLamViecDao.update(caLamViec);
+                    }
+
+                    // Reload data and update UI
+                    loadData();
+                    disabledButtonAccept();
+                    disabledTextInput();
+                    enabledButtonCUD();
+                } else {
+                    MsgBox.alert(this, "Vui lòng nhập phần trăm thưởng!!!");
+                }
+            } catch (NumberFormatException e) {
+                MsgBox.alert(this, "Vui lòng nhập số nguyên cho phần trăm thưởng!!!");
+            } catch (DateTimeParseException e) {
+                MsgBox.alert(this, "Vui lòng nhập thời gian theo định dạng HH:mm:ss!!!");
+            } catch (Exception e) {
+                MsgBox.alert(this, "Đã xảy ra lỗi khi xác nhận!!!");
+            }
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.qlchtl.views.MyControls.MyButton btnCancle;
+    private com.qlchtl.views.MyControls.MyButton btnCancel;
     private com.qlchtl.views.MyControls.MyButton btnConfirm;
     private com.qlchtl.views.MyControls.MyButton btnDelete;
     private com.qlchtl.views.MyControls.MyButton btnNew;
@@ -426,6 +611,8 @@ public class ShiftForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jSEnd;
+    private javax.swing.JSpinner jSStart;
     private com.qlchtl.views.MyControls.MyPanel myPanel1;
     private com.qlchtl.views.MyControls.MyPanel myPanel2;
     private com.qlchtl.views.MyControls.MyPanel myPanel3;
@@ -440,7 +627,131 @@ public class ShiftForm extends javax.swing.JPanel {
     private javax.swing.JTable tblShift;
     private javax.swing.JTextField txtAllowance;
     private javax.swing.JTextField txtCodeShift;
-    private javax.swing.JTextField txtEndTime;
-    private javax.swing.JTextField txtStartTime;
     // End of variables declaration//GEN-END:variables
+   void enabledTextInput()
+    {
+        jSStart.setEnabled(true);
+        jSEnd.setEnabled(true);
+        txtAllowance.setEnabled(true);
+    }
+    void enabledButtonAccept()
+    {
+        btnCancel.setEnabled(true);
+        btnConfirm.setEnabled(true);
+    }
+    void enabledButtonCUD()
+    {
+        btnNew.setEnabled(true);
+        btnUpdate.setEnabled(true);
+        btnDelete.setEnabled(true);
+    }
+    void disabledTextInput()
+    {
+        jSStart.setEnabled(false);
+        jSEnd.setEnabled(false);
+        txtAllowance.setEnabled(false);
+    }
+    void disabledButtonAccept()
+    {
+        btnCancel.setEnabled(false);
+        btnConfirm.setEnabled(false);
+    }
+    void disabledButtonCUD()
+    {
+        btnNew.setEnabled(false);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+    void loadData()
+    {
+        CaLamViecDao caLamViecDao=new CaLamViecDao();
+         
+        List<CaLamViec> caLamViecs=caLamViecDao.selectAll();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("CodeShift");
+        model.addColumn("Start Time");
+        model.addColumn("End Time");
+        model.addColumn("Allowance");
+        for(CaLamViec caLamViec: caLamViecs)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String startTime = caLamViec.getGioBatDau().format(formatter);
+            String endTime = caLamViec.getGioKetThuc().format(formatter);
+            String[] rowdata={
+                    
+                    caLamViec.getMaCa(),
+                    startTime,
+                    endTime,
+                    String.valueOf(caLamViec.getPhanTramThuongThem())
+            };
+            model.addRow(rowdata);
+        }
+        tblShift.setModel(model);
+    }
+    private String createMaCa()
+    {
+        CaLamViecDao caLamViecDao=new CaLamViecDao();
+        int SoLuongCa=caLamViecDao.tongCa();
+        return String.format("CA%02d",SoLuongCa+1);
+    }
+    private void addTable1SelectionListener() {
+        tblShift.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = tblShift.getSelectedRow();
+                    if (selectedRow != -1) {
+                        String selectedCodeShift = (String) tblShift.getValueAt(selectedRow, 0);
+                        String selectedStartTime = (String) tblShift.getValueAt(selectedRow, 1);
+                        String selectedEndTime  = (String) tblShift.getValueAt(selectedRow, 2);
+                        String  selectedAllowance = (String) tblShift.getValueAt(selectedRow, 3);
+                        txtCodeShift.setText(selectedCodeShift);
+                        try {          
+                            Date selectedDate = dateFormat.parse(selectedStartTime);
+                            jSStart.setValue(selectedDate);
+                        } catch (ParseException ex) {
+                            ex.printStackTrace(); 
+                        }
+                        try {          
+                            Date selectedDate = dateFormat.parse(selectedEndTime);
+                            jSEnd.setValue(selectedDate);
+                        } catch (ParseException ex) {
+                            ex.printStackTrace(); 
+                        }
+                        txtAllowance.setText(selectedAllowance);
+                    }
+                }
+            }
+        });
+    }
+
+    private String getFirstCodeShift() {
+        int rowCount=tblShift.getRowCount();
+        if(rowCount>0)
+        {
+            return (String) tblShift.getValueAt(0,0);
+        }
+        return null;
+    }
+
+    private void loadFirstData(String firstCodeShift) {
+                        
+                        String selectedStartTime = (String) tblShift.getValueAt(0, 1);
+                        String selectedEndTime  = (String) tblShift.getValueAt(0, 2);
+                        String  selectedAllowance = (String) tblShift.getValueAt(0, 3);
+                        txtCodeShift.setText(firstCodeShift);
+                        try {          
+                            Date selectedDate = dateFormat.parse(selectedStartTime);
+                            jSStart.setValue(selectedDate);
+                        } catch (ParseException ex) {
+                            ex.printStackTrace(); 
+                        }
+                        try {          
+                            Date selectedDate = dateFormat.parse(selectedEndTime);
+                            jSEnd.setValue(selectedDate);
+                        } catch (ParseException ex) {
+                            ex.printStackTrace(); 
+                        }
+                        txtAllowance.setText(selectedAllowance);
+    }
 }

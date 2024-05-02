@@ -10,14 +10,16 @@ import com.qlchtl.entity.SanPham;
 import com.qlchtl.utils.XJdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author LENOVO
  */
-public class HoaDonDao {
+public class HoaDonDao extends qlchSysDao<HoaDon, String>{
     public void insert(HoaDon entity) {
         String sql = "INSERT INTO hoadon(MaHD, NgayXuat, GiaTri, MaKH, DiemTich, DiemSuDung) VALUES(?, ?, ?, ?, ?, ?)";
         XJdbc.update(sql,
@@ -52,7 +54,7 @@ public class HoaDonDao {
     public HoaDon selectById(String maHD) {
         String sql = "SELECT * FROM HoaDon WHERE MaHD = ?";
         List<HoaDon> list = selectBySql(sql, maHD);
-        return list.size() > 0 ? list.get(0) : null;
+        return !list.isEmpty() ? list.get(0) : null;
     }
     protected List<HoaDon> selectBySql(String sql, Object... args) {
         List<HoaDon> list = new ArrayList<>();
@@ -84,4 +86,22 @@ public class HoaDonDao {
                 hoadon.getDiemSuDung(),    
                 hoadon.getMaHD());
     }
+
+    @Override
+    public void delete(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<HoaDon> selectAll() {
+        String sql = "SELECT * FROM HoaDon WHERE MaNV IS NOT NULL ORDER BY MaHD";
+        return selectBySql(sql);
+    }
+    public List<HoaDon> selectByDateRange(Date fromDate, Date toDate) {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String fromDateString = sdf.format(fromDate);
+    String toDateString = sdf.format(toDate);
+    String sql = "SELECT * FROM HoaDon WHERE MaNV IS NOT NULL AND NgayXuat BETWEEN '" + fromDateString + "' AND '" + toDateString + "' ORDER BY MaHD";
+    return selectBySql(sql);
+}
 }

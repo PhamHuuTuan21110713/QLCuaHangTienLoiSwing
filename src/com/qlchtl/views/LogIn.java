@@ -20,6 +20,7 @@ public class LogIn extends javax.swing.JFrame {
     /**
      * Creates new form LogIn
      */
+    private static String MaNV;
     public LogIn() {
     initComponents();
     setLocationRelativeTo(null);
@@ -261,11 +262,9 @@ public class LogIn extends javax.swing.JFrame {
 
     private void btnLogginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogginMouseClicked
         // TODO add your handling code here:
- //        dangNhap();
-         FormMain frm = new FormMain(this);
-         frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-         frm.setVisible(true);
-         this.setVisible(false);
+
+         dangNhap();
+
     }//GEN-LAST:event_btnLogginMouseClicked
 
     private void btnShowPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassMouseClicked
@@ -354,13 +353,15 @@ public class LogIn extends javax.swing.JFrame {
                     } else if(!nhanVien.isTrangThai()) {
                         MsgBox.alert(this, "Tài khoản nhân viên đã bị khóa, vui lòng liên hệ admin biết thêm thông tin!");
                     } else if(acc.getIsRole() == 1) {
+                        MaNV=nhanVien.getMaNV();
                         this.dispose();
-                        FormMain formMenuAdmin = new FormMain(this);
+                        FormMain formMenuAdmin = new FormMain(this,acc.getIsRole());
                         formMenuAdmin.setVisible(true);
                     } else {
-                        JFHoaDon formNhanVien = new JFHoaDon();
-                        formNhanVien.setVisible(true);
+                        MaNV=nhanVien.getMaNV();
                         this.dispose();
+                        FormMain formMenuAdmin = new FormMain(this,acc.getIsRole());
+                        formMenuAdmin.setVisible(true);
                     }
                 }
             }
@@ -392,4 +393,8 @@ public class LogIn extends javax.swing.JFrame {
     private javax.swing.JTextField txtAccount;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
+    public static String getMaNV()
+    {
+        return MaNV;
+    }
 }

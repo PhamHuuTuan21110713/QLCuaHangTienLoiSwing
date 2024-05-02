@@ -70,4 +70,19 @@ public class ChucVuDao extends qlchSysDao<ChucVu, String> {
         }
         return list;
     }
+    public int tongChucVu()
+    {
+        String sql="SELECT COUNT(*) AS total FROM ChucVu";
+        int tongchucvu = 0;
+        try(ResultSet rs=XJdbc.query(sql))
+        {
+            while(rs.next())
+            {
+                tongchucvu=rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tongchucvu;
+    }
 }

@@ -18,6 +18,7 @@ public class XJdbc {
     private static String username="root";
     private static String password="PhamHuuTuan258654@";
 
+
    
      public static PreparedStatement getStmt(String sql, Object...args) throws SQLException {
         Connection connection = null;

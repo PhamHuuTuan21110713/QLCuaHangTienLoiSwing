@@ -60,13 +60,20 @@ public class DetailProduct extends javax.swing.JFrame  {
         this.formMain = formMain;
         this.idProduct = idProduct;
         initComponents();
+        decentralizate();
         this.setLocationRelativeTo(null);
         setButton(false);
         setTextField(false);
         selectedCt = txtPromotionProd.getText();
         fillTable();
     }
-    
+    private void decentralizate() {
+        if(formMain.getRoleUser()==1) {
+            return;
+        } else if( formMain.getRoleUser()==0) {
+            this.btnUpdateProd.setVisible(false);
+        }
+    }
     private void setButton(Boolean state) {
         btnCancelProd.setEnabled(state);
         btnConfirmProduct.setEnabled(state);
