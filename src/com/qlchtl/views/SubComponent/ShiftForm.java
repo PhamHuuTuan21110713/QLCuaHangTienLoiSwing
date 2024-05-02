@@ -39,6 +39,7 @@ public class ShiftForm extends javax.swing.JPanel {
     public ShiftForm(FormMain parentForm) {
         initComponents();
         this.parentForm = parentForm;
+        decentralizate();
         MyTable.apply(scpMain, MyTable.TableType.DEFAULT);
         loadData();
         disabledButtonAccept();
@@ -49,6 +50,17 @@ public class ShiftForm extends javax.swing.JPanel {
             loadFirstData(firstCodeShift);
         }
         addTable1SelectionListener();
+    }
+    private void decentralizate() {
+        if(parentForm.getRoleUser()==1) {
+            return;
+        } else if(parentForm.getRoleUser()==0) {
+            btnUpdate.setVisible(false);
+            btnCancel.setVisible(false);
+            btnConfirm.setVisible(false);
+            btnNew.setVisible(false);
+            btnDelete.setVisible(false);
+        }
     }
     private boolean addShift=true;
     /**

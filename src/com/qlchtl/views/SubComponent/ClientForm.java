@@ -37,6 +37,7 @@ public class ClientForm extends javax.swing.JPanel {
     public ClientForm(FormMain parentForm) {
         initComponents();
         this.parentForm = parentForm;
+        
          MyTable.apply(scpClient, MyTable.TableType.DEFAULT);
          pnlBtnAdd.setVisible(false);
          pnlBtnUpdate.setVisible(false);
@@ -46,12 +47,27 @@ public class ClientForm extends javax.swing.JPanel {
          lblUpdate.setVisible(false);
          btnConfirm.setVisible(false);
          btnCancel.setVisible(false);
+         decentralizate();
          List<KhachHang> list = khachHangDao.selectAll();
          fillTableClient(list);
          System.out.println(22);
          clickData();
     }
 
+    private void decentralizate() {
+        if(parentForm.getRoleUser()==1) {
+            return;
+        } else if (parentForm.getRoleUser()==0) {
+            this.lblBtnShowMoreOption.setVisible(false);
+            this.pnlBtnShowMoreOption.setVisible(false);
+            this.lblBtnAdd.setVisible(true);
+            this.pnlBtnAdd.setVisible(true);
+            this.btnCancel.setVisible(true);
+            this.btnConfirm.setVisible(true);
+            this.lblBtnUpdate.setVisible(true);
+            this.pnlBtnUpdate.setVisible(true);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -289,7 +305,6 @@ public class ClientForm extends javax.swing.JPanel {
         jPanel13.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 200, 2));
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlBtnUpdate.setBackground(new java.awt.Color(101, 181, 94));
         pnlBtnUpdate.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -336,8 +351,6 @@ public class ClientForm extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel15.add(pnlBtnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
-
         pnlBtnDelete.setBackground(new java.awt.Color(207, 103, 114));
         pnlBtnDelete.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnDelete.setShadowColor(new java.awt.Color(153, 153, 153));
@@ -376,8 +389,6 @@ public class ClientForm extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel15.add(pnlBtnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
-
         pnlBtnAdd.setBackground(new java.awt.Color(238, 242, 116));
         pnlBtnAdd.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnAdd.setShadowColor(new java.awt.Color(153, 153, 153));
@@ -411,8 +422,6 @@ public class ClientForm extends javax.swing.JPanel {
         });
         pnlBtnAdd.add(lblBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 30));
 
-        jPanel15.add(pnlBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-
         pnlBtnShowMoreOption.setBackground(new java.awt.Color(109, 158, 237));
         pnlBtnShowMoreOption.setPreferredSize(new java.awt.Dimension(50, 50));
         pnlBtnShowMoreOption.setShadowColor(new java.awt.Color(153, 153, 153));
@@ -437,7 +446,30 @@ public class ClientForm extends javax.swing.JPanel {
         });
         pnlBtnShowMoreOption.add(lblBtnShowMoreOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -5, 50, 40));
 
-        jPanel15.add(pnlBtnShowMoreOption, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlBtnShowMoreOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlBtnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlBtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlBtnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(pnlBtnShowMoreOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(pnlBtnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(pnlBtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(pnlBtnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
