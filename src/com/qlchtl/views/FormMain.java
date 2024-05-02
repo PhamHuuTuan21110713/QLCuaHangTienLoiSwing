@@ -11,6 +11,7 @@ import com.qlchtl.entity.KhachHang;
 import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
+import com.qlchtl.entity.TaiKhoan;
 import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.MyControls.MyPanelBoxShadow;
 import com.qlchtl.views.MyControls.MyScrollBar;
@@ -62,9 +63,15 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     public void setIdStaffSelected(String a) {
         this.idStaffSelected = a;
     }
-
-    public FormMain(LogIn lgin) {
+    private int role;
+    
+     public int  getRoleUser() {
+        return role;
+    }
+    public FormMain(LogIn lgin,int role) {
         initComponents();
+        this.role = role;
+        decentralizate();
         this.pnlProduct.setBackground(new Color(24,145,143));
         this.lblProduct.setForeground(Color.white);
         this.lgin = lgin;
@@ -73,7 +80,23 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         setTupTabbedPane();
         loadSP();
     }
-
+    private void decentralizate() {
+        if(role == 1) {
+            return;
+        } else if (role == 0) {
+            btnDeleteProdFound.setVisible(false);
+            btnAddStaff.setVisible(false);
+            lblAddNewProd.setVisible(false);
+            pnlAddNewPrd.setVisible(false);
+            jLabel18.setVisible(false);
+            lblStaff.setVisible(false);
+            pnlStaff.setVisible(false);
+            iconStaff.setVisible(false);
+            pnlAccount.setVisible(false);
+            lblAccount.setVisible(false);
+            iconAccount.setVisible(false);
+        }
+    }
     private ClientForm clientForm = new ClientForm(this);
     private InvoiceForm invoiceForm = new InvoiceForm(this);
     private  RankForm rankForm = new RankForm(this);
@@ -182,14 +205,15 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         });
 
         pnlMain.setBackground(new java.awt.Color(250, 250, 250));
-        pnlMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         myPanelBoxShadow1.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow1.setShadowOpacity(0.3F);
         myPanelBoxShadow1.setShadowSize(5);
         myPanelBoxShadow1.setVerifyInputWhenFocusTarget(false);
+        myPanelBoxShadow1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/letter-k.png"))); // NOI18N
+        myPanelBoxShadow1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 15, -1, 85));
 
         pnlMenu.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -235,7 +259,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(lblProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addComponent(lblProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
 
@@ -282,7 +306,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlStaffLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(lblStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addComponent(lblStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
         );
 
@@ -329,7 +353,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClientLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(lblClient, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addComponent(lblClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -376,7 +400,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlInvoiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInvoiceLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(lblInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(lblInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -422,7 +446,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(lblRank, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(lblRank, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
@@ -469,7 +493,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlShiftLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(lblShift, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(lblShift, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -516,7 +540,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAccountLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(lblAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(lblAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -581,19 +605,19 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                         .addComponent(iconProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(17, 17, 17)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(iconStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(pnlStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(iconClient, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(pnlClient, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMenuLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(pnlInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                     .addGroup(pnlMenuLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(iconInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(iconInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMenuLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -603,17 +627,19 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                         .addComponent(iconRank, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlShift, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                     .addComponent(iconShift, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMenuLayout.createSequentialGroup()
-                        .addComponent(pnlAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                         .addGap(105, 105, 105))
                     .addGroup(pnlMenuLayout.createSequentialGroup()
                         .addComponent(iconAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
+
+        myPanelBoxShadow1.add(pnlMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 199, 220, 530));
 
         myPanelBoxShadow3.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow3.setShadowColor(new java.awt.Color(10, 200, 186));
@@ -645,37 +671,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout myPanelBoxShadow1Layout = new javax.swing.GroupLayout(myPanelBoxShadow1);
-        myPanelBoxShadow1.setLayout(myPanelBoxShadow1Layout);
-        myPanelBoxShadow1Layout.setHorizontalGroup(
-            myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, myPanelBoxShadow1Layout.createSequentialGroup()
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(myPanelBoxShadow3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(17, 17, 17))
-        );
-        myPanelBoxShadow1Layout.setVerticalGroup(
-            myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(myPanelBoxShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                    .addGroup(myPanelBoxShadow1Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(myPanelBoxShadow3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(99, 99, 99)
-                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
-
-        pnlMain.add(myPanelBoxShadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 240, 770));
+        myPanelBoxShadow1.add(myPanelBoxShadow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 28, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(252, 252, 252));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -751,8 +747,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/logout.png"))); // NOI18N
         jPanel2.add(lblLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, -1, -1));
-
-        pnlMain.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 910, 50));
 
         ucProduct.setBackground(new java.awt.Color(252, 252, 252));
         ucProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1025,26 +1019,32 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         pnlHeaderStaff.setBackground(new java.awt.Color(255, 255, 255));
         pnlHeaderStaff.setFocusCycleRoot(true);
+        pnlHeaderStaff.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(102, 102, 102));
         jLabel23.setText("Name");
+        pnlHeaderStaff.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 15, 77, -1));
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(102, 102, 102));
         jLabel24.setText("Code");
+        pnlHeaderStaff.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 15, 42, -1));
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(102, 102, 102));
         jLabel25.setText("Phone Number");
+        pnlHeaderStaff.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 15, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(102, 102, 102));
         jLabel26.setText("Gender");
+        pnlHeaderStaff.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 15, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(102, 102, 102));
         jLabel27.setText("Action");
+        pnlHeaderStaff.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(744, 15, -1, -1));
 
         btnAddStaff.setForeground(new java.awt.Color(24, 145, 143));
         btnAddStaff.setText("Add Staff");
@@ -1058,39 +1058,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
                 btnAddStaffMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout pnlHeaderStaffLayout = new javax.swing.GroupLayout(pnlHeaderStaff);
-        pnlHeaderStaff.setLayout(pnlHeaderStaffLayout);
-        pnlHeaderStaffLayout.setHorizontalGroup(
-            pnlHeaderStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeaderStaffLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAddStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
-                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
-                .addComponent(jLabel25)
-                .addGap(55, 55, 55)
-                .addComponent(jLabel26)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-                .addComponent(jLabel27)
-                .addGap(85, 85, 85))
-        );
-        pnlHeaderStaffLayout.setVerticalGroup(
-            pnlHeaderStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHeaderStaffLayout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(pnlHeaderStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel27)
-                    .addComponent(btnAddStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        pnlHeaderStaff.add(btnAddStaff, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 3, 105, 47));
 
         scpStaff.setBorder(null);
 
@@ -1101,7 +1069,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             .addGroup(pnlScrollStaffLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlScrollStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlHeaderStaff, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlHeaderStaff, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
                     .addComponent(scpStaff))
                 .addContainerGap())
         );
@@ -1173,12 +1141,12 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             .addGroup(ucStaffLayout.createSequentialGroup()
                 .addGroup(ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ucStaffLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(pnlScrollStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(ucStaffLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(myPanelBoxShadow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ucStaffLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(pnlScrollStaff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         ucStaffLayout.setVerticalGroup(
             ucStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1192,7 +1160,25 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         tpnMain.addTab("tab2", ucStaff);
 
-        pnlMain.add(tpnMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 910, 750));
+        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
+        pnlMain.setLayout(pnlMainLayout);
+        pnlMainLayout.setHorizontalGroup(
+            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainLayout.createSequentialGroup()
+                .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tpnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pnlMainLayout.setVerticalGroup(
+            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tpnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1447,6 +1433,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(0);  
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "PRODUCT";
+        lblTabName.setText("Product");
     }                             
 
     
@@ -1455,6 +1442,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
          tpnMain.setSelectedIndex(2);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "CLIENT";
+        lblTabName.setText("Client");
 
     }//GEN-LAST:event_ClientClick
 
@@ -1463,6 +1451,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(3);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "INVOICE";
+        lblTabName.setText("Invoice");
 
     }//GEN-LAST:event_InvoiceClick
 
@@ -1471,6 +1460,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(4);
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "RANK";
+        lblTabName.setText("Rank");
 
     }//GEN-LAST:event_RankClick
 
@@ -1480,6 +1470,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(5);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "SHIFT";
+        lblTabName.setText("Shift");
 
     }//GEN-LAST:event_ShiftClick
 
@@ -1488,6 +1479,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         tpnMain.setSelectedIndex(6);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
         this.TYPE_SEARCHING = "ACCOUNT";
+        lblTabName.setText("Account");
     }//GEN-LAST:event_AccountClick
 
     private void AddNewProductClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewProductClick
@@ -1600,38 +1592,38 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormMain(new LogIn()).setVisible(true);
-            }
-        });
-    }
-    
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(FormMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormMain(new LogIn()).setVisible(true);
+//            }
+//        });
+//    }
+//    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnAddStaff;
@@ -1813,4 +1805,5 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     public void onUpdateCompleteNhanVien() {
         loadNV();
     }
+   
 }
