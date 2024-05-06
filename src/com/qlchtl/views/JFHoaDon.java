@@ -18,6 +18,7 @@ import com.qlchtl.print.ReportManager;
 import com.qlchtl.print.model.FieldReportPayment;
 import com.qlchtl.print.model.ParameterReportPayment;
 import com.qlchtl.utils.MsgBox;
+import com.qlchtl.views.SubComponent.InvoiceForm;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -59,14 +60,17 @@ public class JFHoaDon extends javax.swing.JFrame {
     private String MaNV;
     private String TenNV;
     private String SDTNV;
-    public JFHoaDon() {
-        
+
+    InvoiceForm parForm;
+    public JFHoaDon(InvoiceForm parForm) {
         initComponents();
+        this.parForm = parForm;
         this.lblNowDate.setText(LocalDate.now().toString());
         remakeControls();
         loadCustomers();
         loadProducts();
         createMaHD();
+        clearTable();
         loadData();
         updateTongTien();
         setLocationRelativeTo(null);
@@ -505,10 +509,13 @@ public class JFHoaDon extends javax.swing.JFrame {
                         .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel22))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(myPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(myPanel3Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(46, 46, 46)
                         .addGroup(myPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -799,31 +806,42 @@ public class JFHoaDon extends javax.swing.JFrame {
         // TODO add your handling code here:
         KhachHangDao khachhangdao=new KhachHangDao();
         KhachHang khachhang=khachhangdao.selectById((String) jcbIDKhachHang.getSelectedItem());
-        if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
+        double giaTri = Double.parseDouble(jTextField2.getText());
+        int diemSuDung = Integer.parseInt(jTextField1.getText());
+        double limit = 0.1 * giaTri;
+        if (diemSuDung > limit) {
+        MsgBox.alert(this, "Số điểm sử dụng không được vượt quá 10% giá trị đơn hàng!");
+        }
+        else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
         {    
-            HoaDonDao hoadondao = new HoaDonDao();
-            HoaDon hoadon = new HoaDon();
+
+            double giaTriMoi = giaTri - diemSuDung;
+            HoaDonDao hoadondao=new HoaDonDao();
+            HoaDon hoadon=new HoaDon();
             hoadon.setMaHD(MaHD);
             hoadon.setNgayXuat(LocalDate.now());
-            hoadon.setGiaTri(jTextField2.getText());
+            hoadon.setGiaTri(String.valueOf(giaTriMoi));
+
             hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
             hoadon.setMaNV((String) jlblIDNhanvien.getText());
             hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
             hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
             hoadondao.update(hoadon);
             MsgBox.alert(this, "Thanh toán thành công!");
-            khachhangdao.updateSuDungDiem(khachhang, Integer.parseInt(jTextField1.getText()));
+
+            khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
             khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
             loadInvoiceReport();
-            hoadonmoi = 1;
+            hoadonmoi=1;
             createMaHD();
             loadData();
             updateTongTien();
-            
-            
+            jTextField1.setText("0");
+            parForm.reloadForm();
+
         }
         else 
-            MsgBox.alert(this, "Điểm tích không đủ để dùng!");
+            MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
@@ -867,7 +885,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFHoaDon().setVisible(true);
+                
             }
         });
     }
@@ -893,7 +911,9 @@ public class JFHoaDon extends javax.swing.JFrame {
         List<KhachHang> khachhangs= khachhangdao.selectAll();
         for(KhachHang khachhang:khachhangs)
         {
-            jcbIDKhachHang.addItem(khachhang.getMaKH());
+            if(!khachhang.getTrangThai().equals("0")){
+                jcbIDKhachHang.addItem(khachhang.getMaKH());
+            }
         }
     }
     private void loadProducts() 
@@ -902,16 +922,20 @@ public class JFHoaDon extends javax.swing.JFrame {
         List<SanPham> sanphams= sanphamdao.selectAll();
         for(SanPham sanpham:sanphams)
         {
-            jcbIDSanPham.addItem(sanpham.getMaSP());
+            if(!sanpham.getTrangThai().equals("0"))
+                jcbIDSanPham.addItem(sanpham.getMaSP());
         }
     }
     private void updateProductInfo() {
         SanPhamDao sanphamdao=new SanPhamDao();
         String selectedProductId=(String) jcbIDSanPham.getSelectedItem();
         SanPham sanpham=sanphamdao.selectById(selectedProductId);
-        if(sanpham==null)
+        if(sanpham==null||sanpham.getTrangThai().equals("0"))
         {
             MsgBox.alert(this, "Sản phẩm không tồn tại!");
+            jcbIDSanPham.setSelectedIndex(0);
+            sanpham=sanphamdao.selectById((String)jcbIDSanPham.getSelectedItem());
+            jtxtQuantity.setText("1");
         }
         else
         {
@@ -985,19 +1009,24 @@ public class JFHoaDon extends javax.swing.JFrame {
     
     public void setTable(String code) {
         jcbIDSanPham.setSelectedItem(code);
-        ChiTietHoaDonDao chitiethoadondao=new ChiTietHoaDonDao();
-        ChiTietHoaDon chitiethoadon=new ChiTietHoaDon();
-        chitiethoadon.setMaSp((String) jcbIDSanPham.getSelectedItem());
-        chitiethoadon.setMaHD(MaHD);
-        chitiethoadon.setMaCH("CH00000001");
-        chitiethoadon.setGiaThanhToan(jlbPrice.getText());
-        chitiethoadon.setsL(Integer.parseInt(jtxtQuantity.getText()));
-        double tongtien = Double.parseDouble(jlbPrice.getText())*Integer.parseInt(jtxtQuantity.getText());
-        DecimalFormat df = new DecimalFormat("0.00");
-        chitiethoadon.setTongTien(df.format(tongtien));
-        chitiethoadondao.insert(chitiethoadon);
-        loadData();
-        updateTongTien();
+        SanPhamDao sanPhamDao=new SanPhamDao();
+        SanPham sanpham=sanPhamDao.selectById(code);
+        if((sanpham!=null)&&(sanpham.getTrangThai().equals("1")))
+        {
+            ChiTietHoaDonDao chitiethoadondao=new ChiTietHoaDonDao();
+            ChiTietHoaDon chitiethoadon=new ChiTietHoaDon();
+            chitiethoadon.setMaSp((String) jcbIDSanPham.getSelectedItem());
+            chitiethoadon.setMaHD(MaHD);
+            chitiethoadon.setMaCH("CH00000001");
+            chitiethoadon.setGiaThanhToan(jlbPrice.getText());
+            chitiethoadon.setsL(Integer.parseInt(jtxtQuantity.getText()));
+            double tongtien = Double.parseDouble(jlbPrice.getText())*Integer.parseInt(jtxtQuantity.getText());
+            DecimalFormat df = new DecimalFormat("0.00");
+            chitiethoadon.setTongTien(df.format(tongtien));
+            chitiethoadondao.insert(chitiethoadon);
+            loadData();
+            updateTongTien();
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1070,5 +1099,9 @@ public class JFHoaDon extends javax.swing.JFrame {
         jlblIDNhanvien.setText(MaNV);
         jlblTenNhanvien.setText(TenNV);
         jlblSDTNhanvien.setText(SDTNV);
+    }
+    private void clearTable(){
+        ChiTietHoaDonDao chitiethoadondao=new ChiTietHoaDonDao();
+        chitiethoadondao.deleteAll(MaHD);
     }
 }

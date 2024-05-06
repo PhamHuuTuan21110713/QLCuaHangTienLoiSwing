@@ -240,8 +240,6 @@ public class Scan extends javax.swing.JFrame implements Runnable, ThreadFactory,
                 System.out.print(resultToInvoice);
                 isEmty = false;
                 printResults();
-                JFHoaDon hoadon=new JFHoaDon();
-                hoadon.getMaSPFromScan(resultToInvoice);
                // hoadon.setVisible(true);
                 parForm.setTable(resultToInvoice);
             }
