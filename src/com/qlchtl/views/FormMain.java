@@ -38,10 +38,13 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private LogIn lgin;
     private String idProductSelected;
     private String idStaffSelected;
-
+    private int role;
+    private ClientForm clientForm ;
+    private InvoiceForm invoiceForm ;
+    private  RankForm rankForm ;
+    private ShiftForm shiftForm ;
+    private AccountForm accountForm ;
     private String TYPE_SEARCHING = "PRODUCT";
-
-
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
 
@@ -63,14 +66,17 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     public void setIdStaffSelected(String a) {
         this.idStaffSelected = a;
     }
-    private int role;
+
     
-     public int  getRoleUser() {
-        return role;
-    }
+     
     public FormMain(LogIn lgin,int role) {
-        initComponents();
         this.role = role;
+        this.clientForm = new ClientForm(this);
+        this.invoiceForm = new InvoiceForm(this);
+        this.rankForm = new RankForm(this);
+        this.shiftForm = new ShiftForm(this);
+        this.accountForm = new AccountForm(this);
+        initComponents();
         decentralizate();
         this.pnlProduct.setBackground(new Color(24,145,143));
         this.lblProduct.setForeground(Color.white);
@@ -79,6 +85,9 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         settingScrollPane();
         setTupTabbedPane();
         loadSP();
+    }
+    public int  getRole() {
+        return this.role;
     }
     private void decentralizate() {
         if(role == 1) {
@@ -97,11 +106,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             iconAccount.setVisible(false);
         }
     }
-    private ClientForm clientForm = new ClientForm(this);
-    private InvoiceForm invoiceForm = new InvoiceForm(this);
-    private  RankForm rankForm = new RankForm(this);
-    private ShiftForm shiftForm = new ShiftForm(this);
-    private AccountForm accountForm = new AccountForm(this);
+    
     private void setTupTabbedPane() {
         
         tpnMain.addTab("", clientForm);

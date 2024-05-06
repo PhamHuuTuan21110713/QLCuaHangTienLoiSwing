@@ -355,11 +355,13 @@ public class LogIn extends javax.swing.JFrame {
                     } else if(acc.getIsRole() == 1) {
                         MaNV=nhanVien.getMaNV();
                         this.dispose();
+                        System.out.println("Login: "+ acc.getIsRole());
                         FormMain formMenuAdmin = new FormMain(this,acc.getIsRole());
                         formMenuAdmin.setVisible(true);
                     } else {
                         MaNV=nhanVien.getMaNV();
                         this.dispose();
+                        System.out.println("Login: "+ acc.getIsRole());
                         FormMain formMenuAdmin = new FormMain(this,acc.getIsRole());
                         formMenuAdmin.setVisible(true);
                     }

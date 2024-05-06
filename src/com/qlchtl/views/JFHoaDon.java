@@ -14,13 +14,21 @@ import com.qlchtl.entity.HoaDon;
 import com.qlchtl.entity.KhachHang;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
+import com.qlchtl.print.ReportManager;
+import com.qlchtl.print.model.FieldReportPayment;
+import com.qlchtl.print.model.ParameterReportPayment;
 import com.qlchtl.utils.MsgBox;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +39,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.JasperCompileManager;
 /**
  *
  * @author Dell
@@ -45,6 +60,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private String TenNV;
     private String SDTNV;
     public JFHoaDon() {
+        
         initComponents();
         this.lblNowDate.setText(LocalDate.now().toString());
         remakeControls();
@@ -768,30 +784,43 @@ public class JFHoaDon extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtQuantityActionPerformed
 
+    
+    private void loadInvoiceReport()  {
+       try {
+           ReportManager.getInstance().compileReport();
+           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, jTextField2.getText(), jTextField1.getText(), jLabel25.getText(), null);
+           ReportManager.getInstance().printReportPayment(data);
+       }catch(Exception e) {
+           e.printStackTrace();
+       }
+    }
+    
     private void jbtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCreateActionPerformed
         // TODO add your handling code here:
         KhachHangDao khachhangdao=new KhachHangDao();
         KhachHang khachhang=khachhangdao.selectById((String) jcbIDKhachHang.getSelectedItem());
         if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
         {    
-        HoaDonDao hoadondao=new HoaDonDao();
-        HoaDon hoadon=new HoaDon();
-        hoadon.setMaHD(MaHD);
-        hoadon.setNgayXuat(LocalDate.now());
-        hoadon.setGiaTri(jTextField2.getText());
-        hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
-        hoadon.setMaNV((String) jlblIDNhanvien.getText());
-        hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
-        hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
-        hoadondao.update(hoadon);
-        MsgBox.alert(this, "Thanh toán thành công!");
-        khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
-        khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
-        hoadonmoi=1;
-        createMaHD();
-        loadData();
-        updateTongTien();
-        
+            HoaDonDao hoadondao = new HoaDonDao();
+            HoaDon hoadon = new HoaDon();
+            hoadon.setMaHD(MaHD);
+            hoadon.setNgayXuat(LocalDate.now());
+            hoadon.setGiaTri(jTextField2.getText());
+            hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
+            hoadon.setMaNV((String) jlblIDNhanvien.getText());
+            hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
+            hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
+            hoadondao.update(hoadon);
+            MsgBox.alert(this, "Thanh toán thành công!");
+            khachhangdao.updateSuDungDiem(khachhang, Integer.parseInt(jTextField1.getText()));
+            khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
+            loadInvoiceReport();
+            hoadonmoi = 1;
+            createMaHD();
+            loadData();
+            updateTongTien();
+            
+            
         }
         else 
             MsgBox.alert(this, "Điểm tích không đủ để dùng!");

@@ -26,8 +26,9 @@ public class RankForm extends javax.swing.JPanel {
      */
     FormMain parentForm ;
     public RankForm(FormMain form) {
-        initComponents();
         this.parentForm = form;
+        initComponents();
+        
         decentralizate();
          MyTable.apply(jScrollPane1, MyTable.TableType.DEFAULT);
         loadData();
@@ -41,9 +42,10 @@ public class RankForm extends javax.swing.JPanel {
         addTable1SelectionListener();
     }
     private void decentralizate() {
-        if(parentForm.getRoleUser()==1) {
+        System.out.println("Rank: " + this.parentForm.getRole());
+        if(parentForm.getRole()==1) {
             return;
-        } else if(parentForm.getRoleUser()==0) {
+        } else if(parentForm.getRole()==0) {
              btnUpdate.setVisible(false);
             btnCancel.setVisible(false);
             btnConfirm.setVisible(false);

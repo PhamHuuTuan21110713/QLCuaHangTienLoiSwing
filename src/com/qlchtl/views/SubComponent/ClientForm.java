@@ -35,9 +35,8 @@ public class ClientForm extends javax.swing.JPanel {
 
     private FormMain parentForm;
     public ClientForm(FormMain parentForm) {
-        initComponents();
         this.parentForm = parentForm;
-        
+        initComponents();
          MyTable.apply(scpClient, MyTable.TableType.DEFAULT);
          pnlBtnAdd.setVisible(false);
          pnlBtnUpdate.setVisible(false);
@@ -55,9 +54,10 @@ public class ClientForm extends javax.swing.JPanel {
     }
 
     private void decentralizate() {
-        if(parentForm.getRoleUser()==1) {
+        System.out.println("Client: "+parentForm.getRole());
+        if(parentForm.getRole()==1) {
             return;
-        } else if (parentForm.getRoleUser()==0) {
+        } else if (parentForm.getRole()==0) {
             this.lblBtnShowMoreOption.setVisible(false);
             this.pnlBtnShowMoreOption.setVisible(false);
             this.lblBtnAdd.setVisible(true);

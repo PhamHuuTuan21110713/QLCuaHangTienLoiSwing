@@ -52,9 +52,10 @@ public class ShiftForm extends javax.swing.JPanel {
         addTable1SelectionListener();
     }
     private void decentralizate() {
-        if(parentForm.getRoleUser()==1) {
+        System.out.println("Shift: " + parentForm.getRole());
+        if(parentForm.getRole()==1) {
             return;
-        } else if(parentForm.getRoleUser()==0) {
+        } else if(parentForm.getRole()==0) {
             btnUpdate.setVisible(false);
             btnCancel.setVisible(false);
             btnConfirm.setVisible(false);
