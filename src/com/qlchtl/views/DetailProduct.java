@@ -68,9 +68,10 @@ public class DetailProduct extends javax.swing.JFrame  {
         fillTable();
     }
     private void decentralizate() {
-        if(formMain.getRoleUser()==1) {
+        System.out.println("Prod: "  +formMain.getRole());
+        if(formMain.getRole()==1) {
             return;
-        } else if( formMain.getRoleUser()==0) {
+        } else if( formMain.getRole()==0) {
             this.btnUpdateProd.setVisible(false);
         }
     }

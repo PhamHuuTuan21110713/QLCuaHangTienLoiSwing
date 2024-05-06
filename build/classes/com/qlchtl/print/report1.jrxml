@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="226" pageHeight="842" columnWidth="204" leftMargin="11" rightMargin="11" topMargin="0" bottomMargin="0" uuid="6a8479be-24f5-47fd-863a-11ec4be7d208">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codeInvoice" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="usedScore" class="java.lang.String"/>
+	<parameter name="storedScore" class="java.lang.String"/>
+<!--	<queryString>
+		<![CDATA[select *
+from (select sp.TenSP, fhd.MaHD, fhd.MaCH, fhd.GiaThanhToan, fhd.SoLuong, fhd.TongTien, fhd.NgayXuat,fhd.GiaTri, fhd.MaKH, fhd.MaNV,fhd.DiemTich,fhd.DiemSuDung
+from (select ct.MaSP, ct.MaHD, ct.MaCH, ct.GiaThanhToan, ct.SoLuong, ct.TongTien, hd.NgayXuat,hd.GiaTri, hd.MaKH, hd.MaNV,hd.DiemTich,hd.DiemSuDung
+	from chitiethoadon as ct inner join hoadon as hd on ct.MaHD = hd.MaHD
+order by ct.MaHD) as fhd inner join sanpham as sp on fhd.MaSP = sp.MaSP) as s
+where s.MaHD = $P{codeInvoice}]]>
+	</queryString>-->
+	<field name="tenSP" class="java.lang.String"/>
+	<field name="maHD" class="java.lang.String"/>
+	<field name="maCH" class="java.lang.String"/>
+	<field name="giaThanhToan" class="java.math.BigDecimal"/>
+	<field name="soLuong" class="java.lang.Integer"/>
+	<field name="tongTien" class="java.math.BigDecimal"/>
+	<field name="ngayXuat" class="java.sql.Timestamp"/>
+	<field name="giaTri" class="java.math.BigDecimal"/>
+	<field name="maKH" class="java.lang.String"/>
+	<field name="maNV" class="java.lang.String"/>
+	<field name="diemTich" class="java.lang.Integer"/>
+	<field name="diemSuDung" class="java.lang.Integer"/>
+
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="30" width="58" height="19" uuid="e1bcd65e-a475-4508-a410-d4e02e2b4beb"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="204" height="30" uuid="c9ce92c6-409e-4208-a7cb-79dc2f5f783a"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Xirkel K]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="33" y="69" width="171" height="20" uuid="e92a1609-0df2-4f43-afec-a9132ec78bcc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="69" width="33" height="20" uuid="b40c626f-904f-43d3-af17-0360ff96d59b"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="49" width="33" height="20" uuid="41d2ad38-4556-4689-97e0-dc3c9fd1dc6c"/>
+				<textElement verticalAlignment="Top">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Code:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="33" y="49" width="171" height="20" uuid="79d0483b-fc0d-4057-a694-5390e9bf5baa"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{codeInvoice}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26">
+			<staticText>
+				<reportElement x="0" y="6" width="48" height="20" uuid="660550a6-bcac-4da4-8cb9-56502657c083"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Product]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="6" width="59" height="20" uuid="b8bddd12-a27d-4ddf-a36d-472d1db6bef9"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="6" width="49" height="20" uuid="23ccf608-7e1c-4aa3-bfde-60a127c5ced8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="6" width="47" height="20" uuid="796fb472-cf93-4790-81ac-b026ee20ee77"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="107" y="5" width="50" height="15" uuid="3ef62838-c94f-4b0e-b2ce-d73cb60b81e0"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" pdfEncoding="Cp1258"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{soLuong}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="5" width="59" height="15" uuid="2c31ab11-b3c4-428f-9c90-f7b68b1a8081"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" pdfEncoding="Cp1258"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{giaThanhToan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="5" width="47" height="15" uuid="2fb273fa-418d-4189-9c07-74177b29d6fc"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" pdfEncoding="Cp1258"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tongTien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="5" width="48" height="15" uuid="5c8ddcc2-e6f6-45b2-a482-8701af9df932"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" pdfEncoding="Cp1258"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tenSP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="232" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="66" width="95" height="20" uuid="97b8172f-c4d8-4db3-bb39-1e899678ffdd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="95" y="66" width="109" height="20" uuid="635fae96-135a-419a-9eb3-626b9e697318"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="26" width="95" height="20" uuid="fc3dd2cd-b705-44c2-bff8-8f26065a12ae"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Used Score:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="46" width="95" height="20" uuid="2995d6b4-34c6-42aa-bc98-03c4fb03b14f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stored Score:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="11" width="204" height="1" uuid="4953eabb-65b5-4ba3-b28a-f4e3e699baaf"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="95" y="26" width="109" height="20" uuid="9d1070a0-424b-4198-82db-ae269d525cd5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{usedScore}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="46" width="109" height="20" uuid="b1754edb-794c-4de5-9896-2f6acfc60020"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{storedScore}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="99" width="204" height="80" uuid="9e51ed36-bc39-43c3-898e-0c2f3dfacd81"/>
+			</image>
+			<line>
+				<reportElement x="0" y="193" width="204" height="1" uuid="8572b189-0706-4272-9f3f-b96204d60a39"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="194" width="204" height="20" uuid="cbf54449-351c-4003-b46c-ed5ea61b18e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thanks & see you again :3]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
