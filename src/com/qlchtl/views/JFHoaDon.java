@@ -7,11 +7,13 @@ package com.qlchtl.views;
 import com.qlchtl.dao.ChiTietHoaDonDao;
 import com.qlchtl.dao.HoaDonDao;
 import com.qlchtl.dao.KhachHangDao;
+import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.ChiTietHoaDon;
 import com.qlchtl.entity.HoaDon;
 import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.print.ReportManager;
@@ -827,14 +829,13 @@ public class JFHoaDon extends javax.swing.JFrame {
                 hoadon.setMaHD(MaHD);
                 hoadon.setNgayXuat(LocalDate.now());
                 hoadon.setGiaTri(String.valueOf(giaTriMoi));
-
                 hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
                 hoadon.setMaNV((String) jlblIDNhanvien.getText());
                 hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
                 hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
                 hoadondao.update(hoadon);
+                updateSoluong();
                 MsgBox.alert(this, "Thanh toán thành công!");
-
                 khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
                 khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
                 loadInvoiceReport();
@@ -921,6 +922,20 @@ public class JFHoaDon extends javax.swing.JFrame {
             if(!khachhang.getTrangThai().equals("0")){
                 jcbIDKhachHang.addItem(khachhang.getMaKH());
             }
+        }
+    }
+    private void updateSoluong()
+    {
+        ChiTietHoaDonDao chiTietHoaDonDao=new ChiTietHoaDonDao();
+        KhoDao khoDao=new KhoDao();
+        List<ChiTietHoaDon> chiTietHoaDons= chiTietHoaDonDao.selectByMaHD(MaHD);
+        for(ChiTietHoaDon chiTietHoaDon:chiTietHoaDons)
+        {
+            Kho kho=khoDao.selectById(chiTietHoaDon.getMaSp());
+            if(kho.getSoLuong()>=chiTietHoaDon.getsL())
+                kho.setSoLuong(kho.getSoLuong()-chiTietHoaDon.getsL());
+            else
+                 MsgBox.alert(this, "Số lượng sản phẩm trong kho không đủ!");
         }
     }
     private void loadProducts() 
