@@ -37,7 +37,7 @@ public class DetailProduct extends javax.swing.JFrame  {
 
     private String idProduct;
     public  String selectedCt ;
-//    public double sum;
+    public double sum =0;
     public String Item;
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();
@@ -349,14 +349,14 @@ public class DetailProduct extends javax.swing.JFrame  {
 
 
 
+        ChiTietKhuyenMaiDao ctkmDao = new ChiTietKhuyenMaiDao();
+        ChuongTrinhKhuyenMaiDao chiTietKhuyenMaiDao = new ChuongTrinhKhuyenMaiDao();
+        List<ChuongTrinhKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiDao.selectAll();
 
-        ChiTietKhuyenMaiDao chiTietKhuyenMaiDao = new ChiTietKhuyenMaiDao();
-        List<ChiTietKhuyenMai> chiTietKhuyenMai = chiTietKhuyenMaiDao.selectAll();
-
-        Map<String, ChiTietKhuyenMai> promotionMap = new HashMap<>();
+        Map<String, ChuongTrinhKhuyenMai> promotionMap = new HashMap<>();
         promotionMap.put("None", null); // Thêm mục "None" vào Map
 
-        for (ChiTietKhuyenMai promotion : chiTietKhuyenMai) {
+        for (ChuongTrinhKhuyenMai promotion : chiTietKhuyenMai) {
             promotionMap.put(promotion.getMaCT(), promotion);
         }
 
@@ -410,12 +410,12 @@ public class DetailProduct extends javax.swing.JFrame  {
                     System.out.println(12+Item);
                     if (selectedPromotionCode != null) {
                         if (selectedPromotionCode.equals("None")) {
-                            txtStartDayProd.setText("0");
-                            txtEndDayProd.setText("0");
+                            txtStartDayProd.setText("01/01/1111");
+                            txtEndDayProd.setText("01/01/1111");
                             txtPromotionProd.setText("None");
                         } else {
                             System.out.println(12+Item);
-                            ChiTietKhuyenMai selectedPromotion = promotionMap.get(selectedPromotionCode);
+                            ChuongTrinhKhuyenMai selectedPromotion = promotionMap.get(selectedPromotionCode);
 //                            if (selectedPromotion != null) {
 //
 //                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -429,7 +429,7 @@ public class DetailProduct extends javax.swing.JFrame  {
                             if (selectedPromotion != null) {
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-                                ChiTietKhuyenMai ctkm1 = chiTietKhuyenMaiDao.selectById(txtCodePrd.getText());
+                                ChiTietKhuyenMai ctkm1 = ctkmDao.selectById(txtCodePrd.getText());
 
                                 String formattedDateStart = String.valueOf(ctkm1.getNgayApDung().format(formatter));
                                 txtStartDayProd.setText(formattedDateStart);
@@ -661,8 +661,10 @@ public class DetailProduct extends javax.swing.JFrame  {
     private void ConfirmClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmClick
         // TODO add your handling code here:
         update();
+        updateGia();
         setButton(false);
         setTextField(false);
+        dispose();
 
     }//GEN-LAST:event_ConfirmClick
     private LogIn lgin;
@@ -753,7 +755,27 @@ public class DetailProduct extends javax.swing.JFrame  {
         return kho;
     }
 
+    SanPham getFormSanPhamGia() {
+        SanPham sp = new SanPham();
+        sp.setMaSP(txtCodePrd.getText());
+        sp.setTienThanhToan(String.valueOf(sum));
+        return sp;
+    }
 
+
+    void updateGia(){
+        SanPham modelsp = getFormSanPhamGia();
+        try {
+            sanPhamDao.updateGia(modelsp);
+            this.fillTable();
+            if (formMain != null) {
+                formMain.onUpdateCompleteSanPham();
+            }
+        }
+        catch (Exception e) {
+            this.fillTable();
+        }
+    }
 
     SanPham getFormSanPham() {
         SanPham sp = new SanPham();
@@ -763,7 +785,6 @@ public class DetailProduct extends javax.swing.JFrame  {
         sp.setTrangThai("1");
         sp.setTienGoc(txtRootPriceProd.getText());
         sp.setTienThanhToan(txtPricePrd.getText());
-
         String inputDate = txtImportDatePrd.getText();
         if (isValidDate(inputDate, "dd/MM/yyyy")) {
             LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -809,7 +830,7 @@ public class DetailProduct extends javax.swing.JFrame  {
             txtStatePrd.setText("Hết Hàng");
         }
         txtRootPriceProd.setText(sp.getTienGoc());   
-        double sum = Double.valueOf(sp.getTienThanhToan());
+        sum = Double.valueOf(sp.getTienGoc());
         if (txtPromotionProd.getText().equals("CT01")) {
             sum -= sum * 0.1;
         } else if (txtPromotionProd.getText().equals("CT02")) {

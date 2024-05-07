@@ -808,42 +808,49 @@ public class JFHoaDon extends javax.swing.JFrame {
         KhachHangDao khachhangdao=new KhachHangDao();
         KhachHang khachhang=khachhangdao.selectById((String) jcbIDKhachHang.getSelectedItem());
         double giaTri = Double.parseDouble(jTextField2.getText());
-        int diemSuDung = Integer.parseInt(jTextField1.getText());
+        
         double limit = 0.1 * giaTri;
-        if (diemSuDung > limit) {
-        MsgBox.alert(this, "Số điểm sử dụng không được vượt quá 10% giá trị đơn hàng!");
+        if(!jTextField1.getText().matches("\\d+")) 
+        {
+            jTextField1.setText("");
+            MsgBox.alert(this, "Điểm sử dụng không hợp lệ!");
         }
-        else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
-        {    
+        else
+        {   int diemSuDung = Integer.parseInt(jTextField1.getText());
+             if (diemSuDung > limit) {
+                        MsgBox.alert(this, "Số điểm sử dụng không được vượt quá 10% giá trị đơn hàng!");
+                }
+            else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
+            {    
+                double giaTriMoi = giaTri - diemSuDung;
+                HoaDonDao hoadondao=new HoaDonDao();
+                HoaDon hoadon=new HoaDon();
+                hoadon.setMaHD(MaHD);
+                hoadon.setNgayXuat(LocalDate.now());
+                hoadon.setGiaTri(String.valueOf(giaTriMoi));
 
-            giaTriMoi = giaTri - diemSuDung;
-            
-            HoaDonDao hoadondao=new HoaDonDao();
-            HoaDon hoadon=new HoaDon();
-            hoadon.setMaHD(MaHD);
-            hoadon.setNgayXuat(LocalDate.now());
-            hoadon.setGiaTri(String.valueOf(giaTriMoi));
+                hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
+                hoadon.setMaNV((String) jlblIDNhanvien.getText());
+                hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
+                hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
+                hoadondao.update(hoadon);
+                MsgBox.alert(this, "Thanh toán thành công!");
 
-            hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
-            hoadon.setMaNV((String) jlblIDNhanvien.getText());
-            hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
-            hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
-            hoadondao.update(hoadon);
-            MsgBox.alert(this, "Thanh toán thành công!");
-            System.out.println("HoaDon: "+hoadon.getGiaTri().toString());
-            khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
-            khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
-            loadInvoiceReport();
-            hoadonmoi=1;
-            createMaHD();
-            loadData();
-            updateTongTien();
-            jTextField1.setText("0");
-            parForm.reloadForm();
+                khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
+                khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
+                loadInvoiceReport();
+                hoadonmoi=1;
+                createMaHD();
+                loadData();
+                updateTongTien();
+                jTextField1.setText("0");
+                parForm.reloadForm();
 
-        }
-        else 
-            MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
+            }
+            else 
+                MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
+            }
+
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed

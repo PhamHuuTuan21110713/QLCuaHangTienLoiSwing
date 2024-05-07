@@ -586,6 +586,8 @@ public class AddStaff extends javax.swing.JDialog {
     private void btnCreateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateMouseClicked
         // TODO add your handling code here:
         insert();
+        List<TaiKhoan> listtk = taiKhoanDao.selectAll();
+        formMain.accountForm.fillTableTk(listtk);
     }//GEN-LAST:event_btnCreateMouseClicked
 
     /**
