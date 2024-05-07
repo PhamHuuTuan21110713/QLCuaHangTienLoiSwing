@@ -73,6 +73,8 @@ public class DetailProduct extends javax.swing.JFrame  {
             return;
         } else if( formMain.getRole()==0) {
             this.btnUpdateProd.setVisible(false);
+            this.btnConfirmProduct.setVisible(false);
+            this.btnCancelProd.setVisible(false);
         }
     }
     private void setButton(Boolean state) {
