@@ -50,6 +50,14 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
 
     }
 
+    public void updateGia(SanPham sanPham) {
+        String sql = "UPDATE sanpham SET TienThanhToan = ? WHERE MaSP = ?";
+        XJdbc.update(sql,
+                sanPham.getTienThanhToan(),
+                sanPham.getMaSP());
+
+    }
+
 
 
 
