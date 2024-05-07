@@ -62,7 +62,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private String MaNV;
     private String TenNV;
     private String SDTNV;
-
+    double giaTriMoi=0;
     InvoiceForm parForm;
     public JFHoaDon(InvoiceForm parForm) {
         initComponents();
@@ -408,6 +408,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel24.setText("Price:");
 
+        jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 204, 204));
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField2.setText("00.0");
@@ -797,7 +798,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private void loadInvoiceReport()  {
        try {
            ReportManager.getInstance().compileReport();
-           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, jTextField2.getText(), jTextField1.getText(), jLabel25.getText(), null);
+           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, String.valueOf(giaTriMoi) , jTextField1.getText(), jLabel25.getText(), null);
            ReportManager.getInstance().printReportPayment(data);
        }catch(Exception e) {
            e.printStackTrace();
@@ -823,7 +824,7 @@ public class JFHoaDon extends javax.swing.JFrame {
                 }
             else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
             {    
-                double giaTriMoi = giaTri - diemSuDung;
+                giaTriMoi = giaTri - diemSuDung;
                 HoaDonDao hoadondao=new HoaDonDao();
                 HoaDon hoadon=new HoaDon();
                 hoadon.setMaHD(MaHD);
@@ -850,6 +851,7 @@ public class JFHoaDon extends javax.swing.JFrame {
             else 
                 MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
             }
+
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
@@ -933,7 +935,11 @@ public class JFHoaDon extends javax.swing.JFrame {
         {
             Kho kho=khoDao.selectById(chiTietHoaDon.getMaSp());
             if(kho.getSoLuong()>=chiTietHoaDon.getsL())
+            {
                 kho.setSoLuong(kho.getSoLuong()-chiTietHoaDon.getsL());
+                khoDao.updateSL(kho);
+            }
+
             else
                  MsgBox.alert(this, "Số lượng sản phẩm trong kho không đủ!");
         }

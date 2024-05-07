@@ -103,7 +103,7 @@ public class AccountForm extends javax.swing.JPanel {
         }
     }
 
-    void fillTableTk(List<TaiKhoan> list) {
+    public void fillTableTk(List<TaiKhoan> list) {
         DefaultTableModel model = (DefaultTableModel) tblAccount.getModel();
         model.setRowCount(0);
         for (int i = 0; i < list.size(); i++) {
