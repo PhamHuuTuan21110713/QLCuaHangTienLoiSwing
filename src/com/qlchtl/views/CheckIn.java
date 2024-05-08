@@ -4,6 +4,22 @@
  */
 package com.qlchtl.views;
 
+import com.qlchtl.dao.LichLamDao;
+import com.qlchtl.entity.LichLam;
+import com.qlchtl.entity.NhanVien;
+import com.qlchtl.entity.TaiKhoan;
+import com.qlchtl.utils.MsgBox;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.qlchtl.views.DetailProduct.isValidDate;
+
 /**
  *
  * @author Dell
@@ -15,7 +31,9 @@ public class CheckIn extends javax.swing.JDialog {
      */
     public CheckIn(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        System.out.println(LogIn.MaNV);
         initComponents();
+        init();
     }
 
     /**
@@ -67,6 +85,11 @@ public class CheckIn extends javax.swing.JDialog {
         btnConfirm.setColorOver(new java.awt.Color(153, 153, 153));
         btnConfirm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnConfirm.setRadius(10);
+        btnConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirmMouseClicked(evt);
+            }
+        });
 
         btnCancle.setForeground(new java.awt.Color(255, 255, 255));
         btnCancle.setText("Cancle");
@@ -75,6 +98,11 @@ public class CheckIn extends javax.swing.JDialog {
         btnCancle.setColorOver(new java.awt.Color(153, 153, 153));
         btnCancle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancle.setRadius(10);
+        btnCancle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancleMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,6 +158,17 @@ public class CheckIn extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmMouseClicked
+        // TODO add your handling code here:
+        insert();
+        dispose();
+    }//GEN-LAST:event_btnConfirmMouseClicked
+
+    private void btnCancleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancleMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCancleMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -170,6 +209,88 @@ public class CheckIn extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+    public String[] firstChucVu = {null};
+
+    LichLamDao lichLamDao = new LichLamDao();
+    List<LichLam> listLichLam = lichLamDao.selectAll();
+    void init(){
+
+        txtStaffCode.setText(LogIn.MaNV);
+        LocalDate ngayHienTai = LocalDate.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String ngayHienTaiChuoi = ngayHienTai.format(formatter);
+
+
+        txtDate.setText(ngayHienTaiChuoi);
+
+        Set<String> uniquePromotionNames = new HashSet<>();
+        for (LichLam promotion : listLichLam) {
+//            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
+            uniquePromotionNames.add(promotion.getMaCa());
+        }
+        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+
+        cboShiftCode.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
+
+        if (promotionNamesWithNone.length > 0) {
+            firstChucVu[0] = promotionNamesWithNone[0];
+        }
+        cboShiftCode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) cboShiftCode.getSelectedItem();
+                firstChucVu[0] = selectedItem;
+            }
+        });
+
+    }
+
+
+    LichLam getFromLichLam(){
+        LichLam lm =  new LichLam();
+        lm.setMaNV(txtStaffCode.getText());
+
+
+
+        String inputWork = txtDate.getText().trim();
+        if (!isValidDate(inputWork, "dd/MM/yyyy")) {
+            return null;
+        }
+        LocalDate convertedWork = LocalDate.parse(inputWork, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        lm.setNgayThangNam(convertedWork);
+
+        lm.setMaCa(firstChucVu[0]);
+        System.out.println(firstChucVu[0]);
+
+        return  lm;
+    }
+
+    private FormMain formMain;
+
+    void insert() {
+
+        LichLam modelKho = getFromLichLam();
+        System.out.println(modelKho);
+        if (modelKho != null) {
+
+            try {
+
+                lichLamDao.insert(modelKho);
+
+                MsgBox.alert(this, "Check in thành công!");
+
+                if (formMain != null) {
+                    formMain.onUpdateCompleteNhanVien();
+                }
+
+            } catch (Exception e) {
+                MsgBox.alert(this, "Check in thất bại!");
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

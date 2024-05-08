@@ -18,6 +18,15 @@ public class LichLam {
 
     }
 
+    @Override
+    public String toString() {
+        return "LichLam{" +
+                "maNV='" + maNV + '\'' +
+                ", ngayThangNam=" + ngayThangNam +
+                ", maCa='" + maCa + '\'' +
+                '}';
+    }
+
     // Getters and Setters
     public String getMaNV() {
         return maNV;
@@ -43,13 +52,4 @@ public class LichLam {
         this.maCa = maCa;
     }
 
-    // toString method for debugging or logging
-    @Override
-    public String toString() {
-        return "LichLam{" +
-                "maNV='" + maNV + '\'' +
-                ", ngayThangNam=" + ngayThangNam +
-                ", maCa='" + maCa + '\'' +
-                '}';
-    }
 }

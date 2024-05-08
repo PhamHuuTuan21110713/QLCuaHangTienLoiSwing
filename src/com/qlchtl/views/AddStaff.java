@@ -39,13 +39,13 @@ public class AddStaff extends javax.swing.JDialog {
     NhanVienDao nhanVienDao = new NhanVienDao();
     TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
     ChucVuDao chucVuDao = new ChucVuDao();
-    LichLamDao lichLamDao = new LichLamDao();
+    ;
 
     public String[] firstChucVu = {null};
     public String[] firstChucVu1 = {null};
     public String[] firstrole = {null};
     List<ChucVu> listNCC = chucVuDao.selectAll();
-    List<LichLam> listLichLam = lichLamDao.selectAll();
+
 
     String img;
 
@@ -642,12 +642,12 @@ public class AddStaff extends javax.swing.JDialog {
         rdoMale.setSelected(true);
 
 
-        Set<String> uniquePromotionNames = new HashSet<>();
-        for (LichLam promotion : listLichLam) {
-//            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
-            uniquePromotionNames.add(promotion.getMaCa());
-        }
-        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+//        Set<String> uniquePromotionNames = new HashSet<>();
+//        for (LichLam promotion : listLichLam) {
+////            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
+//            uniquePromotionNames.add(promotion.getMaCa());
+//        }
+//        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
 
         
 
