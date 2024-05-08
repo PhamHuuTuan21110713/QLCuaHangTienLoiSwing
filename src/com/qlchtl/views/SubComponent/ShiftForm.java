@@ -105,7 +105,6 @@ public class ShiftForm extends javax.swing.JPanel {
         myPanel4 = new com.qlchtl.views.MyControls.MyPanel();
         btnNew = new com.qlchtl.views.MyControls.MyButton();
         btnUpdate = new com.qlchtl.views.MyControls.MyButton();
-        btnDelete = new com.qlchtl.views.MyControls.MyButton();
         btnConfirm = new com.qlchtl.views.MyControls.MyButton();
         btnCancel = new com.qlchtl.views.MyControls.MyButton();
 
@@ -368,32 +367,16 @@ public class ShiftForm extends javax.swing.JPanel {
             }
         });
 
-        btnDelete.setForeground(new java.awt.Color(82, 86, 204));
-        btnDelete.setText("Delete");
-        btnDelete.setToolTipText("");
-        btnDelete.setBorderColor(new java.awt.Color(255, 255, 255));
-        btnDelete.setColorClick(new java.awt.Color(153, 153, 153));
-        btnDelete.setColorOver(new java.awt.Color(204, 204, 204));
-        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnDelete.setRadius(5);
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout myPanel4Layout = new javax.swing.GroupLayout(myPanel4);
         myPanel4.setLayout(myPanel4Layout);
         myPanel4Layout.setHorizontalGroup(
             myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(myPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(40, 40, 40))
         );
         myPanel4Layout.setVerticalGroup(
             myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,12 +384,11 @@ public class ShiftForm extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        myPanelBoxShadow2.add(myPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 320, 100));
+        myPanelBoxShadow2.add(myPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 310, 100));
 
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Confirm");
@@ -421,11 +403,10 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnConfirmActionPerformed(evt);
             }
         });
-        myPanelBoxShadow2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 90, 40));
+        myPanelBoxShadow2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, 90, 40));
 
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
-        btnCancel.setActionCommand("Cancel");
         btnCancel.setBorderColor(new java.awt.Color(82, 86, 204));
         btnCancel.setColor(new java.awt.Color(82, 86, 204));
         btnCancel.setColorClick(new java.awt.Color(61, 65, 179));
@@ -437,7 +418,7 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnCancelActionPerformed(evt);
             }
         });
-        myPanelBoxShadow2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 90, 40));
+        myPanelBoxShadow2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 90, 40));
 
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
@@ -519,19 +500,6 @@ public class ShiftForm extends javax.swing.JPanel {
         disabledButtonCUD();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        int selectedRow=tblShift.getSelectedRow();
-        if (selectedRow != -1) {
-            String MaCa =(String) tblShift.getValueAt(selectedRow, 0);
-            CaLamViecDao caLamViecDao=new CaLamViecDao();
-            caLamViecDao.delete(MaCa);
-            loadData();
-        } else {
-            MsgBox.alert(this, "Vui lòng chọn ca để xóa!");
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         txtAllowance.setText("");
@@ -603,7 +571,6 @@ public class ShiftForm extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnCancel;
     private com.qlchtl.views.MyControls.MyButton btnConfirm;
-    private com.qlchtl.views.MyControls.MyButton btnDelete;
     private com.qlchtl.views.MyControls.MyButton btnNew;
     private com.qlchtl.views.MyControls.MyButton btnUpdate;
     private javax.swing.JLabel jLabel1;
