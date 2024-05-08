@@ -16,7 +16,7 @@ public class XJdbc {
     private static String dburl="jdbc:mysql://localhost:3306/qlchtl";
     //    private static String dburl="jdbc:mysql://localhost:3306/qlcuahangtienloi";
     private static String username="root";
-    private static String password="123456";
+    private static String password="12345";
 
 
 

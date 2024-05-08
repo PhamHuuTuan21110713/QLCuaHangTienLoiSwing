@@ -158,6 +158,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         lblGoSearch = new javax.swing.JLabel();
         lblTabName = new javax.swing.JLabel();
         lblLogout = new javax.swing.JLabel();
+        btnCheckIn = new com.qlchtl.views.MyControls.MyButton();
         tpnMain = new javax.swing.JTabbedPane();
         ucProduct = new javax.swing.JPanel();
         myPanelBoxShadow4 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
@@ -208,6 +209,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         });
 
         pnlMain.setBackground(new java.awt.Color(250, 250, 250));
+        pnlMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         myPanelBoxShadow1.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow1.setShadowOpacity(0.3F);
@@ -676,6 +678,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         myPanelBoxShadow1.add(myPanelBoxShadow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 28, -1, -1));
 
+        pnlMain.add(myPanelBoxShadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 746));
+
         jPanel2.setBackground(new java.awt.Color(252, 252, 252));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -717,6 +721,22 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
             }
         });
         jPanel2.add(lblLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, -1, -1));
+
+        btnCheckIn.setForeground(new java.awt.Color(255, 255, 255));
+        btnCheckIn.setText("Check In");
+        btnCheckIn.setBorderColor(new java.awt.Color(0, 153, 153));
+        btnCheckIn.setColor(new java.awt.Color(0, 204, 204));
+        btnCheckIn.setColorOver(new java.awt.Color(0, 204, 204));
+        btnCheckIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCheckIn.setRadius(10);
+        btnCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckInActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnCheckIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 80, 30));
+
+        pnlMain.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 910, 50));
 
         ucProduct.setBackground(new java.awt.Color(252, 252, 252));
         ucProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1130,25 +1150,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         tpnMain.addTab("tab2", ucStaff);
 
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tpnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tpnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        pnlMain.add(tpnMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1389,7 +1391,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         tpnMain.setSelectedIndex(1);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
-
+        lblTabName.setText("Staff");
         tpnMain.setSelectedIndex(1);  
         List<NhanVien> nhanVienList = nhanVienDao.selectAll();
         renderItemStaffWithThread(nhanVienList);
@@ -1540,6 +1542,13 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         
     }//GEN-LAST:event_lblLogoutMouseClicked
 
+    private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
+        // TODO add your handling code here:
+        CheckIn form = new CheckIn(this, false);
+        form.show();
+        form.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnCheckInActionPerformed
+
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();
         JPanel res = null;
@@ -1606,6 +1615,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnAddStaff;
+    private com.qlchtl.views.MyControls.MyButton btnCheckIn;
     private com.qlchtl.views.MyControls.MyButton btnDeleteProdFound;
     private com.qlchtl.views.MyControls.MyButton btnDeleteStaffFound;
     private com.qlchtl.views.MyControls.MyButton btnDetailStaffFound;
