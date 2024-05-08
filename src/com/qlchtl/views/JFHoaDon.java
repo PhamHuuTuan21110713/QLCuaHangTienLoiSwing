@@ -933,7 +933,10 @@ public class JFHoaDon extends javax.swing.JFrame {
         {
             Kho kho=khoDao.selectById(chiTietHoaDon.getMaSp());
             if(kho.getSoLuong()>=chiTietHoaDon.getsL())
+            {   
                 kho.setSoLuong(kho.getSoLuong()-chiTietHoaDon.getsL());
+                khoDao.updateSL(kho);
+            }
             else
                  MsgBox.alert(this, "Số lượng sản phẩm trong kho không đủ!");
         }
