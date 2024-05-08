@@ -286,7 +286,7 @@ public class ItemStaff extends Component {
 
     
     private void DeleteStaffClick(MouseEvent e, String code) {
-       parentForm.setIdStaffSelected(code);
+        parentForm.setIdStaffSelected(code);
         int choice = JOptionPane.showConfirmDialog(
                 this,
                 "Bạn có chắc chắn muốn xóa nhân viên này?",

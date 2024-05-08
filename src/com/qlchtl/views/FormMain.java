@@ -156,10 +156,9 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         jLabel3 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         lblGoSearch = new javax.swing.JLabel();
-        pnlHome = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        lblHome = new javax.swing.JLabel();
         lblTabName = new javax.swing.JLabel();
         lblLogout = new javax.swing.JLabel();
+        btnCheckIn = new com.qlchtl.views.MyControls.MyButton();
         tpnMain = new javax.swing.JTabbedPane();
         ucProduct = new javax.swing.JPanel();
         myPanelBoxShadow4 = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
@@ -210,6 +209,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         });
 
         pnlMain.setBackground(new java.awt.Color(250, 250, 250));
+        pnlMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         myPanelBoxShadow1.setBackground(new java.awt.Color(255, 255, 255));
         myPanelBoxShadow1.setShadowOpacity(0.3F);
@@ -678,6 +678,8 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         myPanelBoxShadow1.add(myPanelBoxShadow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 28, -1, -1));
 
+        pnlMain.add(myPanelBoxShadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 746));
+
         jPanel2.setBackground(new java.awt.Color(252, 252, 252));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -707,51 +709,34 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         jPanel2.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 5, 300, 40));
 
-        pnlHome.setBackground(new java.awt.Color(205, 247, 244));
-        pnlHome.setShadowOpacity(0.2F);
-        pnlHome.setShadowSize(2);
-        pnlHome.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
-        pnlHome.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomeClick(evt);
-            }
-        });
-
-        lblHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/user (1).png"))); // NOI18N
-        lblHome.setPreferredSize(new java.awt.Dimension(30, 24));
-        lblHome.setVerifyInputWhenFocusTarget(false);
-        lblHome.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomeClick(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
-        pnlHome.setLayout(pnlHomeLayout);
-        pnlHomeLayout.setHorizontalGroup(
-            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHomeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblHome, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlHomeLayout.setVerticalGroup(
-            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHomeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel2.add(pnlHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 5, 35, 40));
-
         lblTabName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTabName.setForeground(new java.awt.Color(21, 123, 142));
         lblTabName.setText("Product");
         jPanel2.add(lblTabName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 40));
 
         lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/logout.png"))); // NOI18N
+        lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLogoutMouseClicked(evt);
+            }
+        });
         jPanel2.add(lblLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, -1, -1));
+
+        btnCheckIn.setForeground(new java.awt.Color(255, 255, 255));
+        btnCheckIn.setText("Check In");
+        btnCheckIn.setBorderColor(new java.awt.Color(0, 153, 153));
+        btnCheckIn.setColor(new java.awt.Color(0, 204, 204));
+        btnCheckIn.setColorOver(new java.awt.Color(0, 204, 204));
+        btnCheckIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCheckIn.setRadius(10);
+        btnCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckInActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnCheckIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 80, 30));
+
+        pnlMain.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 910, 50));
 
         ucProduct.setBackground(new java.awt.Color(252, 252, 252));
         ucProduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1136,6 +1121,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         btnDeleteStaffFound.setColorOver(new java.awt.Color(232, 113, 122));
         btnDeleteStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeleteStaffFound.setRadius(20);
+        btnDeleteStaffFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteStaffFoundMouseClicked(evt);
+            }
+        });
+        btnDeleteStaffFound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteStaffFoundActionPerformed(evt);
+            }
+        });
         myPanelBoxShadow2.add(btnDeleteStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 125, 89, 46));
         myPanelBoxShadow2.add(lblAvataStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 15, 140, 150));
 
@@ -1165,25 +1160,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         tpnMain.addTab("tab2", ucStaff);
 
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tpnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tpnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(myPanelBoxShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        pnlMain.add(tpnMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1424,7 +1401,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         tpnMain.setSelectedIndex(1);   
         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
-
+        lblTabName.setText("Staff");
         tpnMain.setSelectedIndex(1);  
         List<NhanVien> nhanVienList = nhanVienDao.selectAll();
         renderItemStaffWithThread(nhanVienList);
@@ -1495,12 +1472,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     }//GEN-LAST:event_AddNewProductClick
 
-    private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
-        // TODO add your handling code here:
-        tpnMain.setSelectedIndex(7); 
-         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
-    }//GEN-LAST:event_HomeClick
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         this.lgin.setVisible(true);
@@ -1565,6 +1536,48 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         addStaff.setVisible(true);
         addStaff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnAddStaffMouseClicked
+
+
+    private void btnDeleteStaffFoundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteStaffFoundMouseClicked
+        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+
+            deleteNhanVien(idStaffSelected);
+        }
+    }//GEN-LAST:event_btnDeleteStaffFoundMouseClicked
+
+    private void btnDeleteStaffFoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteStaffFoundActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteStaffFoundActionPerformed
+
+    private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
+        // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất không?", "Question?", JOptionPane.OK_CANCEL_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            // Nếu người dùng chọn "OK", thực hiện công việc tiếp theo ở đây
+            this.dispose();
+            lgin.show();
+        } else {
+            // Nếu người dùng chọn "Cancel" hoặc đóng cửa sổ hộp thoại, hủy hàm
+            return;
+        }
+        
+        
+    }//GEN-LAST:event_lblLogoutMouseClicked
+
+    private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
+        // TODO add your handling code here:
+        CheckIn form = new CheckIn(this, false);
+        form.show();
+        form.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnCheckInActionPerformed
 
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();
@@ -1632,6 +1645,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.qlchtl.views.MyControls.MyButton btnAddStaff;
+    private com.qlchtl.views.MyControls.MyButton btnCheckIn;
     private com.qlchtl.views.MyControls.MyButton btnDeleteProdFound;
     private com.qlchtl.views.MyControls.MyButton btnDeleteStaffFound;
     private com.qlchtl.views.MyControls.MyButton btnDetailStaffFound;
@@ -1669,7 +1683,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblCodeStaffFound;
     private javax.swing.JLabel lblGoSearch;
-    private javax.swing.JLabel lblHome;
     private javax.swing.JLabel lblInvoice;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JLabel lblNameStaffFound;
@@ -1694,7 +1707,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlHeaderStaff;
-    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlHome;
     private javax.swing.JPanel pnlInvoice;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlMenu;
@@ -1721,7 +1733,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     void delete() {
         int choice = JOptionPane.showConfirmDialog(
                 this,
-                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Bạn có chắc chắn muốn xóa sản phẩm này?",
                 "Xác nhận xóa",
                 JOptionPane.OK_CANCEL_OPTION
         );
