@@ -49,12 +49,10 @@ public class RankForm extends javax.swing.JPanel {
              btnUpdate.setVisible(false);
             btnCancel.setVisible(false);
             btnConfirm.setVisible(false);
-            btnCreate.setVisible(false);
            
         }
       
     }
-    private boolean addRank=true;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,7 +79,6 @@ public class RankForm extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         btnCancel = new javax.swing.JButton();
         btnConfirm = new javax.swing.JButton();
-        btnCreate = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -255,18 +252,6 @@ public class RankForm extends javax.swing.JPanel {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        btnCreate.setBackground(new java.awt.Color(102, 102, 102));
-        btnCreate.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnCreate.setForeground(new java.awt.Color(255, 255, 255));
-        btnCreate.setText("Create New");
-        btnCreate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        btnCreate.setRequestFocusEnabled(false);
-        btnCreate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateActionPerformed(evt);
-            }
-        });
-
         btnUpdate.setBackground(new java.awt.Color(102, 102, 102));
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
@@ -284,9 +269,7 @@ public class RankForm extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -294,9 +277,7 @@ public class RankForm extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(135, 135, 135)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -335,20 +316,8 @@ public class RankForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // TODO add your handling code here:
-        txtRankName.setText("");
-        txtRankEarning.setText("");
-        addRank=true;
-        enabledButtonAccept();
-        enabledTextInput();
-        disabledButtonCUD();
-        txtRankID.setText(createMaCV());
-    }//GEN-LAST:event_btnCreateActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        addRank=false;
         enabledButtonAccept();
         enabledTextInput();
         disabledButtonCUD();
@@ -358,17 +327,6 @@ public class RankForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         try{
             if(txtRankName.getText()!=null && txtRankEarning.getText()!=null)
-                {if(addRank)
-                {
-                    ChucVuDao chucVuDao=new ChucVuDao();
-                    ChucVu chucVu=new ChucVu();
-                    chucVu.setMaCV(txtRankID.getText());
-                    chucVu.setTenChucVu(txtRankName.getText());
-                    chucVu.setGiaTienMotTieng(Double.parseDouble(txtRankEarning.getText()));
-                    chucVuDao.insert(chucVu);
-                    loadData();
-                }
-                else
                 {
                     ChucVuDao chucVuDao=new ChucVuDao();
                     ChucVu chucVu=new ChucVu();
@@ -377,7 +335,6 @@ public class RankForm extends javax.swing.JPanel {
                     chucVu.setGiaTienMotTieng(Double.parseDouble(txtRankEarning.getText()));
                     chucVuDao.update(chucVu);
                     loadData();
-                }
             }
         }
         catch (Exception e)
@@ -396,7 +353,6 @@ public class RankForm extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
-    private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -416,7 +372,6 @@ public class RankForm extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     void enabledTextInput()
     {
-        txtRankName.setEnabled(true);
         txtRankEarning.setEnabled(true);
     }
     void enabledButtonAccept()
@@ -426,7 +381,6 @@ public class RankForm extends javax.swing.JPanel {
     }
     void enabledButtonCUD()
     {
-        btnCreate.setEnabled(true);
         btnUpdate.setEnabled(true);
      
     }
@@ -442,7 +396,6 @@ public class RankForm extends javax.swing.JPanel {
     }
     void disabledButtonCUD()
     {
-        btnCreate.setEnabled(false);
         btnUpdate.setEnabled(false);
       
     }
