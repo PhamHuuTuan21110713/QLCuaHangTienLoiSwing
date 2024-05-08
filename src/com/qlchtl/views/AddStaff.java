@@ -428,8 +428,8 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPassword)
-                .addContainerGap())
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,7 +451,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtAccountCoude, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(txtAccountCoude)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -627,7 +627,7 @@ public class AddStaff extends javax.swing.JDialog {
     void chonAnh() {
         if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();
-            XImage.save(file); // lưu hình vào thư mục logos
+            XImage.save(file); // lÆ°u hÃ¬nh vÃ o thÆ° má»¥c logos
             ImageIcon icon = XImage.read(file.getName());
             java.awt.Image originalImage = icon.getImage();
             java.awt.Image scaledImage = originalImage.getScaledInstance(170, 220, java.awt.Image.SCALE_SMOOTH);
@@ -654,7 +654,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 
         String initTrangThai = "0";
-        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân Viên", "Quản lý" };
+        String[] states = initTrangThai.equals("0") ? new String[] { "NhÃ¢n viÃªn", "Quáº£n lÃ½" } : new String[] { "NhÃ¢n ViÃªn", "Quáº£n lÃ½" };
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
 
@@ -703,9 +703,9 @@ public class AddStaff extends javax.swing.JDialog {
         tk.setMaNhanVien(txtStaffCode.getText());
         tk.setMatKhau(txtPassword.getText());
         System.out.println(firstrole[0]);
-        if(firstrole[0].equals("Quản lý")) {
+        if(firstrole[0].equals("Quáº£n lÃ½")) {
             tk.setIsRole(1);
-        } else if (firstrole[0].equals("Nhân viên")) {
+        } else if (firstrole[0].equals("NhÃ¢n viÃªn")) {
             tk.setIsRole(0);
         }
         return tk;
@@ -747,9 +747,9 @@ public class AddStaff extends javax.swing.JDialog {
 //        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
 //        nhanVien.setMaCV(chucVuinit.getMaCV());
 
-        if(firstrole[0].equals("Quản lý")) {
+        if(firstrole[0].equals("Quáº£n lÃ½")) {
             nhanVien.setMaCV("CV00000001");
-        } else if (firstrole[0].equals("Nhân viên")) {
+        } else if (firstrole[0].equals("NhÃ¢n viÃªn")) {
             nhanVien.setMaCV("CV00000002");
         }
 
@@ -799,7 +799,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 //                lichLamDao.insert(modelLichlam);
 
-                MsgBox.alert(this, "Thêm nhân viên thành công!");
+                MsgBox.alert(this, "ThÃªm nhÃ¢n viÃªn thÃ nh cÃ´ng!");
                 List<NhanVien> listsp = nhanVienDao.selectAll();
                 if (formMain != null) {
                     formMain.onUpdateCompleteNhanVien();
@@ -807,10 +807,10 @@ public class AddStaff extends javax.swing.JDialog {
 
                 resetText();
             } catch (Exception e) {
-                MsgBox.alert(this, "Thêm nhân viên thất bại!");
+                MsgBox.alert(this, "ThÃªm nhÃ¢n viÃªn tháº¥t báº¡i!");
             }
         } else {
-            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin  nhân viên.");
+            MsgBox.alert(this, "Vui lÃ²ng kiá»ƒm tra vÃ  Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin  nhÃ¢n viÃªn.");
         }
     }
 

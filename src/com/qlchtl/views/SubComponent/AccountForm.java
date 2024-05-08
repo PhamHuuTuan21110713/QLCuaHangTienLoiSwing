@@ -303,7 +303,6 @@ public class AccountForm extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -337,13 +336,12 @@ public class AccountForm extends javax.swing.JPanel {
         myPanelBoxShadow1.setShadowColor(new java.awt.Color(102, 102, 102));
         myPanelBoxShadow1.setShadowSize(3);
 
-
         pnlAvatar.setRoundBottomLeft(100);
         pnlAvatar.setRoundBottomRight(100);
         pnlAvatar.setRoundTopLeft(100);
         pnlAvatar.setRoundTopRight(100);
         pnlAvatar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        pnlAvatar.add(lblAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 39, -1, -1));
+        pnlAvatar.add(lblAvatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -30, 150, 160));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
