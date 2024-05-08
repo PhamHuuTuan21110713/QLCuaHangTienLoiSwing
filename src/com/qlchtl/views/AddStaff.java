@@ -5,6 +5,7 @@
 package com.qlchtl.views;
 
 import com.qlchtl.dao.ChucVuDao;
+import com.qlchtl.dao.LichLamDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.TaiKhoanDao;
 import com.qlchtl.entity.*;
@@ -38,10 +39,13 @@ public class AddStaff extends javax.swing.JDialog {
     NhanVienDao nhanVienDao = new NhanVienDao();
     TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
     ChucVuDao chucVuDao = new ChucVuDao();
+    LichLamDao lichLamDao = new LichLamDao();
 
     public String[] firstChucVu = {null};
+    public String[] firstChucVu1 = {null};
     public String[] firstrole = {null};
     List<ChucVu> listNCC = chucVuDao.selectAll();
+    List<LichLam> listLichLam = lichLamDao.selectAll();
 
     String img;
 
@@ -436,7 +440,7 @@ public class AddStaff extends javax.swing.JDialog {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("Role");
+        jLabel15.setText("Shift");
 
         jComboBox1.setBackground(new java.awt.Color(61, 65, 179));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -652,9 +656,9 @@ public class AddStaff extends javax.swing.JDialog {
 
 
         Set<String> uniquePromotionNames = new HashSet<>();
-        for (ChucVu promotion : listNCC) {
-            ChucVu a = chucVuDao.selectById(promotion.getMaCV());
-            uniquePromotionNames.add(a.getTenChucVu());
+        for (LichLam promotion : listLichLam) {
+//            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
+            uniquePromotionNames.add(promotion.getMaCa());
         }
         String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
 
@@ -674,7 +678,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 
         String initTrangThai = "0";
-        String[] states = initTrangThai.equals("0") ? new String[] { "User", "Admin" } : new String[] { "User", "Admin" };
+        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân Viên", "Quản lý" };
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
 
@@ -696,9 +700,25 @@ public class AddStaff extends javax.swing.JDialog {
 
     }
 
+    LichLam getFromLichLam(){
+        LichLam lm =  new LichLam();
+        lm.setMaNV(txtStaffCode.getText());
+
+        String inputWork = txtStartDate.getText().trim();
+        if (!isValidDate(inputWork, "dd/MM/yyyy")) {
+            return null;
+        }
+        LocalDate convertedWork = LocalDate.parse(inputWork, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        lm.setNgayThangNam(convertedWork);
+
+        lm.setMaCa(firstChucVu[0]);
+        System.out.println(firstChucVu[0]);
+
+        return  lm;
+    }
+
     TaiKhoan getFormTaiKhoan(){
         TaiKhoan tk = new TaiKhoan();
-
         if (txtAccountCoude.getText().trim().isEmpty() || txtUserName.getText().trim().isEmpty() || txtPassword.getText().trim().isEmpty()) {
             return null;
         }
@@ -707,9 +727,9 @@ public class AddStaff extends javax.swing.JDialog {
         tk.setMaNhanVien(txtStaffCode.getText());
         tk.setMatKhau(txtPassword.getText());
         System.out.println(firstrole[0]);
-        if(firstrole[0].equals("Admin")) {
+        if(firstrole[0].equals("Quản lý")) {
             tk.setIsRole(1);
-        } else if (firstrole[0].equals("User")) {
+        } else if (firstrole[0].equals("Nhân viên")) {
             tk.setIsRole(0);
         }
         return tk;
@@ -747,8 +767,16 @@ public class AddStaff extends javax.swing.JDialog {
         nhanVien.setSdt(txtPhone.getText().trim());
         nhanVien.setDiaChi(txtAddress.getText().trim());
         nhanVien.setCccd(txtAddress1.getText().trim());
-        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
-        nhanVien.setMaCV(chucVuinit.getMaCV());
+
+//        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
+//        nhanVien.setMaCV(chucVuinit.getMaCV());
+
+        if(firstrole[0].equals("Quản lý")) {
+            nhanVien.setMaCV("CV00000001");
+        } else if (firstrole[0].equals("Nhân viên")) {
+            nhanVien.setMaCV("CV00000002");
+        }
+
         nhanVien.setTrangThai(true);
         nhanVien.setMaCH("CH00000001");
         nhanVien.setGioiTinh(rdoMale.isSelected() ? "Nam" : rdoFemale.isSelected() ? "Nu" : "Nam");
@@ -786,10 +814,12 @@ public class AddStaff extends javax.swing.JDialog {
     void insert() {
         NhanVien modelsp = getFormNhanVien();
         TaiKhoan modelKho = getFormTaiKhoan();
+//        LichLam modelLichlam = getFromLichLam();
         if (modelsp != null && modelKho!=null) {
             try {
                 nhanVienDao.insert(modelsp);
                 taiKhoanDao.insert(modelKho);
+//                lichLamDao.insert(modelLichlam);
                 MsgBox.alert(this, "Thêm nhân viên thành công!");
                 List<NhanVien> listsp = nhanVienDao.selectAll();
                 if (formMain != null) {

@@ -1136,6 +1136,16 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         btnDeleteStaffFound.setColorOver(new java.awt.Color(232, 113, 122));
         btnDeleteStaffFound.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDeleteStaffFound.setRadius(20);
+        btnDeleteStaffFound.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteStaffFoundMouseClicked(evt);
+            }
+        });
+        btnDeleteStaffFound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteStaffFoundActionPerformed(evt);
+            }
+        });
         myPanelBoxShadow2.add(btnDeleteStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 125, 89, 46));
         myPanelBoxShadow2.add(lblAvataStaffFound, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 15, 140, 150));
 
@@ -1566,6 +1576,25 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         addStaff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnAddStaffMouseClicked
 
+    private void btnDeleteStaffFoundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteStaffFoundMouseClicked
+        // TODO add your handling code here:
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Xác nhận xóa",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (choice == JOptionPane.OK_OPTION) {
+
+            deleteNhanVien(idStaffSelected);
+        }
+    }//GEN-LAST:event_btnDeleteStaffFoundMouseClicked
+
+    private void btnDeleteStaffFoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteStaffFoundActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteStaffFoundActionPerformed
+
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();
         JPanel res = null;
@@ -1721,7 +1750,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     void delete() {
         int choice = JOptionPane.showConfirmDialog(
                 this,
-                "Bạn có chắc chắn muốn xóa nhân viên này?",
+                "Bạn có chắc chắn muốn xóa sản phẩm này?",
                 "Xác nhận xóa",
                 JOptionPane.OK_CANCEL_OPTION
         );
