@@ -156,8 +156,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         jLabel3 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         lblGoSearch = new javax.swing.JLabel();
-        pnlHome = new com.qlchtl.views.MyControls.MyPanelBoxShadow();
-        lblHome = new javax.swing.JLabel();
         lblTabName = new javax.swing.JLabel();
         lblLogout = new javax.swing.JLabel();
         tpnMain = new javax.swing.JTabbedPane();
@@ -707,50 +705,17 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
         jPanel2.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 5, 300, 40));
 
-        pnlHome.setBackground(new java.awt.Color(205, 247, 244));
-        pnlHome.setShadowOpacity(0.2F);
-        pnlHome.setShadowSize(2);
-        pnlHome.setShadowType(com.qlchtl.views.MyControls.ShadowType.BOT);
-        pnlHome.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomeClick(evt);
-            }
-        });
-
-        lblHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/user (1).png"))); // NOI18N
-        lblHome.setPreferredSize(new java.awt.Dimension(30, 24));
-        lblHome.setVerifyInputWhenFocusTarget(false);
-        lblHome.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomeClick(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
-        pnlHome.setLayout(pnlHomeLayout);
-        pnlHomeLayout.setHorizontalGroup(
-            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHomeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblHome, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlHomeLayout.setVerticalGroup(
-            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHomeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel2.add(pnlHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 5, 35, 40));
-
         lblTabName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTabName.setForeground(new java.awt.Color(21, 123, 142));
         lblTabName.setText("Product");
         jPanel2.add(lblTabName, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 40));
 
         lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlchtl/image/logout.png"))); // NOI18N
+        lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLogoutMouseClicked(evt);
+            }
+        });
         jPanel2.add(lblLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, -1, -1));
 
         ucProduct.setBackground(new java.awt.Color(252, 252, 252));
@@ -1495,12 +1460,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     }//GEN-LAST:event_AddNewProductClick
 
-    private void HomeClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeClick
-        // TODO add your handling code here:
-        tpnMain.setSelectedIndex(7); 
-         setPresentTabVisible(evt,new Color(24,145,143),Color.white);
-    }//GEN-LAST:event_HomeClick
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         this.lgin.setVisible(true);
@@ -1565,6 +1524,21 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         addStaff.setVisible(true);
         addStaff.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btnAddStaffMouseClicked
+
+    private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
+        // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất không?", "Question?", JOptionPane.OK_CANCEL_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            // Nếu người dùng chọn "OK", thực hiện công việc tiếp theo ở đây
+            this.dispose();
+            lgin.show();
+        } else {
+            // Nếu người dùng chọn "Cancel" hoặc đóng cửa sổ hộp thoại, hủy hàm
+            return;
+        }
+        
+        
+    }//GEN-LAST:event_lblLogoutMouseClicked
 
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
         Component hoveredComponent = evt.getComponent();
@@ -1669,7 +1643,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private javax.swing.JLabel lblCodeProductFound;
     private javax.swing.JLabel lblCodeStaffFound;
     private javax.swing.JLabel lblGoSearch;
-    private javax.swing.JLabel lblHome;
     private javax.swing.JLabel lblInvoice;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JLabel lblNameStaffFound;
@@ -1694,7 +1667,6 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlAddNewPrd;
     private javax.swing.JPanel pnlClient;
     private javax.swing.JPanel pnlHeaderStaff;
-    private com.qlchtl.views.MyControls.MyPanelBoxShadow pnlHome;
     private javax.swing.JPanel pnlInvoice;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlMenu;
