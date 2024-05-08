@@ -28,11 +28,17 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
                 entity.getMaNV(),
                 entity.getNgayThangNam());
     }
-
+    public void updateCa(LichLam entity) {
+        String sql = "UPDATE lichlam SET MaCa=? WHERE MaNV=?";
+        XJdbc.update(sql,
+                entity.getMaCa(),
+                entity.getMaNV()
+                );
+    }
     @Override
-    public void delete(String maNV) {
-        String sql = "DELETE FROM lichlam WHERE MaNV=?";
-        XJdbc.update(sql, maNV);
+    public void delete(String MaCA) {
+        String sql = "DELETE FROM lichlam WHERE MaCA=?";
+        XJdbc.update(sql, MaCA);
     }
 
     @Override
@@ -40,6 +46,10 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
         String sql = "SELECT * FROM lichlam WHERE MaNV=?";
         List<LichLam> list = selectBySql(sql, maNV);
         return list.size() > 0 ? list.get(0) : null;
+    }
+    public List<LichLam> selectByMaCa(String maCa) {
+        String sql = "SELECT * FROM lichlam WHERE MaNV=?";
+        return selectBySql(sql, maCa);
     }
 
 

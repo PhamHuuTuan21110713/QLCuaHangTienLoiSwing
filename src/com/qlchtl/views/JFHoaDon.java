@@ -62,7 +62,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private String MaNV;
     private String TenNV;
     private String SDTNV;
-    double giaTriMoi=0;
+
     InvoiceForm parForm;
     public JFHoaDon(InvoiceForm parForm) {
         initComponents();
@@ -408,7 +408,6 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel24.setText("Price:");
 
-        jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 204, 204));
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField2.setText("00.0");
@@ -798,7 +797,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private void loadInvoiceReport()  {
        try {
            ReportManager.getInstance().compileReport();
-           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, String.valueOf(giaTriMoi) , jTextField1.getText(), jLabel25.getText(), null);
+           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, jTextField2.getText(), jTextField1.getText(), jLabel25.getText(), null);
            ReportManager.getInstance().printReportPayment(data);
        }catch(Exception e) {
            e.printStackTrace();
@@ -824,7 +823,7 @@ public class JFHoaDon extends javax.swing.JFrame {
                 }
             else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
             {    
-                giaTriMoi = giaTri - diemSuDung;
+                double giaTriMoi = giaTri - diemSuDung;
                 HoaDonDao hoadondao=new HoaDonDao();
                 HoaDon hoadon=new HoaDon();
                 hoadon.setMaHD(MaHD);
@@ -851,7 +850,6 @@ public class JFHoaDon extends javax.swing.JFrame {
             else 
                 MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
             }
-
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
@@ -996,12 +994,11 @@ public class JFHoaDon extends javax.swing.JFrame {
     private int hoadonmoi=0;
     private void createMaHD()
     {
-        String lastInvoiceCode = ""; 
-        String nextInvoiceCode = ""; 
         HoaDonDao hoadondao=new HoaDonDao();
         int SoLuongHoaDon=hoadondao.tongHoaDon();
-        lastInvoiceCode=String.format("HD%08d",SoLuongHoaDon);
-        nextInvoiceCode=String.format("HD%08d",SoLuongHoaDon+hoadonmoi);
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("HD%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("HD%08d",SoLuongHoaDon+hoadonmoi);
         MaHD=nextInvoiceCode;
         HoaDon hoadon= hoadondao.selectById(MaHD);
         if(hoadon==null)

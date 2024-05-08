@@ -4,6 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/Scan.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/RandomCodeEmailSender.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/NhanVienDao.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/HoaDonDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/KhachHangDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/JFHoaDon.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/ChiTietHoaDonDao.java</file>
@@ -11,7 +14,10 @@
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/MyControls/EvaluatorColor.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/RankForm.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailStaff.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ItemProduct.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/LichLamDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/FormMain.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/KhoDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailProduct.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/LogIn.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/AddStaff.java</file>
@@ -24,6 +30,7 @@
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/KhachHang.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/entity/CaLamViec.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/XJdbc.java</file>
+            <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/MyControls/TextAreaCellRenderer.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/InvoiceForm.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/CaLamViecDao.java</file>
             <file>file:/D:/NNTT/Cuoiki/QLCuaHangTienLoiSwing/src/com/qlchtl/print/ReportManager.java</file>
