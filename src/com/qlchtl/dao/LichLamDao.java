@@ -3,6 +3,7 @@ package com.qlchtl.dao;
 import com.qlchtl.entity.LichLam;
 import com.qlchtl.utils.XJdbc;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -90,4 +91,26 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
         }
         return list;
     }
+
+    public int isNgayThangNamExists(LocalDate ngayThangNam) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM lichlam WHERE NgayThangNam = ?";
+        try {
+            ResultSet rs = null;
+            try {
+                rs = XJdbc.query(sql, Date.valueOf(ngayThangNam));
+                if (rs.next()) {
+                    count = rs.getInt("count");
+                }
+            } finally {
+                if (rs != null) {
+                    rs.getStatement().getConnection().close();
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return count;
+    }
+
 }

@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import com.qlchtl.dao.KhachHangDao;
 import com.qlchtl.dao.KhoDao;
+import com.qlchtl.dao.LichLamDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.KhachHang;
@@ -29,6 +30,7 @@ import com.qlchtl.views.SubComponent.ItemProduct;
 import com.qlchtl.views.SubComponent.ItemStaff;
 import com.qlchtl.views.SubComponent.RankForm;
 import com.qlchtl.views.SubComponent.ShiftForm;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -66,8 +68,17 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     public void setIdStaffSelected(String a) {
         this.idStaffSelected = a;
     }
+    LichLamDao lichLamDao = new LichLamDao();
 
-    
+    public int checklm() {
+        LocalDate currentDate = LocalDate.now();
+        int count = lichLamDao.isNgayThangNamExists(currentDate);
+        System.out.print("k" + count);
+        if (count > 0) {
+            return 0;
+        }
+        return 1;
+    }
      
     public FormMain(LogIn lgin,int role) {
         this.role = role;
@@ -1574,9 +1585,15 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
         // TODO add your handling code here:
-        CheckIn form = new CheckIn(this, false);
-        form.show();
-        form.setLocationRelativeTo(null);
+
+        if(checklm()==0)
+        {
+            MsgBox.alert(this, "Bạn chỉ checkin được 1 lần trong ngày!");
+        }else{
+            CheckIn form = new CheckIn(this, false);
+            form.show();
+            form.setLocationRelativeTo(null);
+        }
     }//GEN-LAST:event_btnCheckInActionPerformed
 
     private void setPresentTabVisible(java.awt.event.MouseEvent evt,Color currcolor,Color originColor){
