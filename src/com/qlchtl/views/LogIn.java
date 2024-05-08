@@ -354,6 +354,8 @@ public class LogIn extends javax.swing.JFrame {
                         MsgBox.alert(this, "Tài khoản nhân viên đã bị khóa, vui lòng liên hệ admin biết thêm thông tin!");
                     } else if(acc.getIsRole() == 1) {
                         MaNV=nhanVien.getMaNV();
+                        this.txtAccount.setText("");
+                        this.txtPassword.setText("");
                         this.dispose();
                         System.out.println("Login: "+ acc.getIsRole());
                         FormMain formMenuAdmin = new FormMain(this,acc.getIsRole());

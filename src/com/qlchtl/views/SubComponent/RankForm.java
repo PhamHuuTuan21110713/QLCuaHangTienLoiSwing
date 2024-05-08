@@ -50,7 +50,7 @@ public class RankForm extends javax.swing.JPanel {
             btnCancel.setVisible(false);
             btnConfirm.setVisible(false);
             btnCreate.setVisible(false);
-            btnDelete.setVisible(false);
+           
         }
       
     }
@@ -83,7 +83,6 @@ public class RankForm extends javax.swing.JPanel {
         btnConfirm = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -249,11 +248,11 @@ public class RankForm extends javax.swing.JPanel {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(124, 124, 124)
+                .addGap(53, 53, 53)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(45, 45, 45)
                 .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         btnCreate.setBackground(new java.awt.Color(102, 102, 102));
@@ -279,17 +278,6 @@ public class RankForm extends javax.swing.JPanel {
             }
         });
 
-        btnDelete.setBackground(new java.awt.Color(102, 102, 102));
-        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("Delete");
-        btnDelete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -298,8 +286,7 @@ public class RankForm extends javax.swing.JPanel {
                 .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -307,16 +294,14 @@ public class RankForm extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(52, 52, 52)
                 .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(45, 45, 45)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 390, 290));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 390, 240));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -369,21 +354,6 @@ public class RankForm extends javax.swing.JPanel {
         disabledButtonCUD();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        int selectedRow=jTable1.getSelectedRow();
-        if (selectedRow != -1) {
-       
-            String MaCV =(String) jTable1.getValueAt(selectedRow, 0);
-
-            ChucVuDao chucVuDao=new ChucVuDao();
-            chucVuDao.delete(MaCV);
-            loadData();
-        } else {
-            MsgBox.alert(this, "Vui lòng chọn chức vụ để xóa!");
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
         // TODO add your handling code here:
         try{
@@ -427,7 +397,6 @@ public class RankForm extends javax.swing.JPanel {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JButton btnCreate;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -459,7 +428,7 @@ public class RankForm extends javax.swing.JPanel {
     {
         btnCreate.setEnabled(true);
         btnUpdate.setEnabled(true);
-        btnDelete.setEnabled(true);
+     
     }
     void disabledTextInput()
     {
@@ -475,7 +444,7 @@ public class RankForm extends javax.swing.JPanel {
     {
         btnCreate.setEnabled(false);
         btnUpdate.setEnabled(false);
-        btnDelete.setEnabled(false);
+      
     }
     void loadData()
     {

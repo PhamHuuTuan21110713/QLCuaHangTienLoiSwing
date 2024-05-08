@@ -7,11 +7,13 @@ package com.qlchtl.views;
 import com.qlchtl.dao.ChiTietHoaDonDao;
 import com.qlchtl.dao.HoaDonDao;
 import com.qlchtl.dao.KhachHangDao;
+import com.qlchtl.dao.KhoDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.SanPhamDao;
 import com.qlchtl.entity.ChiTietHoaDon;
 import com.qlchtl.entity.HoaDon;
 import com.qlchtl.entity.KhachHang;
+import com.qlchtl.entity.Kho;
 import com.qlchtl.entity.NhanVien;
 import com.qlchtl.entity.SanPham;
 import com.qlchtl.print.ReportManager;
@@ -60,7 +62,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private String MaNV;
     private String TenNV;
     private String SDTNV;
-
+    double giaTriMoi=0;
     InvoiceForm parForm;
     public JFHoaDon(InvoiceForm parForm) {
         initComponents();
@@ -406,6 +408,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel24.setText("Price:");
 
+        jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 204, 204));
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTextField2.setText("00.0");
@@ -795,7 +798,7 @@ public class JFHoaDon extends javax.swing.JFrame {
     private void loadInvoiceReport()  {
        try {
            ReportManager.getInstance().compileReport();
-           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, jTextField2.getText(), jTextField1.getText(), jLabel25.getText(), null);
+           ParameterReportPayment data = new ParameterReportPayment(this.MaHD, String.valueOf(giaTriMoi) , jTextField1.getText(), jLabel25.getText(), null);
            ReportManager.getInstance().printReportPayment(data);
        }catch(Exception e) {
            e.printStackTrace();
@@ -807,41 +810,48 @@ public class JFHoaDon extends javax.swing.JFrame {
         KhachHangDao khachhangdao=new KhachHangDao();
         KhachHang khachhang=khachhangdao.selectById((String) jcbIDKhachHang.getSelectedItem());
         double giaTri = Double.parseDouble(jTextField2.getText());
-        int diemSuDung = Integer.parseInt(jTextField1.getText());
+        
         double limit = 0.1 * giaTri;
-        if (diemSuDung > limit) {
-        MsgBox.alert(this, "Số điểm sử dụng không được vượt quá 10% giá trị đơn hàng!");
+        if(!jTextField1.getText().matches("\\d+")) 
+        {
+            jTextField1.setText("");
+            MsgBox.alert(this, "Điểm sử dụng không hợp lệ!");
         }
-        else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
-        {    
+        else
+        {   int diemSuDung = Integer.parseInt(jTextField1.getText());
+             if (diemSuDung > limit) {
+                        MsgBox.alert(this, "Số điểm sử dụng không được vượt quá 10% giá trị đơn hàng!");
+                }
+            else if(khachhang.getSoDiemHienCo()>=Integer.parseInt(jTextField1.getText()))
+            {    
+                giaTriMoi = giaTri - diemSuDung;
+                HoaDonDao hoadondao=new HoaDonDao();
+                HoaDon hoadon=new HoaDon();
+                hoadon.setMaHD(MaHD);
+                hoadon.setNgayXuat(LocalDate.now());
+                hoadon.setGiaTri(String.valueOf(giaTriMoi));
+                hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
+                hoadon.setMaNV((String) jlblIDNhanvien.getText());
+                hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
+                hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
+                hoadondao.update(hoadon);
+                updateSoluong();
+                MsgBox.alert(this, "Thanh toán thành công!");
+                khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
+                khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
+                loadInvoiceReport();
+                hoadonmoi=1;
+                createMaHD();
+                loadData();
+                updateTongTien();
+                jTextField1.setText("0");
+                parForm.reloadForm();
 
-            double giaTriMoi = giaTri - diemSuDung;
-            HoaDonDao hoadondao=new HoaDonDao();
-            HoaDon hoadon=new HoaDon();
-            hoadon.setMaHD(MaHD);
-            hoadon.setNgayXuat(LocalDate.now());
-            hoadon.setGiaTri(String.valueOf(giaTriMoi));
+            }
+            else 
+                MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
+            }
 
-            hoadon.setMaKH((String) jcbIDKhachHang.getSelectedItem());
-            hoadon.setMaNV((String) jlblIDNhanvien.getText());
-            hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
-            hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
-            hoadondao.update(hoadon);
-            MsgBox.alert(this, "Thanh toán thành công!");
-
-            khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
-            khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
-            loadInvoiceReport();
-            hoadonmoi=1;
-            createMaHD();
-            loadData();
-            updateTongTien();
-            jTextField1.setText("0");
-            parForm.reloadForm();
-
-        }
-        else 
-            MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
     }//GEN-LAST:event_jbtnCreateActionPerformed
 
     private void jbtnSCanSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSCanSanPhamActionPerformed
@@ -914,6 +924,23 @@ public class JFHoaDon extends javax.swing.JFrame {
             if(!khachhang.getTrangThai().equals("0")){
                 jcbIDKhachHang.addItem(khachhang.getMaKH());
             }
+        }
+    }
+    private void updateSoluong()
+    {
+        ChiTietHoaDonDao chiTietHoaDonDao=new ChiTietHoaDonDao();
+        KhoDao khoDao=new KhoDao();
+        List<ChiTietHoaDon> chiTietHoaDons= chiTietHoaDonDao.selectByMaHD(MaHD);
+        for(ChiTietHoaDon chiTietHoaDon:chiTietHoaDons)
+        {
+            Kho kho=khoDao.selectById(chiTietHoaDon.getMaSp());
+            if(kho.getSoLuong()>=chiTietHoaDon.getsL())
+            {   
+                kho.setSoLuong(kho.getSoLuong()-chiTietHoaDon.getsL());
+                khoDao.updateSL(kho);
+            }
+            else
+                 MsgBox.alert(this, "Số lượng sản phẩm trong kho không đủ!");
         }
     }
     private void loadProducts() 

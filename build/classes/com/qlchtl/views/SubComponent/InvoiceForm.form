@@ -296,12 +296,12 @@
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jDateFrom">
       <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+        <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
       </Properties>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jDateTo">
       <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+        <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
       </Properties>
     </Component>
     <Component class="com.qlchtl.views.MyControls.MyButton" name="btnShowAll">

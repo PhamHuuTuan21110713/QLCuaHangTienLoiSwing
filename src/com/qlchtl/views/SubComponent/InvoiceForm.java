@@ -12,6 +12,9 @@ import com.qlchtl.utils.MsgBox;
 import com.qlchtl.views.FormMain;
 import com.qlchtl.views.JFHoaDon;
 import com.qlchtl.views.MyControls.MyTable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
@@ -172,9 +175,9 @@ public class InvoiceForm extends javax.swing.JPanel {
             }
         });
 
-        jDateFrom.setDateFormatString("yyyy-MM-dd");
+        jDateFrom.setDateFormatString("dd/MM/yyyy");
 
-        jDateTo.setDateFormatString("yyyy-MM-dd");
+        jDateTo.setDateFormatString("dd/MM/yyyy");
 
         btnShowAll.setForeground(new java.awt.Color(30, 136, 56));
         btnShowAll.setText("Show All");
@@ -299,7 +302,8 @@ public class InvoiceForm extends javax.swing.JPanel {
 private void loadDataInvoice()
     {
         HoaDonDao hoaDonDao=new HoaDonDao();
-         
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         List<HoaDon> hoaDons=hoaDonDao.selectAll();
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Invoice ID");
@@ -313,7 +317,7 @@ private void loadDataInvoice()
         {
             String[] rowdata={
                     hoaDon.getMaHD(),
-                    String.valueOf(hoaDon.getNgayXuat()),
+                    outputFormatter.format(LocalDate.parse(String.valueOf(hoaDon.getNgayXuat()), inputFormatter)),
                     String.valueOf(hoaDon.getGiaTri()),
                     hoaDon.getMaKH(),
                     hoaDon.getMaNV(),
@@ -328,9 +332,12 @@ private void loadDataInvoice()
     private void loadDataFromTo() {
         Date fromDate=jDateFrom.getDate();
         Date toDate=jDateTo.getDate();
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         HoaDonDao hoaDonDao=new HoaDonDao();
         List<HoaDon> hoaDons=hoaDonDao.selectByDateRange(fromDate, toDate);
         DefaultTableModel model = new DefaultTableModel();
+        
         model.addColumn("Invoice ID");
         model.addColumn("Issued Date");
         model.addColumn("Price");
@@ -342,7 +349,7 @@ private void loadDataInvoice()
         {
             String[] rowdata={
                     hoaDon.getMaHD(),
-                    String.valueOf(hoaDon.getNgayXuat()),
+                    outputFormatter.format(LocalDate.parse(String.valueOf(hoaDon.getNgayXuat()), inputFormatter)),
                     String.valueOf(hoaDon.getGiaTri()),
                     hoaDon.getMaKH(),
                     hoaDon.getMaNV(),

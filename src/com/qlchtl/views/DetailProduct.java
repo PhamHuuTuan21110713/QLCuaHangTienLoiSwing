@@ -73,6 +73,8 @@ public class DetailProduct extends javax.swing.JFrame  {
             return;
         } else if( formMain.getRole()==0) {
             this.btnUpdateProd.setVisible(false);
+            this.btnConfirmProduct.setVisible(false);
+            this.btnCancelProd.setVisible(false);
         }
     }
     private void setButton(Boolean state) {
@@ -783,7 +785,6 @@ public class DetailProduct extends javax.swing.JFrame  {
         sp.setTrangThai("1");
         sp.setTienGoc(txtRootPriceProd.getText());
         sp.setTienThanhToan(txtPricePrd.getText());
-
         String inputDate = txtImportDatePrd.getText();
         if (isValidDate(inputDate, "dd/MM/yyyy")) {
             LocalDate convertedDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -837,7 +838,7 @@ public class DetailProduct extends javax.swing.JFrame  {
         } else if (txtPromotionProd.getText().equals("CT03")) {
             sum -= sum * 0.3;
         }
-        txtPricePrd.setText(String.valueOf(sum));
+        txtPricePrd.setText(String.format("%.1f", sum));
         String importDate = sp.getNgayNhapHang().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         txtImportDatePrd.setText(importDate);
         txtSupplier.setText(sp.getMaNCC());

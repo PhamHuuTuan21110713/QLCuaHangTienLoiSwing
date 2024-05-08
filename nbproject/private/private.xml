@@ -4,8 +4,19 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/LogIn.java</file>
-            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailProduct.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/FormMain.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ClientForm.java</file>
             <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/XJdbc.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/ResetPassword.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/RankForm.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/dao/LichLamDao.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/DetailProduct.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/utils/RandomCodeEmailSender.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/JFHoaDon.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/AddStaff.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/AccountForm.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/InvoiceForm.java</file>
+            <file>file:/F:/GiaoTrinhSPKT/HocKy6/LTTT/DACK/QLCuaHangTienLoiSwing/src/com/qlchtl/views/SubComponent/ShiftForm.java</file>
         </group>
     </open-files>
 </project-private>
