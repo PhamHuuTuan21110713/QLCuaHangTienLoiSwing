@@ -586,6 +586,8 @@ public class AddStaff extends javax.swing.JDialog {
     private void btnCreateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateMouseClicked
         // TODO add your handling code here:
         insert();
+        List<TaiKhoan> listtk = taiKhoanDao.selectAll();
+        formMain.accountForm.fillTableTk(listtk);
     }//GEN-LAST:event_btnCreateMouseClicked
 
     /**
@@ -786,10 +788,14 @@ public class AddStaff extends javax.swing.JDialog {
     void insert() {
         NhanVien modelsp = getFormNhanVien();
         TaiKhoan modelKho = getFormTaiKhoan();
+       
         if (modelsp != null && modelKho!=null) {
+            
             try {
                 nhanVienDao.insert(modelsp);
+                System.out.println(modelsp.toString());
                 taiKhoanDao.insert(modelKho);
+                System.out.println(modelKho.toString());
                 MsgBox.alert(this, "Thêm nhân viên thành công!");
                 List<NhanVien> listsp = nhanVienDao.selectAll();
                 if (formMain != null) {

@@ -43,7 +43,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
     private InvoiceForm invoiceForm ;
     private  RankForm rankForm ;
     private ShiftForm shiftForm ;
-    private AccountForm accountForm ;
+    public AccountForm accountForm ;
     private String TYPE_SEARCHING = "PRODUCT";
     SanPhamDao sanPhamDao = new SanPhamDao();
     KhoDao khoDAo = new KhoDao();

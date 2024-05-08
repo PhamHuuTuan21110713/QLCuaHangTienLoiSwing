@@ -21,6 +21,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.w3c.dom.DOMConfiguration;
+import javax.swing.*;
 /**
  *
  * @author Dell
@@ -62,6 +63,9 @@ public class ReportManager {
         view(print);
     }
     private void view(JasperPrint print) throws JRException {
-        JasperViewer.viewReport(print);
+//        JasperViewer.viewReport(print);
+          JasperViewer jasperViewer = new JasperViewer(print, false); // Tham số thứ hai là "false" để không hiển thị cửa sổ đồng ý đóng
+          jasperViewer.setVisible(true);
+        
     }
 }
