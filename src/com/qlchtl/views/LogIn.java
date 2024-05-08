@@ -20,7 +20,7 @@ public class LogIn extends javax.swing.JFrame {
     /**
      * Creates new form LogIn
      */
-    private static String MaNV;
+    public static String MaNV;
     public LogIn() {
     initComponents();
     setLocationRelativeTo(null);
@@ -366,6 +366,8 @@ public class LogIn extends javax.swing.JFrame {
                         System.out.println("Login: "+ acc.getIsRole());
                         FormMain formMenuAdmin = new FormMain(this,acc.getIsRole());
                         formMenuAdmin.setVisible(true);
+                        this.txtAccount.setText("");
+                        this.txtPassword.setText("");
                     }
                 }
             }

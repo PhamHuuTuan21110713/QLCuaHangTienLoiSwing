@@ -39,13 +39,13 @@ public class AddStaff extends javax.swing.JDialog {
     NhanVienDao nhanVienDao = new NhanVienDao();
     TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
     ChucVuDao chucVuDao = new ChucVuDao();
-    LichLamDao lichLamDao = new LichLamDao();
+    ;
 
     public String[] firstChucVu = {null};
     public String[] firstChucVu1 = {null};
     public String[] firstrole = {null};
     List<ChucVu> listNCC = chucVuDao.selectAll();
-    List<LichLam> listLichLam = lichLamDao.selectAll();
+
 
     String img;
 
@@ -405,8 +405,8 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtUserName)
-                .addContainerGap())
+                .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,11 +477,12 @@ public class AddStaff extends javax.swing.JDialog {
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(215, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(219, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -626,7 +627,7 @@ public class AddStaff extends javax.swing.JDialog {
     void chonAnh() {
         if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();
-            XImage.save(file); // lưu hình vào thư mục logos
+            XImage.save(file); // lÆ°u hÃ¬nh vÃ o thÆ° má»¥c logos
             ImageIcon icon = XImage.read(file.getName());
             java.awt.Image originalImage = icon.getImage();
             java.awt.Image scaledImage = originalImage.getScaledInstance(170, 220, java.awt.Image.SCALE_SMOOTH);
@@ -641,19 +642,19 @@ public class AddStaff extends javax.swing.JDialog {
         rdoMale.setSelected(true);
 
 
-        Set<String> uniquePromotionNames = new HashSet<>();
-        for (LichLam promotion : listLichLam) {
-//            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
-            uniquePromotionNames.add(promotion.getMaCa());
-        }
-        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
+//        Set<String> uniquePromotionNames = new HashSet<>();
+//        for (LichLam promotion : listLichLam) {
+////            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
+//            uniquePromotionNames.add(promotion.getMaCa());
+//        }
+//        String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
 
         
 
 
 
         String initTrangThai = "0";
-        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân Viên", "Quản lý" };
+        String[] states = initTrangThai.equals("0") ? new String[] { "NhÃ¢n viÃªn", "Quáº£n lÃ½" } : new String[] { "NhÃ¢n ViÃªn", "Quáº£n lÃ½" };
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
 
@@ -702,9 +703,9 @@ public class AddStaff extends javax.swing.JDialog {
         tk.setMaNhanVien(txtStaffCode.getText());
         tk.setMatKhau(txtPassword.getText());
         System.out.println(firstrole[0]);
-        if(firstrole[0].equals("Quản lý")) {
+        if(firstrole[0].equals("Quáº£n lÃ½")) {
             tk.setIsRole(1);
-        } else if (firstrole[0].equals("Nhân viên")) {
+        } else if (firstrole[0].equals("NhÃ¢n viÃªn")) {
             tk.setIsRole(0);
         }
         return tk;
@@ -746,9 +747,9 @@ public class AddStaff extends javax.swing.JDialog {
 //        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
 //        nhanVien.setMaCV(chucVuinit.getMaCV());
 
-        if(firstrole[0].equals("Quản lý")) {
+        if(firstrole[0].equals("Quáº£n lÃ½")) {
             nhanVien.setMaCV("CV00000001");
-        } else if (firstrole[0].equals("Nhân viên")) {
+        } else if (firstrole[0].equals("NhÃ¢n viÃªn")) {
             nhanVien.setMaCV("CV00000002");
         }
 
@@ -798,7 +799,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 //                lichLamDao.insert(modelLichlam);
 
-                MsgBox.alert(this, "Thêm nhân viên thành công!");
+                MsgBox.alert(this, "ThÃªm nhÃ¢n viÃªn thÃ nh cÃ´ng!");
                 List<NhanVien> listsp = nhanVienDao.selectAll();
                 if (formMain != null) {
                     formMain.onUpdateCompleteNhanVien();
@@ -806,10 +807,10 @@ public class AddStaff extends javax.swing.JDialog {
 
                 resetText();
             } catch (Exception e) {
-                MsgBox.alert(this, "Thêm nhân viên thất bại!");
+                MsgBox.alert(this, "ThÃªm nhÃ¢n viÃªn tháº¥t báº¡i!");
             }
         } else {
-            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin  nhân viên.");
+            MsgBox.alert(this, "Vui lÃ²ng kiá»ƒm tra vÃ  Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin  nhÃ¢n viÃªn.");
         }
     }
 

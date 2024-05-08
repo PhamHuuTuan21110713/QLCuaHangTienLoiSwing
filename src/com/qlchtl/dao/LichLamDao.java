@@ -3,6 +3,7 @@ package com.qlchtl.dao;
 import com.qlchtl.entity.LichLam;
 import com.qlchtl.utils.XJdbc;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -28,11 +29,17 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
                 entity.getMaNV(),
                 entity.getNgayThangNam());
     }
-
+    public void updateCa(LichLam entity) {
+        String sql = "UPDATE lichlam SET MaCa=? WHERE MaNV=?";
+        XJdbc.update(sql,
+                entity.getMaCa(),
+                entity.getMaNV()
+                );
+    }
     @Override
-    public void delete(String maNV) {
-        String sql = "DELETE FROM lichlam WHERE MaNV=?";
-        XJdbc.update(sql, maNV);
+    public void delete(String MaCA) {
+        String sql = "DELETE FROM lichlam WHERE MaCA=?";
+        XJdbc.update(sql, MaCA);
     }
 
     @Override
@@ -40,6 +47,10 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
         String sql = "SELECT * FROM lichlam WHERE MaNV=?";
         List<LichLam> list = selectBySql(sql, maNV);
         return list.size() > 0 ? list.get(0) : null;
+    }
+    public List<LichLam> selectByMaCa(String maCa) {
+        String sql = "SELECT * FROM lichlam WHERE MaNV=?";
+        return selectBySql(sql, maCa);
     }
 
 
@@ -80,4 +91,26 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
         }
         return list;
     }
+
+    public int isNgayThangNamExists(LocalDate ngayThangNam) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM lichlam WHERE NgayThangNam = ?";
+        try {
+            ResultSet rs = null;
+            try {
+                rs = XJdbc.query(sql, Date.valueOf(ngayThangNam));
+                if (rs.next()) {
+                    count = rs.getInt("count");
+                }
+            } finally {
+                if (rs != null) {
+                    rs.getStatement().getConnection().close();
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return count;
+    }
+
 }

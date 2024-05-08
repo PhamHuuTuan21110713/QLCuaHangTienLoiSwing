@@ -172,6 +172,9 @@
         </Property>
         <Property name="radius" type="int" value="10"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnConfirmMouseClicked"/>
+      </Events>
     </Component>
     <Component class="com.qlchtl.views.MyControls.MyButton" name="btnCancle">
       <Properties>
@@ -193,6 +196,9 @@
         </Property>
         <Property name="radius" type="int" value="10"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancleMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
