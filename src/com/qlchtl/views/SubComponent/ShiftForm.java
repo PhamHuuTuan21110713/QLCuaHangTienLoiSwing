@@ -60,7 +60,7 @@ public class ShiftForm extends javax.swing.JPanel {
             btnCancel.setVisible(false);
             btnConfirm.setVisible(false);
             btnNew.setVisible(false);
-            btnDelete.setVisible(false);
+            
         }
     }
     private boolean addShift=true;
@@ -611,7 +611,7 @@ public class ShiftForm extends javax.swing.JPanel {
     {
         btnNew.setEnabled(true);
         btnUpdate.setEnabled(true);
-        btnDelete.setEnabled(true);
+        
     }
     void disabledTextInput()
     {
@@ -628,7 +628,7 @@ public class ShiftForm extends javax.swing.JPanel {
     {
         btnNew.setEnabled(false);
         btnUpdate.setEnabled(false);
-        btnDelete.setEnabled(false);
+       
     }
     void loadData()
     {
