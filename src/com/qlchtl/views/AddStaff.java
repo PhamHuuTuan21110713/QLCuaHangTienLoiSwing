@@ -5,6 +5,7 @@
 package com.qlchtl.views;
 
 import com.qlchtl.dao.ChucVuDao;
+import com.qlchtl.dao.LichLamDao;
 import com.qlchtl.dao.NhanVienDao;
 import com.qlchtl.dao.TaiKhoanDao;
 import com.qlchtl.entity.*;
@@ -38,10 +39,13 @@ public class AddStaff extends javax.swing.JDialog {
     NhanVienDao nhanVienDao = new NhanVienDao();
     TaiKhoanDao taiKhoanDao = new TaiKhoanDao();
     ChucVuDao chucVuDao = new ChucVuDao();
+    LichLamDao lichLamDao = new LichLamDao();
 
     public String[] firstChucVu = {null};
+    public String[] firstChucVu1 = {null};
     public String[] firstrole = {null};
     List<ChucVu> listNCC = chucVuDao.selectAll();
+    List<LichLam> listLichLam = lichLamDao.selectAll();
 
     String img;
 
@@ -95,8 +99,8 @@ public class AddStaff extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         txtStartDate = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        cboRank = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -105,8 +109,6 @@ public class AddStaff extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         txtPassword = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         txtAccountCoude = new javax.swing.JTextField();
@@ -370,14 +372,14 @@ public class AddStaff extends javax.swing.JDialog {
 
         myPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel11.setText("Rank");
-        myPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, 71, -1));
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel15.setText("Rank");
+        myPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 71, -1));
 
-        cboRank.setBackground(new java.awt.Color(61, 65, 179));
-        cboRank.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        myPanel1.add(cboRank, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 160, -1));
+        jComboBox1.setBackground(new java.awt.Color(61, 65, 179));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        myPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 157, -1));
 
         jPanel1.add(myPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 610, 330));
 
@@ -434,13 +436,6 @@ public class AddStaff extends javax.swing.JDialog {
             .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel15.setText("Role");
-
-        jComboBox1.setBackground(new java.awt.Color(61, 65, 179));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(102, 102, 102));
         jLabel16.setText("Account code");
@@ -479,7 +474,6 @@ public class AddStaff extends javax.swing.JDialog {
                         .addGap(47, 47, 47)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -487,8 +481,7 @@ public class AddStaff extends javax.swing.JDialog {
                             .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, 0, 157, Short.MAX_VALUE)))))
+                                .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(222, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -516,11 +509,7 @@ public class AddStaff extends javax.swing.JDialog {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel14))
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addGap(84, 84, 84))
         );
 
         jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 530, 260));
@@ -654,29 +643,18 @@ public class AddStaff extends javax.swing.JDialog {
 
 
         Set<String> uniquePromotionNames = new HashSet<>();
-        for (ChucVu promotion : listNCC) {
-            ChucVu a = chucVuDao.selectById(promotion.getMaCV());
-            uniquePromotionNames.add(a.getTenChucVu());
+        for (LichLam promotion : listLichLam) {
+//            ChucVu a = LichLamDao.selectById(promotion.getMaCV());
+            uniquePromotionNames.add(promotion.getMaCa());
         }
         String[] promotionNamesWithNone = uniquePromotionNames.toArray(new String[0]);
 
-        cboRank.setModel(new javax.swing.DefaultComboBoxModel<>(promotionNamesWithNone));
-
-        if (promotionNamesWithNone.length > 0) {
-            firstChucVu[0] = promotionNamesWithNone[0];
-        }
-        cboRank.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedItem = (String) cboRank.getSelectedItem();
-                firstChucVu[0] = selectedItem;
-            }
-        });
+        
 
 
 
         String initTrangThai = "0";
-        String[] states = initTrangThai.equals("0") ? new String[] { "User", "Admin" } : new String[] { "User", "Admin" };
+        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân Viên", "Quản lý" };
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
 
@@ -698,9 +676,25 @@ public class AddStaff extends javax.swing.JDialog {
 
     }
 
+    LichLam getFromLichLam(){
+        LichLam lm =  new LichLam();
+        lm.setMaNV(txtStaffCode.getText());
+
+        String inputWork = txtStartDate.getText().trim();
+        if (!isValidDate(inputWork, "dd/MM/yyyy")) {
+            return null;
+        }
+        LocalDate convertedWork = LocalDate.parse(inputWork, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        lm.setNgayThangNam(convertedWork);
+
+        lm.setMaCa(firstChucVu[0]);
+        System.out.println(firstChucVu[0]);
+
+        return  lm;
+    }
+
     TaiKhoan getFormTaiKhoan(){
         TaiKhoan tk = new TaiKhoan();
-
         if (txtAccountCoude.getText().trim().isEmpty() || txtUserName.getText().trim().isEmpty() || txtPassword.getText().trim().isEmpty()) {
             return null;
         }
@@ -709,9 +703,9 @@ public class AddStaff extends javax.swing.JDialog {
         tk.setMaNhanVien(txtStaffCode.getText());
         tk.setMatKhau(txtPassword.getText());
         System.out.println(firstrole[0]);
-        if(firstrole[0].equals("Admin")) {
+        if(firstrole[0].equals("Quản lý")) {
             tk.setIsRole(1);
-        } else if (firstrole[0].equals("User")) {
+        } else if (firstrole[0].equals("Nhân viên")) {
             tk.setIsRole(0);
         }
         return tk;
@@ -749,8 +743,16 @@ public class AddStaff extends javax.swing.JDialog {
         nhanVien.setSdt(txtPhone.getText().trim());
         nhanVien.setDiaChi(txtAddress.getText().trim());
         nhanVien.setCccd(txtAddress1.getText().trim());
-        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
-        nhanVien.setMaCV(chucVuinit.getMaCV());
+
+//        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
+//        nhanVien.setMaCV(chucVuinit.getMaCV());
+
+        if(firstrole[0].equals("Quản lý")) {
+            nhanVien.setMaCV("CV00000001");
+        } else if (firstrole[0].equals("Nhân viên")) {
+            nhanVien.setMaCV("CV00000002");
+        }
+
         nhanVien.setTrangThai(true);
         nhanVien.setMaCH("CH00000001");
         nhanVien.setGioiTinh(rdoMale.isSelected() ? "Nam" : rdoFemale.isSelected() ? "Nu" : "Nam");
@@ -772,7 +774,6 @@ public class AddStaff extends javax.swing.JDialog {
         txtAddress.setText("");
         txtAddress1.setText("");
 
-        cboRank.setSelectedIndex(0);
         rdoMale.setSelected(true);
 
         lblAvatar.setIcon(null);
@@ -788,14 +789,16 @@ public class AddStaff extends javax.swing.JDialog {
     void insert() {
         NhanVien modelsp = getFormNhanVien();
         TaiKhoan modelKho = getFormTaiKhoan();
-       
+
         if (modelsp != null && modelKho!=null) {
             
             try {
                 nhanVienDao.insert(modelsp);
                 System.out.println(modelsp.toString());
                 taiKhoanDao.insert(modelKho);
-                System.out.println(modelKho.toString());
+
+//                lichLamDao.insert(modelLichlam);
+
                 MsgBox.alert(this, "Thêm nhân viên thành công!");
                 List<NhanVien> listsp = nhanVienDao.selectAll();
                 if (formMain != null) {
@@ -840,11 +843,9 @@ public class AddStaff extends javax.swing.JDialog {
     private com.qlchtl.views.MyControls.MyButton btnCancle1;
     private com.qlchtl.views.MyControls.MyButton btnCreate;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cboRank;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

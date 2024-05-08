@@ -14,6 +14,10 @@ public class LichLam {
         this.maCa = maCa;
     }
 
+    public LichLam() {
+
+    }
+
     // Getters and Setters
     public String getMaNV() {
         return maNV;
