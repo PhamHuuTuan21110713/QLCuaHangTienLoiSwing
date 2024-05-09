@@ -744,7 +744,6 @@ public class ClientForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         delete();
         clearTest();
-        
     }//GEN-LAST:event_DeleteClick
 
     private void UpdateClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateClick
@@ -835,8 +834,8 @@ public class ClientForm extends javax.swing.JPanel {
        
         int SoLuongHoaDon=khachHangDao.tongKhachHang();
         if(SoLuongHoaDon<1) SoLuongHoaDon=1;
-        String lastInvoiceCode=String.format("TK%08d",SoLuongHoaDon);
-        String nextInvoiceCode=String.format("TK%08d",SoLuongHoaDon+hoadonmoi);
+        String lastInvoiceCode=String.format("KH%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("KH%08d",SoLuongHoaDon+1+hoadonmoi);
         TK=nextInvoiceCode;
         txtCodeClientFound.setText(TK);
     }

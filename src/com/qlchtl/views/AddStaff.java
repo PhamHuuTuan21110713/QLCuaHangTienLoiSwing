@@ -56,8 +56,8 @@ public class AddStaff extends javax.swing.JDialog {
         fileChooser = new javax.swing.JFileChooser();
         this.setLocationRelativeTo(null);
         init();
-        createMaSP1();
         createMaSP();
+        createMaSP1();
     }
 
     /**
@@ -430,7 +430,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -453,8 +453,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtAccountCoude)
-                .addContainerGap())
+                .addComponent(txtAccountCoude, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,12 +478,11 @@ public class AddStaff extends javax.swing.JDialog {
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(219, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -824,7 +822,7 @@ public class AddStaff extends javax.swing.JDialog {
         int SoLuongHoaDon=taiKhoanDao.tongTaiKhoan();
         if(SoLuongHoaDon<1) SoLuongHoaDon=1;
         String lastInvoiceCode=String.format("TK%08d",SoLuongHoaDon);
-        String nextInvoiceCode=String.format("TK%08d",SoLuongHoaDon+hoadonmoi);
+        String nextInvoiceCode=String.format("TK%08d",SoLuongHoaDon+1+hoadonmoi);
         TK=nextInvoiceCode;
         txtAccountCoude.setText(TK);
     }
@@ -839,7 +837,7 @@ public class AddStaff extends javax.swing.JDialog {
         int SoLuongHoaDon=nhanVienDao.tongNhanVien();
         if(SoLuongHoaDon<1) SoLuongHoaDon=1;
         String lastInvoiceCode=String.format("NV%08d",SoLuongHoaDon);
-        String nextInvoiceCode=String.format("NV%08d",SoLuongHoaDon+hoadonmoi1);
+        String nextInvoiceCode=String.format("NV%08d",SoLuongHoaDon+1+hoadonmoi1);
         TK1=nextInvoiceCode;
         txtStaffCode.setText(TK1);
     }

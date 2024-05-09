@@ -575,14 +575,17 @@ public class AccountForm extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(82, 86, 204));
         jLabel9.setText("Role:");
+        jLabel9.setEnabled(false);
 
         myPanelBoxShadow6.setBackground(new java.awt.Color(255, 255, 255));
+        myPanelBoxShadow6.setEnabled(false);
         myPanelBoxShadow6.setShadowColor(new java.awt.Color(82, 86, 204));
         myPanelBoxShadow6.setShadowSize(3);
 
         txtRole.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtRole.setForeground(new java.awt.Color(102, 102, 102));
         txtRole.setBorder(null);
+        txtRole.setEnabled(false);
 
         javax.swing.GroupLayout myPanelBoxShadow6Layout = new javax.swing.GroupLayout(myPanelBoxShadow6);
         myPanelBoxShadow6.setLayout(myPanelBoxShadow6Layout);

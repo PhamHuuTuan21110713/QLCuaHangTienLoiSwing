@@ -620,7 +620,7 @@ public class JFHoaDon extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel2.setText("Xirkle k");
 
-        jLabel3.setText("Address:  Ahi hi hi ");
+        jLabel3.setText("Address:  TP. Hồ Chí Minh ");
 
         jLabel4.setText("Phone:  0928895717");
 
@@ -680,8 +680,8 @@ public class JFHoaDon extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(351, 351, 351)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(319, 319, 319)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -833,19 +833,19 @@ public class JFHoaDon extends javax.swing.JFrame {
                 hoadon.setMaNV((String) jlblIDNhanvien.getText());
                 hoadon.setDiemTich(Integer.parseInt(jLabel25.getText()));
                 hoadon.setDiemSuDung(Integer.parseInt(jTextField1.getText()));
-                hoadondao.update(hoadon);
-                updateSoluong();
-                MsgBox.alert(this, "Thanh toán thành công!");
-                khachhangdao.updateSuDungDiem(khachhang,Integer.parseInt(jTextField1.getText()) );
-                khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
-                loadInvoiceReport();
-                hoadonmoi=1;
-                createMaHD();
-                loadData();
-                updateTongTien();
-                jTextField1.setText("0");
-                parForm.reloadForm();
-
+                if (updateSoluong()) {
+                    hoadondao.update(hoadon);
+                    MsgBox.alert(this, "Thanh toán thành công!");
+                    khachhangdao.updateSuDungDiem(khachhang, Integer.parseInt(jTextField1.getText()));
+                    khachhangdao.updateThemDiem(khachhang, Integer.parseInt(jLabel25.getText()));
+                    loadInvoiceReport();
+                    hoadonmoi = 1;
+                    createMaHD();
+                    loadData();
+                    updateTongTien();
+                    jTextField1.setText("0");
+                    parForm.reloadForm();
+                }
             }
             else 
                 MsgBox.alert(this, "Điểm hiện có không đủ để dùng!");
@@ -924,11 +924,20 @@ public class JFHoaDon extends javax.swing.JFrame {
             }
         }
     }
-    private void updateSoluong()
+    private boolean updateSoluong()
     {
         ChiTietHoaDonDao chiTietHoaDonDao=new ChiTietHoaDonDao();
         KhoDao khoDao=new KhoDao();
         List<ChiTietHoaDon> chiTietHoaDons= chiTietHoaDonDao.selectByMaHD(MaHD);
+        for(ChiTietHoaDon chiTietHoaDon:chiTietHoaDons)
+        {   
+            Kho kho=khoDao.selectById(chiTietHoaDon.getMaSp());
+            if(kho.getSoLuong()<chiTietHoaDon.getsL())
+            {
+                MsgBox.alert(this, "Số lượng sản phẩm trong kho không đủ!");
+                return false;
+            }
+        }
         for(ChiTietHoaDon chiTietHoaDon:chiTietHoaDons)
         {
             Kho kho=khoDao.selectById(chiTietHoaDon.getMaSp());
@@ -937,9 +946,8 @@ public class JFHoaDon extends javax.swing.JFrame {
                 kho.setSoLuong(kho.getSoLuong()-chiTietHoaDon.getsL());
                 khoDao.updateSL(kho);
             }
-            else
-                 MsgBox.alert(this, "Số lượng sản phẩm trong kho không đủ!");
         }
+        return true;
     }
     private void loadProducts() 
     {

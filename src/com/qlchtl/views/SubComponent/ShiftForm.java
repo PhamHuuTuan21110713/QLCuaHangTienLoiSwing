@@ -40,6 +40,8 @@ public class ShiftForm extends javax.swing.JPanel {
     private FormMain parentForm;
     public ShiftForm(FormMain parentForm) {
         initComponents();
+        btnNew.setVisible(false);
+        btnDelete.setVisible(false);
         this.parentForm = parentForm;
         decentralizate();
         MyTable.apply(scpMain, MyTable.TableType.DEFAULT);
@@ -342,6 +344,7 @@ public class ShiftForm extends javax.swing.JPanel {
         myPanelBoxShadow2.add(myPanelBoxShadow6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 240, 40));
 
         myPanel4.setBackground(new java.awt.Color(82, 86, 204));
+        myPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnNew.setForeground(new java.awt.Color(82, 86, 204));
         btnNew.setText("New");
@@ -355,6 +358,7 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnNewActionPerformed(evt);
             }
         });
+        myPanel4.add(btnNew, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 32, 85, 32));
 
         btnUpdate.setForeground(new java.awt.Color(82, 86, 204));
         btnUpdate.setText("Update");
@@ -369,6 +373,7 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnUpdateActionPerformed(evt);
             }
         });
+        myPanel4.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 32, 90, 32));
 
         btnDelete.setForeground(new java.awt.Color(82, 86, 204));
         btnDelete.setText("Delete");
@@ -383,30 +388,7 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnDeleteActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout myPanel4Layout = new javax.swing.GroupLayout(myPanel4);
-        myPanel4.setLayout(myPanel4Layout);
-        myPanel4Layout.setHorizontalGroup(
-            myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        myPanel4Layout.setVerticalGroup(
-            myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(myPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(myPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
+        myPanel4.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(224, 32, 90, 32));
 
         myPanelBoxShadow2.add(myPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 320, 100));
 
@@ -423,11 +405,10 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnConfirmActionPerformed(evt);
             }
         });
-        myPanelBoxShadow2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 90, 40));
+        myPanelBoxShadow2.add(btnConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, 90, 40));
 
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
-        btnCancel.setActionCommand("Cancel");
         btnCancel.setBorderColor(new java.awt.Color(82, 86, 204));
         btnCancel.setColor(new java.awt.Color(82, 86, 204));
         btnCancel.setColorClick(new java.awt.Color(61, 65, 179));
@@ -439,7 +420,7 @@ public class ShiftForm extends javax.swing.JPanel {
                 btnCancelActionPerformed(evt);
             }
         });
-        myPanelBoxShadow2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 90, 40));
+        myPanelBoxShadow2.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 490, 90, 40));
 
         javax.swing.GroupLayout myPanel2Layout = new javax.swing.GroupLayout(myPanel2);
         myPanel2.setLayout(myPanel2Layout);
@@ -491,28 +472,6 @@ public class ShiftForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        // TODO add your handling code here:
-        txtAllowance.setText("");
-        try {
-                Date defaultTime = dateFormat.parse("00:00:00");
-                jSStart.setValue(defaultTime);
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-        try {
-                Date defaultTime = dateFormat.parse("00:00:00");
-                jSEnd.setValue(defaultTime);
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
-        addShift=true;
-        enabledButtonAccept();
-        enabledTextInput();
-        disabledButtonCUD();
-        txtCodeShift.setEnabled(true);
-    }//GEN-LAST:event_btnNewActionPerformed
-
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         addShift=false;
@@ -520,21 +479,6 @@ public class ShiftForm extends javax.swing.JPanel {
         enabledTextInput();
         disabledButtonCUD();
     }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        LichLamDao lichLamDAO=new LichLamDao();
-        CaLamViecDao caLamViecDao=new CaLamViecDao();
-        int selectedRow=tblShift.getSelectedRow();
-        if (selectedRow != -1) {
-            String MaCa =(String) tblShift.getValueAt(selectedRow, 0);
-            lichLamDAO.delete(MaCa);
-            caLamViecDao.delete(MaCa);
-            loadData();
-        } else {
-            MsgBox.alert(this, "Vui lòng chọn ca để xóa!");
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
@@ -603,6 +547,43 @@ public class ShiftForm extends javax.swing.JPanel {
                 MsgBox.alert(this, "Bị lỗi khi thêm mới!!!");
             }
     }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        // TODO add your handling code here:
+        txtAllowance.setText("");
+        try {
+            Date defaultTime = dateFormat.parse("00:00:00");
+            jSStart.setValue(defaultTime);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        try {
+            Date defaultTime = dateFormat.parse("00:00:00");
+            jSEnd.setValue(defaultTime);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        addShift=true;
+        enabledButtonAccept();
+        enabledTextInput();
+        disabledButtonCUD();
+        txtCodeShift.setEnabled(true);
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        LichLamDao lichLamDAO=new LichLamDao();
+        CaLamViecDao caLamViecDao=new CaLamViecDao();
+        int selectedRow=tblShift.getSelectedRow();
+        if (selectedRow != -1) {
+            String MaCa =(String) tblShift.getValueAt(selectedRow, 0);
+            lichLamDAO.delete(MaCa);
+            caLamViecDao.delete(MaCa);
+            loadData();
+        } else {
+            MsgBox.alert(this, "Vui lòng chọn ca để xóa!");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

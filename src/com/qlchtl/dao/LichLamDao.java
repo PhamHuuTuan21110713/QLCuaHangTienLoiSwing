@@ -92,13 +92,13 @@ public class LichLamDao extends qlchSysDao<LichLam, String> {
         return list;
     }
 
-    public int isNgayThangNamExists(LocalDate ngayThangNam) {
+    public int isNgayThangNamExists(LocalDate ngayThangNam,String MaNV) {
         int count = 0;
-        String sql = "SELECT COUNT(*) AS count FROM lichlam WHERE NgayThangNam = ?";
+        String sql = "SELECT COUNT(*) AS count FROM lichlam WHERE NgayThangNam = ? and MaNV = ?";
         try {
             ResultSet rs = null;
             try {
-                rs = XJdbc.query(sql, Date.valueOf(ngayThangNam));
+                rs = XJdbc.query(sql, Date.valueOf(ngayThangNam),MaNV);
                 if (rs.next()) {
                     count = rs.getInt("count");
                 }
