@@ -56,6 +56,8 @@ public class AddStaff extends javax.swing.JDialog {
         fileChooser = new javax.swing.JFileChooser();
         this.setLocationRelativeTo(null);
         init();
+        createMaSP();
+        createMaSP1();
     }
 
     /**
@@ -808,11 +810,37 @@ public class AddStaff extends javax.swing.JDialog {
                 MsgBox.alert(this, "Thêm nhân viên thất bại!");
             }
         } else {
-            MsgBox.alert(this, "Vui lòng kiểm tra và nhập đầy đủ thông tin.");
+            MsgBox.alert(this, "Vui lòng kiểm trả và nhập đầy đủ thông tin thông tin");
         }
     }
 
-
+    private String TK="";
+    private int hoadonmoi=0;
+    private void createMaSP()
+    {
+       
+        int SoLuongHoaDon=taiKhoanDao.tongTaiKhoan();
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("TK%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("TK%08d",SoLuongHoaDon+1+hoadonmoi);
+        TK=nextInvoiceCode;
+        txtAccountCoude.setText(TK);
+    }
+    
+    
+    
+    private String TK1="";
+    private int hoadonmoi1=0;
+    private void createMaSP1()
+    {
+       
+        int SoLuongHoaDon=nhanVienDao.tongNhanVien();
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("NV%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("NV%08d",SoLuongHoaDon+1+hoadonmoi1);
+        TK1=nextInvoiceCode;
+        txtStaffCode.setText(TK1);
+    }
 
 
 

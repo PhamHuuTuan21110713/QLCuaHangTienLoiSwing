@@ -40,6 +40,7 @@ public class AddProduct extends javax.swing.JFrame {
         fileChooser = new javax.swing.JFileChooser();
         initComponents();
         this.setLocationRelativeTo(null);
+        createMaSP();
     }
 
 
@@ -645,5 +646,19 @@ public class AddProduct extends javax.swing.JFrame {
         } else {
             MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin  sản phẩm.");
         }
+    }
+    
+    
+    private String MaHD="";
+    private int hoadonmoi=0;
+    private void createMaSP()
+    {
+       
+        int SoLuongHoaDon=sanPhamDao.tongSanPham();
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("SP%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("SP%08d",SoLuongHoaDon+hoadonmoi);
+        MaHD=nextInvoiceCode;
+        txtCodeProd.setText(MaHD);
     }
 }

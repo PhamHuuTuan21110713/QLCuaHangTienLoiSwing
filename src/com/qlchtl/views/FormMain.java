@@ -52,7 +52,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     NhanVienDao nhanVienDao = new NhanVienDao();
     KhachHangDao khachHangDao = new KhachHangDao();
-
+    private TaiKhoan acc ; 
     public static String maSp;
     
     public String getIdProductSelected(){
@@ -72,7 +72,7 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
 
     public int checklm() {
         LocalDate currentDate = LocalDate.now();
-        int count = lichLamDao.isNgayThangNamExists(currentDate);
+        int count = lichLamDao.isNgayThangNamExists(currentDate,this.acc.getMaNhanVien());
         System.out.print("k" + count);
         if (count > 0) {
             return 0;
@@ -80,8 +80,9 @@ public class FormMain extends javax.swing.JFrame implements UpdateCallback{
         return 1;
     }
      
-    public FormMain(LogIn lgin,int role) {
+    public FormMain(LogIn lgin,int role,TaiKhoan acc) {
         this.role = role;
+        this.acc = acc;
         this.clientForm = new ClientForm(this);
         this.invoiceForm = new InvoiceForm(this);
         this.rankForm = new RankForm(this);
