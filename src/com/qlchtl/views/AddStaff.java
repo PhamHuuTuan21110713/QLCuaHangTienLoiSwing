@@ -428,7 +428,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -451,8 +451,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtAccountCoude)
-                .addContainerGap())
+                .addComponent(txtAccountCoude, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,12 +476,11 @@ public class AddStaff extends javax.swing.JDialog {
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(219, Short.MAX_VALUE))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,7 +652,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 
         String initTrangThai = "0";
-        String[] states = initTrangThai.equals("0") ? new String[] { "NhÃ¢n viÃªn", "Quáº£n lÃ½" } : new String[] { "NhÃ¢n ViÃªn", "Quáº£n lÃ½" };
+        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân viên", "Quản lý" };
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
 
@@ -703,9 +701,9 @@ public class AddStaff extends javax.swing.JDialog {
         tk.setMaNhanVien(txtStaffCode.getText());
         tk.setMatKhau(txtPassword.getText());
         System.out.println(firstrole[0]);
-        if(firstrole[0].equals("Quáº£n lÃ½")) {
+        if(firstrole[0].equals("Quản lý")) {
             tk.setIsRole(1);
-        } else if (firstrole[0].equals("NhÃ¢n viÃªn")) {
+        } else if (firstrole[0].equals("Nhân viên")) {
             tk.setIsRole(0);
         }
         return tk;
@@ -747,9 +745,9 @@ public class AddStaff extends javax.swing.JDialog {
 //        ChucVu chucVuinit = chucVuDao.selectByName(firstChucVu[0]);
 //        nhanVien.setMaCV(chucVuinit.getMaCV());
 
-        if(firstrole[0].equals("Quáº£n lÃ½")) {
+        if(firstrole[0].equals("Quản lý")) {
             nhanVien.setMaCV("CV00000001");
-        } else if (firstrole[0].equals("NhÃ¢n viÃªn")) {
+        } else if (firstrole[0].equals("Nhân viên")) {
             nhanVien.setMaCV("CV00000002");
         }
 
@@ -799,7 +797,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 //                lichLamDao.insert(modelLichlam);
 
-                MsgBox.alert(this, "ThÃªm nhÃ¢n viÃªn thÃ nh cÃ´ng!");
+                MsgBox.alert(this, "Thêm nhân viên thành công!");
                 List<NhanVien> listsp = nhanVienDao.selectAll();
                 if (formMain != null) {
                     formMain.onUpdateCompleteNhanVien();
@@ -807,10 +805,10 @@ public class AddStaff extends javax.swing.JDialog {
 
                 resetText();
             } catch (Exception e) {
-                MsgBox.alert(this, "ThÃªm nhÃ¢n viÃªn tháº¥t báº¡i!");
+                MsgBox.alert(this, "Thêm nhân viên thất bại!");
             }
         } else {
-            MsgBox.alert(this, "Vui lÃ²ng kiá»ƒm tra vÃ  Ä‘iá»�n Ä‘áº§y Ä‘á»§ thÃ´ng tin  nhÃ¢n viÃªn.");
+            MsgBox.alert(this, "Vui lòng kiểm tra và nhập đầy đủ thông tin.");
         }
     }
 

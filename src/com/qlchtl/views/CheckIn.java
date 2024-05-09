@@ -78,6 +78,9 @@ public class CheckIn extends javax.swing.JDialog {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Date");
 
+        txtDate.setEditable(false);
+        txtDate.setEnabled(false);
+
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Confirm");
         btnConfirm.setBorderColor(new java.awt.Color(204, 204, 204));
