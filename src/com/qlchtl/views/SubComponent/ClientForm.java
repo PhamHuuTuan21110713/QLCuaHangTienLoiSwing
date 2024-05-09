@@ -739,6 +739,7 @@ public class ClientForm extends javax.swing.JPanel {
     private void DeleteClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteClick
         // TODO add your handling code here:
         delete();
+        clearTest();
         
     }//GEN-LAST:event_DeleteClick
 
