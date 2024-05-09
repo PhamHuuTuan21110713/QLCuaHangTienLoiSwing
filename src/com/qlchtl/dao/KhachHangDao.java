@@ -129,6 +129,20 @@ public class KhachHangDao extends qlchSysDao<KhachHang, String> {
          XJdbc.update(sql, maKH);
     }
 
-
+    public int tongKhachHang()
+       {
+           String sql="SELECT COUNT(*) AS total FROM khachhang";
+           int tonghoadon = 0;
+           try(ResultSet rs=XJdbc.query(sql))
+           {
+               while(rs.next())
+               {
+                   tonghoadon=rs.getInt("total");
+               }
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+           }
+           return tonghoadon;
+       }
 
 }

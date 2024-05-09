@@ -102,8 +102,21 @@ public class NhanVienDao extends qlchSysDao<NhanVien,String> {
             throw new RuntimeException(ex);
         }
         return nhanVienList;
-
-
+    }
+    public int tongNhanVien()
+    {
+        String sql="SELECT COUNT(*) AS total FROM nhanvien";
+        int tonghoadon = 0;
+        try(ResultSet rs=XJdbc.query(sql))
+        {
+            while(rs.next())
+            {
+                tonghoadon=rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tonghoadon;
     }
     
 }

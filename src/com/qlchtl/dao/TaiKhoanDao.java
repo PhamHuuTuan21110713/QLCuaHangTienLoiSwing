@@ -108,4 +108,21 @@ public class TaiKhoanDao extends qlchSysDao<TaiKhoan,String> {
         return list;
 
     }
+    
+    
+     public int tongTaiKhoan()
+    {
+        String sql="SELECT COUNT(*) AS total FROM taikhoan";
+        int tonghoadon = 0;
+        try(ResultSet rs=XJdbc.query(sql))
+        {
+            while(rs.next())
+            {
+                tonghoadon=rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tonghoadon;
+    }
 }

@@ -419,6 +419,9 @@ public class ClientForm extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CreateClick(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBtnAddMouseEntered(evt);
+            }
         });
         pnlBtnAdd.add(lblBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 30));
 
@@ -730,6 +733,7 @@ public class ClientForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         clearTest();
         setUpControl(true);
+        createMaSP();
         check = 1;
         Color colortxt = new Color(242, 242, 242);
         txtCodeClientFound.setBackground(colortxt);
@@ -782,6 +786,10 @@ public class ClientForm extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jTable1KeyPressed
 
+    private void lblBtnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBtnAddMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBtnAddMouseEntered
+
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
         clickData();
@@ -815,6 +823,22 @@ public class ClientForm extends javax.swing.JPanel {
         txtStoredScore.setText(String.valueOf(soDiemDaTich));
         txtUsedScore.setText(String.valueOf(soDiemDaDung));
         txtCurrentScore.setText(String.valueOf(soDiemHienCo));
+    }
+    
+    
+    //////////
+    
+    private String TK="";
+    private int hoadonmoi=0;
+    private void createMaSP()
+    {
+       
+        int SoLuongHoaDon=khachHangDao.tongKhachHang();
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("TK%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("TK%08d",SoLuongHoaDon+hoadonmoi);
+        TK=nextInvoiceCode;
+        txtCodeClientFound.setText(TK);
     }
 
 

@@ -56,6 +56,8 @@ public class AddStaff extends javax.swing.JDialog {
         fileChooser = new javax.swing.JFileChooser();
         this.setLocationRelativeTo(null);
         init();
+        createMaSP1();
+        createMaSP();
     }
 
     /**
@@ -428,8 +430,8 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPassword)
-                .addContainerGap())
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,7 +453,7 @@ public class AddStaff extends javax.swing.JDialog {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtAccountCoude, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(txtAccountCoude)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -627,7 +629,7 @@ public class AddStaff extends javax.swing.JDialog {
     void chonAnh() {
         if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
             File file = fileChooser.getSelectedFile();
-            XImage.save(file); // lưu hình vào thư mục logos
+            XImage.save(file); // lÆ°u hÃ¬nh vÃ o thÆ° má»¥c logos
             ImageIcon icon = XImage.read(file.getName());
             java.awt.Image originalImage = icon.getImage();
             java.awt.Image scaledImage = originalImage.getScaledInstance(170, 220, java.awt.Image.SCALE_SMOOTH);
@@ -654,7 +656,7 @@ public class AddStaff extends javax.swing.JDialog {
 
 
         String initTrangThai = "0";
-        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân Viên", "Quản lý" };
+        String[] states = initTrangThai.equals("0") ? new String[] { "Nhân viên", "Quản lý" } : new String[] { "Nhân viên", "Quản lý" };
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(states));
         jComboBox1.setSelectedIndex(initTrangThai.equals("0") ? 0 : 1);
 
@@ -810,11 +812,37 @@ public class AddStaff extends javax.swing.JDialog {
                 MsgBox.alert(this, "Thêm nhân viên thất bại!");
             }
         } else {
-            MsgBox.alert(this, "Vui lòng kiểm tra và điền đầy đủ thông tin  nhân viên.");
+            MsgBox.alert(this, "Vui lòng kiểm trả và nhập đầy đủ thông tin thông tin");
         }
     }
 
-
+    private String TK="";
+    private int hoadonmoi=0;
+    private void createMaSP()
+    {
+       
+        int SoLuongHoaDon=taiKhoanDao.tongTaiKhoan();
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("TK%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("TK%08d",SoLuongHoaDon+hoadonmoi);
+        TK=nextInvoiceCode;
+        txtAccountCoude.setText(TK);
+    }
+    
+    
+    
+    private String TK1="";
+    private int hoadonmoi1=0;
+    private void createMaSP1()
+    {
+       
+        int SoLuongHoaDon=nhanVienDao.tongNhanVien();
+        if(SoLuongHoaDon<1) SoLuongHoaDon=1;
+        String lastInvoiceCode=String.format("NV%08d",SoLuongHoaDon);
+        String nextInvoiceCode=String.format("NV%08d",SoLuongHoaDon+hoadonmoi1);
+        TK1=nextInvoiceCode;
+        txtStaffCode.setText(TK1);
+    }
 
 
 

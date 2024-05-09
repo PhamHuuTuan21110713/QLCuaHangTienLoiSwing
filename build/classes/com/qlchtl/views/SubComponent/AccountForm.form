@@ -260,7 +260,7 @@
                     <Component class="javax.swing.JLabel" name="lblAvatar">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="33" y="39" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="10" y="-30" width="150" height="160"/>
                         </Constraint>
                       </Constraints>
                     </Component>

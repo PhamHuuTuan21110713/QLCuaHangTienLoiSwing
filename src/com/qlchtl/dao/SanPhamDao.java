@@ -129,6 +129,23 @@ public class SanPhamDao extends qlchSysDao<SanPham,String> {
         }
         return list;
     }
+    
+    ////
+    public int tongSanPham()
+    {
+        String sql="SELECT COUNT(*) AS total FROM sanpham";
+        int tonghoadon = 0;
+        try(ResultSet rs=XJdbc.query(sql))
+        {
+            while(rs.next())
+            {
+                tonghoadon=rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tonghoadon;
+    }
 
 
 }
